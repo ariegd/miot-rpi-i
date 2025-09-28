@@ -3,4 +3,4 @@ Redes, protocolos e interfaces I
 
 Profesor: Carlos Núñez
 
-* [LAB1](src/README.md)
+* [LAB1](src/lab1/README.md)
