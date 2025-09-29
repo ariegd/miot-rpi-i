@@ -8,6 +8,24 @@
 * Personalizar variables de configuración de proyectos ESP-IDF.
 * Responder a eventos básicos de red en ESP-IDF.
 
+## 3 ✅ Cambios claves:
+*migrada a ESP-IDF v6.0-dev-2594-g25c40d4563*
+* chip_info.cores y chip_info.revision → %d (porque son int).
+* flash_size y esp_get_minimum_free_heap_size() → PRIu32 (porque son uint32_t).
+
+## 2 ✅ Resumen de cambios:
+*migrada a ESP-IDF v6.0-dev-2594-g25c40d4563*
+* #include "esp_chip_info.h" → obligatorio ahora.
+* #include "esp_spi_flash.h" eliminado → usar #include "esp_flash.h".
+* %d, %lu reemplazados por macros de <inttypes.h> → PRIu32, PRId32, etc.
+
+## 1 🔑 Cambios importantes respecto a tu versión original:
+*migrada a ESP-IDF v6.0-dev-2594-g25c40d4563*
+* #include "esp_spi_flash.h" ➝ #include "esp_flash.h".
+* spi_flash_get_chip_size() ➝ esp_flash_get_size(NULL, &flash_size).
+* Uso de uint32_t para el tamaño de la flash.
+* printf adaptado a %lu porque flash_size es uint32_t.
+
 ## Crear un proyecto básico
 ```
 idf.py create-project blink_led
