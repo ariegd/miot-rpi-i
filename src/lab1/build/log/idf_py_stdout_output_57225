@@ -1,0 +1,21 @@
+Command: ninja flash
+[1/5] cd /home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build/esp-idf/esptool_py && /home/zodd/esp/esp-idf/python_env/idf5.5_py3.11_env/bin/python /home/zodd/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build/partition_table/partition-table.bin /home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build/lab1.bin
+lab1.bin binary size 0x2c490 bytes. Smallest app partition is 0x100000 bytes. 0xd3b70 bytes (83%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] cd /home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build/bootloader/esp-idf/esptool_py && /home/zodd/esp/esp-idf/python_env/idf5.5_py3.11_env/bin/python /home/zodd/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build/bootloader/bootloader.bin
+Bootloader binary size 0x5240 bytes. 0x2dc0 bytes (36%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] cd /home/zodd/esp/esp-idf/components/esptool_py && /usr/bin/cmake -D IDF_PATH=/home/zodd/esp/esp-idf -D "SERIAL_TOOL=/home/zodd/esp/esp-idf/python_env/idf5.5_py3.11_env/bin/python;;/home/zodd/esp/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32c3" -D "SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args" -D WORKING_DIRECTORY=/home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build -P /home/zodd/esp/esp-idf/components/esptool_py/run_serial_tool.cmake
+esptool.py --chip esp32c3 -p /dev/ttyACM0 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 2MB 0x0 bootloader/bootloader.bin 0x10000 lab1.bin 0x8000 partition_table/partition-table.bin
+esptool.py v4.10.0
+Serial port /dev/ttyACM0
+
+A fatal error occurred: Could not open /dev/ttyACM0, the port is busy or doesn't exist.
+([Errno 2] could not open port /dev/ttyACM0: [Errno 2] No such file or directory: '/dev/ttyACM0')
+
+Hint: Check if the port is correct and ESP connected
+
+FAILED: CMakeFiles/flash /home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build/CMakeFiles/flash 
+cd /home/zodd/esp/esp-idf/components/esptool_py && /usr/bin/cmake -D IDF_PATH=/home/zodd/esp/esp-idf -D "SERIAL_TOOL=/home/zodd/esp/esp-idf/python_env/idf5.5_py3.11_env/bin/python;;/home/zodd/esp/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32c3" -D "SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args" -D WORKING_DIRECTORY=/home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1/build -P /home/zodd/esp/esp-idf/components/esptool_py/run_serial_tool.cmake
+ninja: build stopped: subcommand failed.
