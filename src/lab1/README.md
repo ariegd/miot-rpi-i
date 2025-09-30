@@ -8,6 +8,19 @@
 * Personalizar variables de configuración de proyectos ESP-IDF.
 * Responder a eventos básicos de red en ESP-IDF.
 
+## Ejercicio 1
+
+Modifica el período de suspensión de la tarea para que sea mayor o menor, y comprueba que efectivamente esto modifica el comportamiento del firmware cargado.
+
+Solución: Aumenta la velocidad con que se muestra los mensajes en la pantalla.
+```
+    for (int i = 10; i >= 0; i--) {
+        printf("Restarting in %d seconds...\n", i);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+```
+
+
 ## 3 ✅ Cambios claves:
 *migrada a ESP-IDF v6.0-dev-2594-g25c40d4563*
 * chip_info.cores y chip_info.revision → %d (porque son int).
