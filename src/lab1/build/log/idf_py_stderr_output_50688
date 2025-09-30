@@ -1,1 +1,0 @@
-Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=/home/zodd/esp/esp-idf/python_env/idf5.5_py3.11_env/bin/python -DESP_PLATFORM=1 -DIDF_TARGET=esp32c3 -DCCACHE_ENABLE=0 /home/zodd/Documentos/@Documentos/Master2025/2025_Master_Universitario_IoT/2-RP1/laboratorio/miot-rpi-i/src/lab1
