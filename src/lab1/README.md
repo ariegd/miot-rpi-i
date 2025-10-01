@@ -8,6 +8,13 @@
 * Personalizar variables de configuración de proyectos ESP-IDF.
 * Responder a eventos básicos de red en ESP-IDF.
 
+
+## Ejercicio 2
+
+Modifica el programa para que se compruebe debidamente si el SoC tiene capacidades WiFi y muestre la información correspondiente por la salida estándar (para ello, puedes consultar la siguiente página).
+
+
+
 ## Ejercicio 1
 
 Modifica el período de suspensión de la tarea para que sea mayor o menor, y comprueba que efectivamente esto modifica el comportamiento del firmware cargado.
