@@ -1,0 +1,16 @@
+menu "Lab1 Configuración"
+
+    config HELLO_TASK_DELAY
+        int "Tiempo de espera de hello_task (ms)"
+        default 2000
+        help
+            Define el tiempo en milisegundos que espera la tarea hello_task.
+
+    config WIFI_TASK_DELAY
+        int "Tiempo de espera de wifi_info_task (ms)"
+        default 3000
+        help
+            Define el tiempo en milisegundos que espera la tarea wifi_info_task.
+
+endmenu
+
