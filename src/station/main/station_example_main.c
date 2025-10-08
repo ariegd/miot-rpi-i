@@ -84,7 +84,16 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
         }
         ESP_LOGI(TAG,"connect to the AP fail");
-    } 
+        
+        /*
+        * Solamente muestra por consola que se ha invocado los EVENT
+        * Si se desea agregar algo más de lógica para tratar los EVENT, este es el lugar.
+        */
+    }   else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_CONNECTED)  {
+        ESP_LOGI(TAG, "[wifi_event_handler] STA ahora conectado al AP");
+    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_STOP)  {
+        ESP_LOGI(TAG, "[wifi_event_handler] STA perdida de IP");
+    }
 }
 
 static void ip_event_handler(void* arg, esp_event_base_t event_base,
@@ -95,6 +104,12 @@ static void ip_event_handler(void* arg, esp_event_base_t event_base,
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+       /*
+        * Ahora se lanza un EVENT cuando se pierde la IP
+        * También aquí es donde se agrega la lógica para tratar el caso
+        */
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_LOST_IP)  {
+      ESP_LOGW(TAG, "[ip_event_handler] Hemos perdido la dirección IP");
     }
 }
 
@@ -118,7 +133,7 @@ void wifi_init_sta(void)
                                                         NULL,
                                                         &instance_any_id));
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT,
-                                                        IP_EVENT_STA_GOT_IP,
+                                                        ESP_EVENT_ANY_ID,          // Se ha cambiado de  IP_EVENT_STA_GOT_IP por ESP_EVENT_ANY_ID
                                                         &ip_event_handler,
                                                         NULL,
                                                         &instance_got_ip));
