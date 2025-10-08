@@ -48,6 +48,18 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
         ESP_LOGI(TAG, "[wifi_event_handler] station "MACSTR" leave, AID=%d, reason=%d",
                  MAC2STR(event->mac), event->aid, event->reason);
     }
+    
+    /*
+    * Ejemplo de dos eventos que faltan por tratar y se han añadido, para su posterior monitoreo
+    *  - WIFI_EVENT_AP_START: Indica que la interfaz AP ha arrancado.
+    *  - WIFI_EVENT_AP_STOP: Indica que la interfaz AP ha sido detenida.
+    */
+    else if (event_id == WIFI_EVENT_AP_START) {
+        ESP_LOGI(TAG, "[wifi_event_handler] SoftAP ha arrancado correctamente :)");
+    }
+    else if (event_id == WIFI_EVENT_AP_STOP) {
+        ESP_LOGI(TAG, "[wifi_event_handler] SoftAP ha sido parado :(");
+    }
 }
 
 void wifi_init_softap(void)
