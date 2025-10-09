@@ -176,7 +176,7 @@ static void wifi_scan(void)
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_start());
-
+/*
 #ifdef USE_CHANNEL_BITMAP
     wifi_scan_config_t *scan_config = (wifi_scan_config_t *)calloc(1,sizeof(wifi_scan_config_t));
     if (!scan_config) {
@@ -189,7 +189,16 @@ static void wifi_scan(void)
 
 #else
     esp_wifi_scan_start(NULL, true);
-#endif /*USE_CHANNEL_BITMAP*/
+#endif *//*USE_CHANNEL_BITMAP*/
+
+    // --------- Escaneo en un solo canal ---------
+    wifi_scan_config_t scan_config = {0};
+    scan_config.channel = 8; // <-- Cambia aquí el canal deseado
+    scan_config.show_hidden = true; // Opcional, para ver redes ocultas
+
+    ESP_LOGI(TAG, "Escaneando SOLO en el canal %d", scan_config.channel);
+    ESP_ERROR_CHECK(esp_wifi_scan_start(&scan_config, true));
+    // --------------------------------------------
 
     ESP_LOGI(TAG, "Max AP number ap_info can hold = %u", number);
     ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
