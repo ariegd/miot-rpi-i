@@ -18,7 +18,6 @@
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "regex.h"
-#include <sys/time.h> // Para medir el tiempo con gettimeofday()
 
 #define DEFAULT_SCAN_LIST_SIZE CONFIG_EXAMPLE_SCAN_LIST_SIZE
 
@@ -177,7 +176,7 @@ static void wifi_scan(void)
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_start());
-/*
+
 #ifdef USE_CHANNEL_BITMAP
     wifi_scan_config_t *scan_config = (wifi_scan_config_t *)calloc(1,sizeof(wifi_scan_config_t));
     if (!scan_config) {
@@ -190,32 +189,7 @@ static void wifi_scan(void)
 
 #else
     esp_wifi_scan_start(NULL, true);
-#endif *//*USE_CHANNEL_BITMAP*/
-
-    // --------- Escaneo en un solo canal ---------
-    wifi_scan_config_t scan_config = {0};
-    scan_config.channel = 8; // <-- Cambia aquí el canal deseado
-    scan_config.show_hidden = true; // Opcional, para ver redes ocultas
-
-    // --- Modifica aquí los tiempos de espera por canal ---
-    scan_config.scan_time.active.min = 100;  // Tiempo mínimo en ms por canal en modo activo
-    scan_config.scan_time.active.max = 300;  // Tiempo máximo en ms por canal en modo activo
-    // Si quieres modo pasivo, usa: scan_config.scan_type = WIFI_SCAN_TYPE_PASSIVE; y scan_time.passive
-    scan_config.scan_type = WIFI_SCAN_TYPE_ACTIVE;
-
-    struct timeval t_ini, t_fin;
-    gettimeofday(&t_ini, NULL);
-
-    ESP_LOGI(TAG, "Escaneando SOLO en el canal %d con min=%d, max=%d ms", 
-        scan_config.channel, 
-        scan_config.scan_time.active.min, 
-        scan_config.scan_time.active.max);
-    ESP_ERROR_CHECK(esp_wifi_scan_start(&scan_config, true));
-    
-    gettimeofday(&t_fin, NULL);
-    long tiempo = (t_fin.tv_sec - t_ini.tv_sec) * 1000 + (t_fin.tv_usec - t_ini.tv_usec) / 1000;
-    ESP_LOGI(TAG, "Tiempo total de escaneo: %ld ms", tiempo);
-    // --------------------------------------------
+#endif /*USE_CHANNEL_BITMAP*/
 
     ESP_LOGI(TAG, "Max AP number ap_info can hold = %u", number);
     ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
