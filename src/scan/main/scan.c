@@ -29,6 +29,22 @@ static uint8_t channel_list[CHANNEL_LIST_SIZE] = {1, 6, 11};
 
 static const char *TAG = "scan";
 
+// ===================== 1
+// Estructura de redes conocidas
+typedef struct {
+    const char* ssid;
+    const char* password;
+    int priority; // 1 = máxima prioridad
+} known_network_t;
+
+// Lista de redes conocidas (rellena tus datos)
+static const known_network_t known_networks[] = {
+    {"SSID_LABORATORIO", "PASSWORD_LAB", 1}, // Prioridad más alta
+    {"SSID_MOVIL",       "PASSWORD_MOVIL",  2},
+    {"SSID_DOMICILIO",   "PASSWORD_CASA",   3}
+};
+#define N_KNOWN_NETWORKS (sizeof(known_networks)/sizeof(known_networks[0]))
+
 static void print_auth_mode(int authmode)
 {
     switch (authmode) {
@@ -156,9 +172,31 @@ static void array_2_channel_bitmap(const uint8_t channel_list[], const uint8_t c
 }
 #endif /*USE_CHANNEL_BITMAP*/
 
+// ===================== 2
+// NUEVO: Buscar en el escaneo la red conocida de mayor prioridad disponible
+int find_best_known_ap(const wifi_ap_record_t* ap_records, uint16_t ap_num, const known_network_t** out_network, wifi_ap_record_t* out_ap) {
+    int best_priority = 999;
+    int found = 0;
+    for (uint16_t i = 0; i < ap_num; i++) {
+        for (size_t k = 0; k < N_KNOWN_NETWORKS; k++) {
+            if (strcmp((const char*)ap_records[i].ssid, known_networks[k].ssid) == 0) {
+                if (known_networks[k].priority < best_priority) {
+                    best_priority = known_networks[k].priority;
+                    *out_network = &known_networks[k];
+                    if (out_ap) {
+                        memcpy(out_ap, &ap_records[i], sizeof(wifi_ap_record_t));
+                    }
+                    found = 1;
+                }
+            }
+        }
+    }
+    return found;
+}
+
 
 /* Initialize Wi-Fi as sta and set scan method */
-static void wifi_scan(void)
+static void wifi_scan_and_connect(void)
 {
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
@@ -204,6 +242,26 @@ static void wifi_scan(void)
         }
         ESP_LOGI(TAG, "Channel \t\t%d", ap_info[i].primary);
     }
+    
+    // ===================== 3
+    // Buscar la mejor red conocida disponible
+    const known_network_t* selected_network = NULL;
+    wifi_ap_record_t selected_ap;
+    if (find_best_known_ap(ap_info, number, &selected_network, &selected_ap)) {
+        ESP_LOGI(TAG, "Red conocida encontrada: %s. Intentando conectar...", selected_network->ssid);
+
+        wifi_config_t wifi_config = {0};
+        strncpy((char*)wifi_config.sta.ssid, selected_network->ssid, sizeof(wifi_config.sta.ssid));
+        strncpy((char*)wifi_config.sta.password, selected_network->password, sizeof(wifi_config.sta.password));
+        wifi_config.sta.bssid_set = false;
+
+        ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
+        ESP_ERROR_CHECK(esp_wifi_connect());
+        ESP_LOGI(TAG, "Intentando conectar a %s (prioridad %d)", selected_network->ssid, selected_network->priority);
+        // Aquí podrías esperar a que se establezca la conexión y mostrar el resultado
+    } else {
+        ESP_LOGW(TAG, "Ninguna red conocida encontrada. No se realiza conexión.");
+    }
 }
 
 void app_main(void)
@@ -216,5 +274,5 @@ void app_main(void)
     }
     ESP_ERROR_CHECK( ret );
 
-    wifi_scan();
+    wifi_scan_and_connect();
 }
