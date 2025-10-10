@@ -18,6 +18,7 @@
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "regex.h"
+#include "sdkconfig.h"  // Necesitamos para usar CONFIG_*
 
 #define DEFAULT_SCAN_LIST_SIZE CONFIG_EXAMPLE_SCAN_LIST_SIZE
 
@@ -37,11 +38,17 @@ typedef struct {
     int priority; // 1 = máxima prioridad
 } known_network_t;
 
-// Lista de redes conocidas (rellena tus datos)
+// Genera la lista a partir de las macros de Kconfig
 static const known_network_t known_networks[] = {
-    {"SSID_LABORATORIO", "PASSWORD_LAB", 1}, // Prioridad más alta
-    {"SSID_MOVIL",       "PASSWORD_MOVIL",  2},
-    {"SSID_DOMICILIO",   "PASSWORD_CASA",   3}
+#if CONFIG_WIFI_KNOWN_NETWORKS_NUM > 1
+    {CONFIG_WIFI_KNOWN_SSID_1, CONFIG_WIFI_KNOWN_PASS_1, CONFIG_WIFI_KNOWN_PRI_1},
+#endif
+#if CONFIG_WIFI_KNOWN_NETWORKS_NUM > 2
+    {CONFIG_WIFI_KNOWN_SSID_2, CONFIG_WIFI_KNOWN_PASS_2, CONFIG_WIFI_KNOWN_PRI_2},
+#endif
+#if CONFIG_WIFI_KNOWN_NETWORKS_NUM > 3
+    {CONFIG_WIFI_KNOWN_SSID_3, CONFIG_WIFI_KNOWN_PASS_3, CONFIG_WIFI_KNOWN_PRI_3},
+#endif
 };
 #define N_KNOWN_NETWORKS (sizeof(known_networks)/sizeof(known_networks[0]))
 
