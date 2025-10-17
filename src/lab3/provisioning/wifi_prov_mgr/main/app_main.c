@@ -399,7 +399,13 @@ void app_main(void)
         char service_name[12];
         get_device_service_name(service_name, sizeof(service_name));
 
-#ifdef CONFIG_EXAMPLE_PROV_SECURITY_VERSION_1
+#ifdef CONFIG_EXAMPLE_PROV_SECURITY_VERSION_0
+        wifi_prov_security_t security = WIFI_PROV_SECURITY_0;
+
+        const char *pop = NULL;
+        wifi_prov_security1_params_t *sec_params = pop;
+        const char *username  = NULL;
+#elif CONFIG_EXAMPLE_PROV_SECURITY_VERSION_1
         /* What is the security level that we want (0, 1, 2):
          *      - WIFI_PROV_SECURITY_0 is simply plain text communication.
          *      - WIFI_PROV_SECURITY_1 is secure communication which consists of secure handshake
