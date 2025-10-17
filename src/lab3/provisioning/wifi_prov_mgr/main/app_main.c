@@ -32,6 +32,9 @@
 
 static const char *TAG = "app";
 
+// [NUEVA VARIABLE GLOBAL] Buffer para almacenar el nombre del dispositivo recibido
+static char device_name_received[32] = "ESP32-C3";
+
 #if CONFIG_EXAMPLE_PROV_SECURITY_VERSION_2
 #if CONFIG_EXAMPLE_PROV_SEC2_DEV_MODE
 #define EXAMPLE_PROV_SEC2_USERNAME          "wifiprov"
@@ -232,9 +235,15 @@ static void get_device_service_name(char *service_name, size_t max)
 esp_err_t custom_prov_data_handler(uint32_t session_id, const uint8_t *inbuf, ssize_t inlen,
                                           uint8_t **outbuf, ssize_t *outlen, void *priv_data)
 {
-    if (inbuf) {
+    /*Recibirá el nombre del dispositivo.*/
+    if (inbuf && inlen > 0  &&  inlen < sizeof(device_name_received)) {
+        snprintf(device_name_received, sizeof(device_name_received), "%.*s", inlen, (char *)inbuf);
         ESP_LOGI(TAG, "Received data: %.*s", inlen, (char *)inbuf);
+        ESP_LOGI(TAG, "Nombre de dispositivo recibido: %s", device_name_received);
+    } else if(inbuf) {
+        ESP_LOGW(TAG, "Datos recibidos en custom-data inválidos o demasiado largos.");
     }
+    
     char response[] = "SUCCESS";
     *outbuf = (uint8_t *)strdup(response);
     if (*outbuf == NULL) {
@@ -552,7 +561,7 @@ void app_main(void)
     }
 #else
      while (1) {
-         ESP_LOGI(TAG, "Hello World!");
+         ESP_LOGI(TAG, "Hello world from %s!", device_name_received);
          vTaskDelay(1000 / portTICK_PERIOD_MS);
      }
 #endif
