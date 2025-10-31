@@ -30,6 +30,8 @@
 #include "gatts_table_creat_demo.h"
 #include "esp_gatt_common_api.h"
 
+#include "esp_random.h" /*Ejercicio 8*/
+
 #define GATTS_TABLE_TAG "GATTS_TABLE_DEMO"
 
 #define PROFILE_NUM                 1
@@ -173,6 +175,10 @@ static const uint8_t char_prop_write               = ESP_GATT_CHAR_PROP_BIT_WRIT
 static const uint8_t char_prop_read_write_notify   = ESP_GATT_CHAR_PROP_BIT_WRITE | ESP_GATT_CHAR_PROP_BIT_READ | ESP_GATT_CHAR_PROP_BIT_NOTIFY;
 static const uint8_t heart_measurement_ccc[2]      = {0x00, 0x00};
 static const uint8_t char_value[4]                 = {0xA5, 0xB6, 0xB6, 0xD8};
+
+/*Ejercicio 8*/
+static bool notify_enabled = false;
+static uint8_t char_value_mod[4] = {0xA5, 0xB6, 0xB6, 0xD8};
 
 
 /* Full Database Description - Used to add attributes into the database */
@@ -338,6 +344,32 @@ void example_exec_write_event_env(prepare_type_env_t *prepare_write_env, esp_ble
     prepare_write_env->prepare_len = 0;
 }
 
+/*Ejercicio 8*/
+static void publish_data_task(void *pvParameters)
+{
+    while (1) {
+        ESP_LOGI("APP", "Sending data...");
+
+        // Paso 1: actualizar el valor (segundo byte aleatorio entre 0-255)
+        char_value_mod[1] = (uint8_t)(esp_random() & 0xFF);
+
+        // Paso 2: enviar datos si notificaciones están activas
+        if (notify_enabled) {
+            esp_ble_gatts_send_indicate(
+                heart_rate_profile_tab[0].gatts_if,
+                heart_rate_profile_tab[0].conn_id,
+                heart_rate_handle_table[IDX_CHAR_VAL_A],
+                sizeof(char_value_mod),
+                char_value_mod,
+                false);
+            ESP_LOGI("APP", "Notificación enviada: valor = 0x%02X", char_value_mod[1]);
+        }
+
+        // Paso 3: dormir 1 segundo
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
+
 static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if, esp_ble_gatts_cb_param_t *param)
 {
     switch (event) {
@@ -389,15 +421,16 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                     uint16_t descr_value = param->write.value[1]<<8 | param->write.value[0];
                     if (descr_value == 0x0001){
                         ESP_LOGI(GATTS_TABLE_TAG, "notify enable");
-                        uint8_t notify_data[15];
+                        notify_enabled = true; /*Ejercicio 8*/
+                        /*uint8_t notify_data[15];
                         for (int i = 0; i < sizeof(notify_data); ++i)
                         {
                             notify_data[i] = i % 0xff;
                         }
                         //the size of notify_data[] need less than MTU size
                         esp_ble_gatts_send_indicate(gatts_if, param->write.conn_id, heart_rate_handle_table[IDX_CHAR_VAL_A],
-                                                sizeof(notify_data), notify_data, false);
-                    }else if (descr_value == 0x0002){
+                                                sizeof(notify_data), notify_data, false);*/   
+                    } else if (descr_value == 0x0002){
                         ESP_LOGI(GATTS_TABLE_TAG, "indicate enable");
                         uint8_t indicate_data[15];
                         for (int i = 0; i < sizeof(indicate_data); ++i)
@@ -415,6 +448,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                     }
                     else if (descr_value == 0x0000){
                         ESP_LOGI(GATTS_TABLE_TAG, "notify/indicate disable ");
+                        notify_enabled = false;  /*Ejercicio 8*/
                     }else{
                         ESP_LOGE(GATTS_TABLE_TAG, "unknown descr value");
                         ESP_LOG_BUFFER_HEX(GATTS_TABLE_TAG, param->write.value, param->write.len);
@@ -456,6 +490,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
             conn_params.timeout = 400;    // timeout = 400*10ms = 4000ms
             //start sent the update connection parameters to the peer device.
             esp_ble_gap_update_conn_params(&conn_params);
+            xTaskCreate(&publish_data_task, "publish_data_task", 4096, NULL, 5, NULL); /*Ejercicio 8*/
             break;
         case ESP_GATTS_DISCONNECT_EVT:
             ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_DISCONNECT_EVT, reason = 0x%x", param->disconnect.reason);
