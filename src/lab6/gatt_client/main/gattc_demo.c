@@ -41,7 +41,7 @@
 #define EXAMPLE_TEST_COUNT 50
 #endif
 
-static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTS_DEMO";
+static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTS_CLINT";
 static bool connect    = false;
 static bool get_server = false;
 static esp_gattc_char_elem_t *char_elem_result   = NULL;
@@ -72,8 +72,8 @@ static esp_ble_scan_params_t ble_scan_params = {
     .scan_type              = BLE_SCAN_TYPE_ACTIVE,
     .own_addr_type          = BLE_ADDR_TYPE_PUBLIC,
     .scan_filter_policy     = BLE_SCAN_FILTER_ALLOW_ALL,
-    .scan_interval          = 0x50,
-    .scan_window            = 0x30,
+    .scan_interval          = 0x640,
+    .scan_window            = 0x3C,
     .scan_duplicate         = BLE_SCAN_DUPLICATE_DISABLE
 };
 
