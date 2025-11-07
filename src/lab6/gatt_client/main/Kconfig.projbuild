@@ -1,5 +1,26 @@
 menu "Example Configuration"
 
+        config REMOTE_DEVICE_ADDRESS
+            string "Remote BLE Device Address (e.g., 34:85:18:02:70:4E)"
+            default ""
+            help
+                La dirección Bluetooth MAC del dispositivo que se quiera conectar.
+                Formato: XX:XX:XX:XX:XX:XX
+
+        config  BLE_SCAN_INTERVAL_MS
+            int "BLE scan interval (ms)"
+            default 1000
+            range 3 10240
+            help
+              Intervalo de escaneo BLE en milisegundos (mínimo 3 ms, máximo 10240 ms)
+
+        config  BLE_SCAN_WINDOW_MS
+            int "BLE scan window (ms)"
+            default 100
+            range 3 10240
+            help
+              Ventana de escaneo BLE en milisegundos (mínimo 3 ms, máximo 10240 ms)
+
     config EXAMPLE_DUMP_ADV_DATA_AND_SCAN_RESP
         bool "Dump whole adv data and scan response data in example"
         default n

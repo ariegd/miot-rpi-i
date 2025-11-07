@@ -40,6 +40,18 @@
 #if CONFIG_EXAMPLE_INIT_DEINIT_LOOP
 #define EXAMPLE_TEST_COUNT 50
 #endif
+#define BLE_SCAN_INTERVAL_UNITS (CONFIG_BLE_SCAN_INTERVAL_MS / 0.625) 
+#define BLE_SCAN_WINDOW_UNITS (CONFIG_BLE_SCAN_WINDOW_MS / 0.625)
+
+/*Ejercicio 4*/
+static esp_bd_addr_t target_bda_to_filter = {0};
+static void mac_str_to_bytes(const char *mac_str, uint8_t *mac_bytes)
+{
+    // Se usa sscanf para parsear los valores hexadecimales separados por ':'
+    sscanf(mac_str, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",
+           &mac_bytes[0], &mac_bytes[1], &mac_bytes[2],
+           &mac_bytes[3], &mac_bytes[4], &mac_bytes[5]);
+}
 
 static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTS_CLINT";
 static bool connect    = false;
@@ -72,8 +84,8 @@ static esp_ble_scan_params_t ble_scan_params = {
     .scan_type              = BLE_SCAN_TYPE_ACTIVE,
     .own_addr_type          = BLE_ADDR_TYPE_PUBLIC,
     .scan_filter_policy     = BLE_SCAN_FILTER_ALLOW_ALL,
-    .scan_interval          = 0x640,
-    .scan_window            = 0x3C,
+    .scan_interval          = (uint16_t)BLE_SCAN_INTERVAL_UNITS,
+    .scan_window            = (uint16_t)BLE_SCAN_WINDOW_UNITS,
     .scan_duplicate         = BLE_SCAN_DUPLICATE_DISABLE
 };
 
@@ -331,7 +343,7 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
         // The unit of duration is seconds.
         // If duration is set to 0, scanning will continue indefinitely
         // until esp_ble_gap_stop_scanning is explicitly called.
-        uint32_t duration = 30;
+        uint32_t duration = 0;
         esp_ble_gap_start_scanning(duration);
         break;
     }
@@ -348,11 +360,20 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
         esp_ble_gap_cb_param_t *scan_result = (esp_ble_gap_cb_param_t *)param;
         switch (scan_result->scan_rst.search_evt) {
         case ESP_GAP_SEARCH_INQ_RES_EVT:
+          /*Ejercicio 4*/
+          if (strlen(CONFIG_REMOTE_DEVICE_ADDRESS) > 0 && 
+                          memcmp(scan_result->scan_rst.bda, target_bda_to_filter, ESP_BD_ADDR_LEN) != 0) {
+                          
+                          // Ignorar el anuncio y salir del switch interno.
+                          break; 
+            }
+            
             adv_name = esp_ble_resolve_adv_data_by_type(scan_result->scan_rst.ble_adv,
                                                         scan_result->scan_rst.adv_data_len + scan_result->scan_rst.scan_rsp_len,
                                                         ESP_BLE_AD_TYPE_NAME_CMPL,
                                                         &adv_name_len);
             ESP_LOGI(GATTC_TAG, "Scan result, device "ESP_BD_ADDR_STR", name len %u", ESP_BD_ADDR_HEX(scan_result->scan_rst.bda), adv_name_len);
+            ESP_LOGI(GATTC_TAG, "Device RSSI: %d", scan_result->scan_rst.rssi);
             ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
 
 #if CONFIG_EXAMPLE_DUMP_ADV_DATA_AND_SCAN_RESP
@@ -467,6 +488,14 @@ void app_main(void)
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK( ret );
+    
+    /*Ejercicio 4*/
+    if (strlen(CONFIG_REMOTE_DEVICE_ADDRESS) == 17) { // 17 chars long
+        mac_str_to_bytes(CONFIG_REMOTE_DEVICE_ADDRESS, target_bda_to_filter);
+        ESP_LOGI(GATTC_TAG, "Target MAC configured: " ESP_BD_ADDR_STR, ESP_BD_ADDR_HEX(target_bda_to_filter));
+    } else {
+        ESP_LOGE(GATTC_TAG, "MAC address not set or invalid length. Scanning all devices.");
+    }
 
     #if CONFIG_EXAMPLE_CI_PIPELINE_ID
     memcpy(remote_device_name, esp_bluedroid_get_example_name(), sizeof(remote_device_name));
