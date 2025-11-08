@@ -30,6 +30,8 @@
 #include "esp_gatt_common_api.h"
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
+/*Ejercicio 5*/
+#include <math.h> 
 
 #define GATTC_TAG "GATTC_DEMO"
 #define REMOTE_SERVICE_UUID        0x00FF
@@ -42,6 +44,25 @@
 #endif
 #define BLE_SCAN_INTERVAL_UNITS (CONFIG_BLE_SCAN_INTERVAL_MS / 0.625) 
 #define BLE_SCAN_WINDOW_UNITS (CONFIG_BLE_SCAN_WINDOW_MS / 0.625)
+#define RSSI_MAX            -30
+#define RSSI_MIN            -95 
+#define MAX_PROXIMITY_LEVEL 50 
+
+/*Ejercicio 5*/
+static int calculate_proximity_level(int rssi)
+{
+    if (rssi > RSSI_MAX) {
+        rssi = RSSI_MAX;
+    } else if (rssi < RSSI_MIN) {
+        rssi = RSSI_MIN;
+    }
+
+    float rssi_range = (float)(RSSI_MAX - RSSI_MIN);
+    float normalized_rssi = (float)(rssi - RSSI_MIN) / rssi_range;
+    int level = (int)roundf(normalized_rssi * MAX_PROXIMITY_LEVEL);
+    
+    return level;
+}
 
 /*Ejercicio 4*/
 static esp_bd_addr_t target_bda_to_filter = {0};
@@ -375,6 +396,17 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
             ESP_LOGI(GATTC_TAG, "Scan result, device "ESP_BD_ADDR_STR", name len %u", ESP_BD_ADDR_HEX(scan_result->scan_rst.bda), adv_name_len);
             ESP_LOGI(GATTC_TAG, "Device RSSI: %d", scan_result->scan_rst.rssi);
             ESP_LOG_BUFFER_CHAR(GATTC_TAG, adv_name, adv_name_len);
+            
+            int proximity_level = calculate_proximity_level(scan_result->scan_rst.rssi);
+            char proximity_dots[MAX_PROXIMITY_LEVEL + 1]; 
+            memset(proximity_dots, '.', proximity_level);
+            proximity_dots[proximity_level] = '\0'; 
+            
+           ESP_LOGW(GATTC_TAG, "PROXIMITY (Nivel %d): [%s%*s]", 
+                     proximity_level, 
+                     proximity_dots, 
+                     MAX_PROXIMITY_LEVEL - proximity_level,
+                     ""); 
 
 #if CONFIG_EXAMPLE_DUMP_ADV_DATA_AND_SCAN_RESP
             if (scan_result->scan_rst.adv_data_len > 0) {
