@@ -74,7 +74,7 @@ static void mac_str_to_bytes(const char *mac_str, uint8_t *mac_bytes)
            &mac_bytes[3], &mac_bytes[4], &mac_bytes[5]);
 }
 
-static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTS_CLINT";
+static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] = "ESP_GATTS_EJ-1";
 static bool connect    = false;
 static bool get_server = false;
 static esp_gattc_char_elem_t *char_elem_result   = NULL;
