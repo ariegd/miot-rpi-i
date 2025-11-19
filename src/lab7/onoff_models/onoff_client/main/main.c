@@ -278,6 +278,9 @@ static esp_err_t ble_mesh_init(void)
         ESP_LOGE(TAG, "Failed to initialize mesh stack (err %d)", err);
         return err;
     }
+    
+    // Cambia el nombre del dispositivo no aprovisionado
+    esp_ble_mesh_set_unprovisioned_device_name("HELL_CLIENT");
 
     err = esp_ble_mesh_node_prov_enable((esp_ble_mesh_prov_bearer_t)(ESP_BLE_MESH_PROV_ADV | ESP_BLE_MESH_PROV_GATT));
     if (err != ESP_OK) {
@@ -312,7 +315,7 @@ void app_main(void)
         ESP_LOGE(TAG, "esp32_bluetooth_init failed (err %d)", err);
         return;
     }
-
+    
     /* Open nvs namespace for storing/restoring mesh example info */
     err = ble_mesh_nvs_open(&NVS_HANDLE);
     if (err) {
