@@ -42,6 +42,13 @@
 #define COMP_DATA_1_OCTET(msg, offset)      (msg[offset])
 #define COMP_DATA_2_OCTET(msg, offset)      (msg[offset + 1] << 8 | msg[offset])
 
+// --- Tarea 4 ---1
+static uint8_t authorized_uuids[][16] = {
+    {0x32, 0x10, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd},
+    // Si tenemos otro nodo, lo añadimos:
+    // {0xAA, 0xBB, ... },
+};
+
 // --- Tarea 3 ---1
 #define MAX_NODES 10               
 static uint16_t nodes_addr[MAX_NODES]; 
@@ -111,6 +118,17 @@ static void example_ble_mesh_set_msg_common(esp_ble_mesh_client_common_param_t *
 #if ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(5, 2, 0)
     common->msg_role = MSG_ROLE;
 #endif
+}
+
+// --- Tarea 4 ---2
+static bool is_device_authorized(const uint8_t *uuid)
+{
+    for (int i = 0; i < ARRAY_SIZE(authorized_uuids); i++) {
+        if (memcmp(uuid, authorized_uuids[i], 16) == 0) {
+            return true; 
+        }
+    }
+    return false; 
 }
 
 // --- Tarea 3 ---3
