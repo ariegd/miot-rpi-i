@@ -42,6 +42,12 @@
 #define COMP_DATA_1_OCTET(msg, offset)      (msg[offset])
 #define COMP_DATA_2_OCTET(msg, offset)      (msg[offset + 1] << 8 | msg[offset])
 
+// --- Tarea 3 ---1
+#define MAX_NODES 10               
+static uint16_t nodes_addr[MAX_NODES]; 
+static uint8_t nodes_count = 0;   
+static uint8_t current_node_idx = 0; 
+
 static uint8_t  dev_uuid[ESP_BLE_MESH_OCTET16_LEN];
 static uint16_t server_address = ESP_BLE_MESH_ADDR_UNASSIGNED;
 static uint16_t sensor_prop_id;
@@ -107,6 +113,41 @@ static void example_ble_mesh_set_msg_common(esp_ble_mesh_client_common_param_t *
 #endif
 }
 
+// --- Tarea 3 ---3
+void example_ble_mesh_send_sensor_get_round_robin(void)
+{
+    esp_ble_mesh_sensor_client_get_state_t get = {0};
+    esp_ble_mesh_client_common_param_t common = {0};
+    esp_ble_mesh_node_t *node = NULL;
+    esp_err_t err = ESP_OK;
+
+    if (nodes_count == 0) {
+        ESP_LOGW(TAG, "¡No hay nodos provisionados todavía!");
+        return;
+    }
+
+    uint16_t addr_objetivo = nodes_addr[current_node_idx];
+    ESP_LOGI(TAG, "Pidiendo datos al nodo #%d (Dirección: 0x%04x)", current_node_idx + 1, addr_objetivo);
+
+    node = esp_ble_mesh_provisioner_get_node_with_addr(addr_objetivo);
+    if (node == NULL) {
+        ESP_LOGE(TAG, "Error: El nodo 0x%04x no existe en la tabla interna", addr_objetivo);
+        return;
+    }
+
+    example_ble_mesh_set_msg_common(&common, node, sensor_client.model, ESP_BLE_MESH_MODEL_OP_SENSOR_GET);
+    
+    err = esp_ble_mesh_sensor_client_get_state(&common, &get);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error al enviar petición GET");
+    }
+
+    current_node_idx++;
+    if (current_node_idx >= nodes_count) {
+        current_node_idx = 0; 
+    }
+}
+
 static esp_err_t prov_complete(uint16_t node_index, const esp_ble_mesh_octet16_t uuid,
                                uint16_t primary_addr, uint8_t element_num, uint16_t net_idx)
 {
@@ -120,7 +161,16 @@ static esp_err_t prov_complete(uint16_t node_index, const esp_ble_mesh_octet16_t
         node_index, primary_addr, element_num, net_idx);
     ESP_LOG_BUFFER_HEX("uuid", uuid, ESP_BLE_MESH_OCTET16_LEN);
 
-    server_address = primary_addr;
+   // --- Tarea 3 ---2
+    if (nodes_count < MAX_NODES) {
+        nodes_addr[nodes_count] = primary_addr;
+        nodes_count++;
+        ESP_LOGI(TAG, "Nuevo nodo guardado. Total: %d", nodes_count);
+    } else {
+        ESP_LOGW(TAG, "Agenda llena, no caben más nodos");
+    }
+    
+    // server_address = primary_addr; 
 
     sprintf(name, "%s%02x", "NODE-", node_index);
     err = esp_ble_mesh_provisioner_set_node_name(node_index, name);
@@ -415,6 +465,7 @@ static void example_ble_mesh_config_client_cb(esp_ble_mesh_cfg_client_cb_event_t
         break;
     }
 }
+
 
 void example_ble_mesh_send_sensor_message(uint32_t opcode)
 {

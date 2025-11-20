@@ -18,6 +18,8 @@
 #define BUTTON_ACTIVE_LEVEL     0
 
 extern void example_ble_mesh_send_sensor_message(uint32_t opcode);
+// --- Tarea 3 ---4
+extern void example_ble_mesh_send_sensor_get_round_robin(void);
 
 static uint32_t send_opcode[] = {
     [0] = ESP_BLE_MESH_MODEL_OP_SENSOR_DESCRIPTOR_GET,
@@ -30,7 +32,9 @@ static uint8_t press_count;
 
 static void button_tap_cb(void* arg)
 {
-    example_ble_mesh_send_sensor_message(send_opcode[press_count++]);
+    // --- Tarea 3 ---5
+    example_ble_mesh_send_sensor_get_round_robin();
+    //example_ble_mesh_send_sensor_message(send_opcode[press_count++]);
     press_count = press_count % ARRAY_SIZE(send_opcode);
 }
 
