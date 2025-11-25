@@ -71,7 +71,7 @@ static esp_ble_mesh_cfg_srv_t config_server = {
 NET_BUF_SIMPLE_DEFINE_STATIC(sensor_data_0, 1);
 NET_BUF_SIMPLE_DEFINE_STATIC(sensor_data_1, 1);
 
-// --- NUEVA TAREA: Lee hardware y actualiza Mesh ---
+// --- Ejercicio 6 ---1
 void sensor_update_task(void *arg)
 {
     float t, h;
@@ -80,30 +80,18 @@ void sensor_update_task(void *arg)
     ESP_LOGI(TAG, "Iniciando tarea de actualización de sensores...");
 
     while (1) {
-        // 1. Pedir dato al hardware (board.c)
         if (board_get_temp(&t, &h) == ESP_OK) {
             
-            // 2. Convertir a formato Mesh (Temperature 8)
-            // Unidades de 0.5°C. Ejemplo: 25.0°C -> 50
             temp_8_val = (int8_t)(t * 2);
 
             ESP_LOGI(TAG, "Sensor Real -> Temp: %.2f °C | Mesh Raw: %d", t, temp_8_val);
 
-            // 3. Actualizar Buffer Mesh (Indoor Temp - ID 0)
-            // Reseteamos el buffer para borrar el dato viejo
             net_buf_simple_reset(&sensor_data_0);
-            // Añadimos el nuevo dato
             net_buf_simple_add_u8(&sensor_data_0, temp_8_val);
-
-            // Opcional: Actualizar outdoor con humedad (o lo que quieras)
-            // net_buf_simple_reset(&sensor_data_1);
-            // net_buf_simple_add_u8(&sensor_data_1, (int8_t)h);
-
         } else {
             ESP_LOGE(TAG, "Error leyendo sensor SHTC3");
         }
 
-        // 4. Esperar 3 segundos
         vTaskDelay(pdMS_TO_TICKS(3000));
     }
 }
@@ -683,7 +671,7 @@ void app_main(void)
         return;
     }
     
-   // 2. Crear la tarea que conecta el Hardware con el Mesh
+   // --- Ejercicio 6 ---2
     xTaskCreate(sensor_update_task, "sensor_task", 4096, NULL, 5, NULL);
 
     ble_mesh_get_dev_uuid(dev_uuid);
