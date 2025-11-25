@@ -15,6 +15,7 @@ extern "C" {
 #endif /**< __cplusplus */
 
 #include "driver/gpio.h"
+#include "esp_err.h" // Necesario para esp_err_t
 
 #if defined(CONFIG_BLE_MESH_ESP_WROOM_32)
 #define LED_R GPIO_NUM_25
@@ -61,8 +62,10 @@ struct _led_state {
 };
 
 void board_led_operation(uint8_t pin, uint8_t onoff);
-
 void board_init(void);
+
+// --- NUEVO: Función pública para obtener una lectura ---
+esp_err_t board_get_temp(float *t, float *h);
 
 #ifdef __cplusplus
 }

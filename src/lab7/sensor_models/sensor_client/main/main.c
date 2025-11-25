@@ -42,14 +42,14 @@
 #define COMP_DATA_1_OCTET(msg, offset)      (msg[offset])
 #define COMP_DATA_2_OCTET(msg, offset)      (msg[offset + 1] << 8 | msg[offset])
 
-// --- Tarea 4 ---1
+// --- Ejercicio 5 ---1
 static uint8_t authorized_uuids[][16] = {
     {0x32, 0x10, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd, 0xdd},
     // Si tenemos otro nodo, lo añadimos:
     // {0xAA, 0xBB, ... },
 };
 
-// --- Tarea 3 ---1
+// --- Ejercicio 4 ---1
 #define MAX_NODES 10               
 static uint16_t nodes_addr[MAX_NODES]; 
 static uint8_t nodes_count = 0;   
@@ -120,7 +120,7 @@ static void example_ble_mesh_set_msg_common(esp_ble_mesh_client_common_param_t *
 #endif
 }
 
-// --- Tarea 4 ---2
+// --- Ejercicio 5 ---2
 static bool is_device_authorized(const uint8_t *uuid)
 {
     for (int i = 0; i < ARRAY_SIZE(authorized_uuids); i++) {
@@ -131,7 +131,7 @@ static bool is_device_authorized(const uint8_t *uuid)
     return false; 
 }
 
-// --- Tarea 3 ---3
+// --- Ejercicio 4 ---3
 void example_ble_mesh_send_sensor_get_round_robin(void)
 {
     esp_ble_mesh_sensor_client_get_state_t get = {0};
@@ -179,7 +179,7 @@ static esp_err_t prov_complete(uint16_t node_index, const esp_ble_mesh_octet16_t
         node_index, primary_addr, element_num, net_idx);
     ESP_LOG_BUFFER_HEX("uuid", uuid, ESP_BLE_MESH_OCTET16_LEN);
 
-   // --- Tarea 3 ---2
+   // --- Ejercicio 4 ---2
     if (nodes_count < MAX_NODES) {
         nodes_addr[nodes_count] = primary_addr;
         nodes_count++;
@@ -230,6 +230,14 @@ static void recv_unprov_adv_pkt(uint8_t dev_uuid[ESP_BLE_MESH_OCTET16_LEN], uint
     ESP_LOGI(TAG, "Address type 0x%02x, adv type 0x%02x", addr_type, adv_type);
     ESP_LOG_BUFFER_HEX("Device UUID", dev_uuid, ESP_BLE_MESH_OCTET16_LEN);
     ESP_LOGI(TAG, "oob info 0x%04x, bearer %s", oob_info, (bearer & ESP_BLE_MESH_PROV_ADV) ? "PB-ADV" : "PB-GATT");
+
+    // --- Ejercicio 5 ---3
+    if (!is_device_authorized(dev_uuid)) {
+        ESP_LOGW(TAG, "Bloqueado: Dispositivo no autorizado.");
+        return; 
+    }
+    ESP_LOGI(TAG, "Autorizado: Iniciando provisionado.");
+
 
     memcpy(add_dev.addr, addr, BD_ADDR_LEN);
     add_dev.addr_type = (esp_ble_mesh_addr_type_t)addr_type;
