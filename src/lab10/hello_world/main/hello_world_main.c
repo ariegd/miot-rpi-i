@@ -24,9 +24,9 @@ static const char *TAG = "LoRaWAN_APP";
 
 const char *appEui = "0101010101010101";
 // DevEUI
-const char *devEui = "70B3D57ED006B7B2";
+const char *devEui = "70B3D57ED0074CF4";
 // AppKey
-const char *appKey = "8427407CC943D5B188160CC89F176846";
+const char *appKey = "A8A9FE204BB384D205CB3C5611982E9F";
 
 // Pins and other resources
 #define TTN_SPI_HOST      SPI2_HOST
@@ -41,14 +41,14 @@ const char *appKey = "8427407CC943D5B188160CC89F176846";
 #define TTN_PIN_DIO1      1
 
 #define TX_INTERVAL 30
-static uint8_t msgData[] = "Hello, world";
+static uint8_t msgData[] = {0xAA, 0xBB, 0xCC, 0xDD};
 
 
 void sendMessages(void* pvParameter)
 {
     while (1) {
         ESP_LOGI(TAG, "Sending message...");
-        ttn_response_code_t res = ttn_transmit_message(msgData, sizeof(msgData) - 1, 1, false);
+        ttn_response_code_t res = ttn_transmit_message(msgData, sizeof(msgData), 1, false);
         if ( res == TTN_SUCCESSFUL_TRANSMISSION ) { ESP_LOGI(TAG, "Message sent.");}else{ ESP_LOGI(TAG, "Transmission failed.");}
 
         vTaskDelay(TX_INTERVAL * pdMS_TO_TICKS(1000));

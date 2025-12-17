@@ -1,0 +1,3332 @@
+[
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:47:00.907271858Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BFF7A"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BFF7A"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPR96YGRAWV0MNK25JY23F"
+      ],
+      "received_at": "2025-12-17T17:47:00.905963624Z",
+      "uplink_message": {
+        "session_key_id": "AZstamnUR3htbSZrxOmgPA==",
+        "f_port": 1,
+        "f_cnt": 3,
+        "frm_payload": "qrvM3Q==",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:47:00.656985998Z",
+            "timestamp": 2615828339,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 9,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEPO+qd8JGgwIlNmLygYQsLOIzwIguLKT3JBM",
+            "received_at": "2025-12-17T17:47:00.683440227Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:47:00.660892009Z",
+            "timestamp": 1342036515,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -3.75,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEKO09/8EGgwIlNmLygYQ6LyC2QIguLHwvIehAg==",
+            "received_at": "2025-12-17T17:47:00.648072127Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867300000",
+          "timestamp": 2615828339,
+          "time": "2025-12-17T17:47:00.656985998Z"
+        },
+        "received_at": "2025-12-17T17:47:00.703825718Z",
+        "consumed_airtime": "0.051456s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPR96YGRAWV0MNK25JY23F"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPR9DBE0Y0JERRN6SCFE14"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:46:24.825115412Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BFF7A"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BFF7A"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPQ5Z7Y33WFXHGAVF3JRP4"
+      ],
+      "received_at": "2025-12-17T17:46:24.821076860Z",
+      "uplink_message": {
+        "session_key_id": "AZstamnUR3htbSZrxOmgPA==",
+        "f_port": 1,
+        "f_cnt": 2,
+        "frm_payload": "qrvM3Q==",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:46:24.570625066Z",
+            "timestamp": 2579728132,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEISOjs4JGgwI8NiLygYQw8OwpQIgoM+dnopL",
+            "received_at": "2025-12-17T17:46:24.595961919Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:46:24.571544885Z",
+            "timestamp": 1305936276,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -5.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEJSD3O4EGgwI8NiLygYQz7LLqwIgoNT4/oCgAg==",
+            "received_at": "2025-12-17T17:46:24.550663701Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867700000",
+          "timestamp": 2579728132,
+          "time": "2025-12-17T17:46:24.570625066Z"
+        },
+        "received_at": "2025-12-17T17:46:24.616156376Z",
+        "consumed_airtime": "0.051456s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPQ5Z7Y33WFXHGAVF3JRP4"
+    ],
+    "origin": "ip-10-100-4-144.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPQ65SEVRNXZNMA8Z84BPH"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:45:48.715468926Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BFF7A"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BFF7A"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPP2PSEFEWTF4PPK1E7Y5F"
+      ],
+      "received_at": "2025-12-17T17:45:48.710935861Z",
+      "uplink_message": {
+        "session_key_id": "AZstamnUR3htbSZrxOmgPA==",
+        "f_port": 1,
+        "f_cnt": 1,
+        "frm_payload": "qrvM3Q==",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:45:48.447614908Z",
+            "timestamp": 2543628011,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 10.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEOvd8rwJGgwIzNiLygYQl5T08AEg+Iut4INK",
+            "received_at": "2025-12-17T17:45:48.485829645Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:45:48.475145101Z",
+            "timestamp": 1269836115,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -7.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcENPSwN0EGgwIzNiLygYQ463zmQIguNiFwfqeAg==",
+            "received_at": "2025-12-17T17:45:48.521341888Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868300000",
+          "timestamp": 2543628011,
+          "time": "2025-12-17T17:45:48.447614908Z"
+        },
+        "received_at": "2025-12-17T17:45:48.506032740Z",
+        "consumed_airtime": "0.051456s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPP2PSEFEWTF4PPK1E7Y5F"
+    ],
+    "origin": "ip-10-100-4-144.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPP2XB6Z6C3G7CTAQZCYQG"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:45:12.589902595Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BFF7A"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BFF7A"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPMZE1Z4FFAMVE9YXPKATH"
+      ],
+      "received_at": "2025-12-17T17:45:12.588080122Z",
+      "uplink_message": {
+        "session_key_id": "AZstamnUR3htbSZrxOmgPA==",
+        "f_port": 1,
+        "frm_payload": "qrvM3Q==",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:45:12.343245029Z",
+            "timestamp": 2507525547,
+            "rssi": -51,
+            "channel_rssi": -51,
+            "snr": 10.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEKub16sJGgwIqNiLygYQ3ODHtwEg+Metof1I",
+            "received_at": "2025-12-17T17:45:12.365562025Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:45:12.358573913Z",
+            "timestamp": 1233733611,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -5.5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEOuPpcwEGgwIqNiLygYQps7oygEg+NuDgvSdAg==",
+            "received_at": "2025-12-17T17:45:12.363477382Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868100000",
+          "timestamp": 2507525547,
+          "time": "2025-12-17T17:45:12.343245029Z"
+        },
+        "received_at": "2025-12-17T17:45:12.385612572Z",
+        "consumed_airtime": "0.051456s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPMZE1Z4FFAMVE9YXPKATH"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPMZMDQHKPN8NENG3H8FXP"
+  },
+  {
+    "name": "as.up.join.forward",
+    "time": "2025-12-17T17:45:09.093877248Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BFF7A"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BFF7A"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPMTEGG4QEXE79ZPNV6DSP"
+      ],
+      "received_at": "2025-12-17T17:45:09.089198161Z",
+      "join_accept": {
+        "session_key_id": "AZstamnUR3htbSZrxOmgPA==",
+        "received_at": "2025-12-17T17:45:07.280624020Z"
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPMTEGG4QEXE79ZPNV6DSP"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPMW75B5F2WAYC9FTTA341"
+  },
+  {
+    "name": "ns.up.join.process",
+    "time": "2025-12-17T17:45:07.483831784Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.UplinkMessage",
+      "raw_payload": "AAEBAQEBAQEB9EwH0H7Vs3B5BoM3Y7c=",
+      "payload": {
+        "m_hdr": {},
+        "mic": "gzdjtw==",
+        "join_request_payload": {
+          "join_eui": "0101010101010101",
+          "dev_eui": "70B3D57ED0074CF4",
+          "dev_nonce": "0679"
+        }
+      },
+      "settings": {
+        "data_rate": {
+          "lora": {
+            "bandwidth": 125000,
+            "spreading_factor": 7,
+            "coding_rate": "4/5"
+          }
+        },
+        "frequency": "868500000",
+        "timestamp": 2502398491,
+        "time": "2025-12-17T17:45:07.236219882Z"
+      },
+      "rx_metadata": [
+        {
+          "gateway_ids": {
+            "gateway_id": "gateway-lorawan-iot-ucm",
+            "eui": "C0EE40FFFF294C1F"
+          },
+          "time": "2025-12-17T17:45:07.236219882Z",
+          "timestamp": 2502398491,
+          "rssi": -51,
+          "channel_rssi": -51,
+          "snr": 7,
+          "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEJuknqkJGgwIo9iLygYQ3am+hQEg+PLKlOpI",
+          "received_at": "2025-12-17T17:45:07.259656737Z"
+        },
+        {
+          "gateway_ids": {
+            "gateway_id": "eui-58a0cbfffe804a5c",
+            "eui": "58A0CBFFFE804A5C"
+          },
+          "time": "2025-12-17T17:45:07.225313901Z",
+          "timestamp": 1228606547,
+          "rssi": -113,
+          "channel_rssi": -113,
+          "snr": -6.75,
+          "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcENOY7MkEGgwIo9iLygYQ6cP9kgEguMig9eCdAg==",
+          "received_at": "2025-12-17T17:45:07.246379593Z"
+        }
+      ],
+      "received_at": "2025-12-17T17:45:07.280624020Z",
+      "correlation_ids": [
+        "gs:uplink:01KCPPMTEGG4QEXE79ZPNV6DSP"
+      ],
+      "device_channel_index": 2,
+      "consumed_airtime": "0.061696s"
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPMTEGG4QEXE79ZPNV6DSP"
+    ],
+    "origin": "ip-10-100-14-179.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPMTMV5B51PV5V7V3RVHPW"
+  },
+  {
+    "name": "js.join.accept",
+    "time": "2025-12-17T17:45:07.286517140Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BFF7A"
+        }
+      }
+    ],
+    "origin": "ip-10-100-14-13.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPMTEPWDTWNHYXSGQ0KP3J"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:44:38.806481461Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPKYEA33XSQ05J6AQ443HP"
+      ],
+      "received_at": "2025-12-17T17:44:38.805191452Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 23,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:44:38.561331033Z",
+            "timestamp": 2473734396,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 7.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEPzhyJsJGgwIhtiLygYQh4KEnwIg4LC9sP9H",
+            "received_at": "2025-12-17T17:44:38.581996043Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:44:38.571809053Z",
+            "timestamp": 1199942420,
+            "rssi": -113,
+            "channel_rssi": -113,
+            "snr": -5.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEJTWlrwEGgwIhtiLygYQwtClswIgoIyRkfacAg==",
+            "received_at": "2025-12-17T17:44:38.582850796Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867500000",
+          "timestamp": 2473734396,
+          "time": "2025-12-17T17:44:38.561331033Z"
+        },
+        "received_at": "2025-12-17T17:44:38.602671506Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPKYEA33XSQ05J6AQ443HP"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPKYMP938V5AAPN5NBQ11V"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:44:02.705497797Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPJV61WERBT60359J9WZW7"
+      ],
+      "received_at": "2025-12-17T17:44:02.701596265Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 22,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:44:02.457072973Z",
+            "timestamp": 2437624244,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfELTjrIoJGgwI4teLygYQ2fqL7QEgoM7o7fhG",
+            "received_at": "2025-12-17T17:44:02.477590956Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:44:02.453258991Z",
+            "timestamp": 1163832244,
+            "rssi": -113,
+            "channel_rssi": -113,
+            "snr": -5.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcELTX+qoEGgwI4teLygYQntmb9AEgoO66zu+bAg==",
+            "received_at": "2025-12-17T17:44:02.449356644Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867700000",
+          "timestamp": 2437624244,
+          "time": "2025-12-17T17:44:02.457072973Z"
+        },
+        "received_at": "2025-12-17T17:44:02.498068597Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPJV61WERBT60359J9WZW7"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPJVCHSE2AAEDNXMDM84HA"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:43:26.583851664Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPHQX32XA936VKYGY907NB"
+      ],
+      "received_at": "2025-12-17T17:43:26.579874051Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 21,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:43:26.332638978Z",
+            "timestamp": 2401514051,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 8,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEMPkkPkIGgwIvteLygYQsrCYsQEguKuRq/JF",
+            "received_at": "2025-12-17T17:43:26.352116590Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868500000",
+          "timestamp": 2401514051,
+          "time": "2025-12-17T17:43:26.332638978Z"
+        },
+        "received_at": "2025-12-17T17:43:26.373045023Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPHQX32XA936VKYGY907NB"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPHR3QHKAZJ8CY6VMTVGB6"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:42:57.072231461Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPGV2ZARCYCF23RHEWBJCC"
+      ],
+      "received_at": "2025-12-17T17:42:57.067308360Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_cnt": 20,
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:42:56.825824022Z",
+            "timestamp": 2371990219,
+            "rssi": -49,
+            "channel_rssi": -49,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEMvlhusIGgwIoNeLygYQsM/UmwMg+NGJrYRF",
+            "received_at": "2025-12-17T17:42:56.843647111Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:42:56.816248893Z",
+            "timestamp": 1098198139,
+            "rssi": -113,
+            "channel_rssi": -113,
+            "snr": -5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEPvY1IsEGgwIoNeLygYQ2YDyngMg+IDXjfuZAg==",
+            "received_at": "2025-12-17T17:42:56.802472811Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867300000",
+          "timestamp": 2371990219,
+          "time": "2025-12-17T17:42:56.825824022Z"
+        },
+        "received_at": "2025-12-17T17:42:56.864084801Z",
+        "consumed_airtime": "0.046336s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPGV2ZARCYCF23RHEWBJCC"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPGV9GJ57Y54MKNPQHH7C7"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:42:50.373680215Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPGMHQJ5SBVZNRZ57GNHQ6"
+      ],
+      "received_at": "2025-12-17T17:42:50.372183849Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 19,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:42:50.128004074Z",
+            "timestamp": 2365283771,
+            "rssi": -51,
+            "channel_rssi": -51,
+            "snr": 11,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfELu77ecIGgsImteLygYQ3dfrTyD4xJiv60Q=",
+            "received_at": "2025-12-17T17:42:50.147746282Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:42:50.123121976Z",
+            "timestamp": 1091491691,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -6.75,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEOuuu4gEGgsImteLygYQ6cXlWCD48+WP4pkC",
+            "received_at": "2025-12-17T17:42:50.121736142Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868100000",
+          "timestamp": 2365283771,
+          "time": "2025-12-17T17:42:50.128004074Z"
+        },
+        "received_at": "2025-12-17T17:42:50.168239352Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPGMHQJ5SBVZNRZ57GNHQ6"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPGMR5MSC4FTYMAQTV3CSJ"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:42:14.260454781Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPFH9477YK3048755C3N9M"
+      ],
+      "received_at": "2025-12-17T17:42:14.256537240Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 18,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:42:14.014969110Z",
+            "timestamp": 2329169411,
+            "rssi": -54,
+            "channel_rssi": -54,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEIOc0dYIGgsI9taLygYQtIKBGSC498Lq5EM=",
+            "received_at": "2025-12-17T17:42:14.033058670Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:42:13.995888948Z",
+            "timestamp": 1055377291,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -3,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEIuPn/cDGgsI9taLygYQvsqcHiD47Y3L25gC",
+            "received_at": "2025-12-17T17:42:14.006332111Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867100000",
+          "timestamp": 2329169411,
+          "time": "2025-12-17T17:42:14.014969110Z"
+        },
+        "received_at": "2025-12-17T17:42:14.053088706Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPFH9477YK3048755C3N9M"
+    ],
+    "origin": "ip-10-100-4-144.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPFHFMPNZ88RQXNVPKEGMQ"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:41:38.136929341Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPEE06862X3R7Z0VWB3TDJ"
+      ],
+      "received_at": "2025-12-17T17:41:38.135286757Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 17,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:41:37.888036012Z",
+            "timestamp": 2293053387,
+            "rssi": -51,
+            "channel_rssi": -51,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEMvvtMUIGgwI0daLygYQq7jYuQMg+OGHpd5C",
+            "received_at": "2025-12-17T17:41:37.907018348Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:41:37.892035961Z",
+            "timestamp": 1019261227,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEKviguYDGgwI0daLygYQjOqGygMg+J/QhdWXAg==",
+            "received_at": "2025-12-17T17:41:37.918425052Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867300000",
+          "timestamp": 2293053387,
+          "time": "2025-12-17T17:41:37.888036012Z"
+        },
+        "received_at": "2025-12-17T17:41:37.928223136Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPEE06862X3R7Z0VWB3TDJ"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPEE6RJF4PW79KA1106M1W"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:41:02.016950020Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPDAQG7A72TK25KD4CB0YX"
+      ],
+      "received_at": "2025-12-17T17:41:02.012534053Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 16,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:41:01.762904882Z",
+            "timestamp": 2256943203,
+            "rssi": -58,
+            "channel_rssi": -58,
+            "snr": 9.25,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEOPwmLQIGgwIrdaLygYQ8OPLgQMguIWx4tdB",
+            "received_at": "2025-12-17T17:41:01.788703649Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:41:01.783762931Z",
+            "timestamp": 983151003,
+            "rssi": -117,
+            "channel_rssi": -117,
+            "snr": -8.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEJvj5tQDGgwIrdaLygYQlez+lQMg+Ir3ws6WAg==",
+            "received_at": "2025-12-17T17:41:01.807555459Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868100000",
+          "timestamp": 2256943203,
+          "time": "2025-12-17T17:41:01.762904882Z"
+        },
+        "received_at": "2025-12-17T17:41:01.809696263Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPDAQG7A72TK25KD4CB0YX"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPDAY04GV23HBB1F2KNS6C"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:40:25.915004582Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPC7F9SXVFZ0PP8ZK950YM"
+      ],
+      "received_at": "2025-12-17T17:40:25.911085500Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 15,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:40:25.668756008Z",
+            "timestamp": 2220832979,
+            "rssi": -53,
+            "channel_rssi": -53,
+            "snr": 6.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfENPx/KIIGgwIidaLygYQwsK30AIguPDXn9FA",
+            "received_at": "2025-12-17T17:40:25.685909509Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868500000",
+          "timestamp": 2220832979,
+          "time": "2025-12-17T17:40:25.668756008Z"
+        },
+        "received_at": "2025-12-17T17:40:25.706300421Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPC7F9SXVFZ0PP8ZK950YM"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPC7NVKJ6E31D3C4CNAJE3"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:39:49.791694256Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPB46D8GB05PAFV4TACM9G"
+      ],
+      "received_at": "2025-12-17T17:39:49.787576062Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 14,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:39:49.533902883Z",
+            "timestamp": 2184722740,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 7.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfELTy4JEIGgwI5dWLygYQxI2BlQIgoOb93Mo/",
+            "received_at": "2025-12-17T17:39:49.571466443Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:39:49.547019958Z",
+            "timestamp": 910930468,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -6.75,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEKTkrrIDGgwI5dWLygYQ9JrzwAIgoLm/vcGUAg==",
+            "received_at": "2025-12-17T17:39:49.630407190Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867500000",
+          "timestamp": 2184722740,
+          "time": "2025-12-17T17:39:49.533902883Z"
+        },
+        "received_at": "2025-12-17T17:39:49.581770920Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPB46D8GB05PAFV4TACM9G"
+    ],
+    "origin": "ip-10-100-4-144.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPB4CZ93C7HT6NZJD62E2Z"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:39:13.712674734Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPPA0YYJCPKX334H4MCPV77"
+      ],
+      "received_at": "2025-12-17T17:39:13.708892653Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 13,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:39:13.450402975Z",
+            "timestamp": 2148612595,
+            "rssi": -52,
+            "channel_rssi": -52,
+            "snr": 10,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEPPzxIAIGgwIwdWLygYQgs7U7wEguLqpmsQ+",
+            "received_at": "2025-12-17T17:39:13.492401356Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:39:13.460068941Z",
+            "timestamp": 874820283,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -7.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcELvlkqEDGgwIwdWLygYQ2MPkuAIg+NTo+rqTAg==",
+            "received_at": "2025-12-17T17:39:13.612297340Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868300000",
+          "timestamp": 2148612595,
+          "time": "2025-12-17T17:39:13.450402975Z"
+        },
+        "received_at": "2025-12-17T17:39:13.503556135Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPPA0YYJCPKX334H4MCPV77"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPPA15GD8KR2D64HSK2J71Q"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:38:37.569454608Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP8XNGDFDN429P0DA49EEY"
+      ],
+      "received_at": "2025-12-17T17:38:37.565663125Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 12,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:38:37.319293022Z",
+            "timestamp": 2112502411,
+            "rssi": -55,
+            "channel_rssi": -55,
+            "snr": 10,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEIv1qO8HGgwIndWLygYQqOXWqwEg+N3S1709",
+            "received_at": "2025-12-17T17:38:37.340814308Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:38:37.344711065Z",
+            "timestamp": 838710059,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -4.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEKvm9o8DGgwIndWLygYQn66SwgEg+L+PuLSSAg==",
+            "received_at": "2025-12-17T17:38:37.364610577Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867100000",
+          "timestamp": 2112502411,
+          "time": "2025-12-17T17:38:37.319293022Z"
+        },
+        "received_at": "2025-12-17T17:38:37.360801456Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP8XNGDFDN429P0DA49EEY"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP8XW1C637ETVYWAPH3Q2B"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:38:01.469660299Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP7TDHT45SZ8Y41642DKF8"
+      ],
+      "received_at": "2025-12-17T17:38:01.468293376Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 11,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:38:01.228229045Z",
+            "timestamp": 2076392188,
+            "rssi": -48,
+            "channel_rssi": -48,
+            "snr": 9.75,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEPz1jN4HGgsI+dSLygYQ3cGwfiDg0PmUtzw=",
+            "received_at": "2025-12-17T17:38:01.245567965Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:38:01.231430053Z",
+            "timestamp": 802599804,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -7.5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEPzm2v4CGgwI+dSLygYQidueiAEg4Li09a2RAg==",
+            "received_at": "2025-12-17T17:38:01.242915085Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867700000",
+          "timestamp": 2076392188,
+          "time": "2025-12-17T17:38:01.228229045Z"
+        },
+        "received_at": "2025-12-17T17:38:01.265756817Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP7TDHT45SZ8Y41642DKF8"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP7TKXQQ5P5RQAVX3TCW4F"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:37:25.355385390Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP6Q4ZDZM0ZMQYZGBQK93G"
+      ],
+      "received_at": "2025-12-17T17:37:25.354054084Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 10,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:37:25.119530916Z",
+            "timestamp": 2040281948,
+            "rssi": -60,
+            "channel_rssi": -60,
+            "snr": 10,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfENz28MwHGgsI1dSLygYQ5r//RyDgvp/SsDs=",
+            "received_at": "2025-12-17T17:37:25.131739512Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:37:25.113337993Z",
+            "timestamp": 766489524,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -7.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcELTnvu0CGgsI1dSLygYQmZu9UCCg7teyp5AC",
+            "received_at": "2025-12-17T17:37:25.127914669Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867900000",
+          "timestamp": 2040281948,
+          "time": "2025-12-17T17:37:25.119530916Z"
+        },
+        "received_at": "2025-12-17T17:37:25.151850292Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP6Q4ZDZM0ZMQYZGBQK93G"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP6QBBMWJGMVW9ZGBPXPDS"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:36:49.264029335Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP5KWY5AV6E4YWGPKGNRJX"
+      ],
+      "received_at": "2025-12-17T17:36:49.262653488Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 9,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:36:49.025629043Z",
+            "timestamp": 2004171795,
+            "rssi": -53,
+            "channel_rssi": -53,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEJP41LsHGgsIsdSLygYQlqODGiC41MqPqjo=",
+            "received_at": "2025-12-17T17:36:49.034704204Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:36:49.010360956Z",
+            "timestamp": 730379331,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -6.75,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEMPootwCGgsIsdSLygYQrZOIISC4y4DwoI8C",
+            "received_at": "2025-12-17T17:36:49.031856042Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868100000",
+          "timestamp": 2004171795,
+          "time": "2025-12-17T17:36:49.025629043Z"
+        },
+        "received_at": "2025-12-17T17:36:49.057600700Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP5KWY5AV6E4YWGPKGNRJX"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP5M3GZ5WA1S8DKHR44HC9"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:36:13.127437070Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP4GKRGF5V7Z6SSA3XAJWJ"
+      ],
+      "received_at": "2025-12-17T17:36:13.123619362Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 8,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:36:12.874900102Z",
+            "timestamp": 1968061604,
+            "rssi": -49,
+            "channel_rssi": -49,
+            "snr": 9,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEKT5uKoHGgwIjNSLygYQh6fhtgMgoMHzzKM5",
+            "received_at": "2025-12-17T17:36:12.900410847Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:36:12.904695034Z",
+            "timestamp": 694269100,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEKzphssCGgwIjNSLygYQi9GazwMg4P+mrZqOAg==",
+            "received_at": "2025-12-17T17:36:12.933219002Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867700000",
+          "timestamp": 1968061604,
+          "time": "2025-12-17T17:36:12.874900102Z"
+        },
+        "received_at": "2025-12-17T17:36:12.920779090Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP4GKRGF5V7Z6SSA3XAJWJ"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP4GT7FNR9HKP9TW4Q9KGA"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:35:37.033371591Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP3DBRK89ATVJTPTXCTE4F"
+      ],
+      "received_at": "2025-12-17T17:35:37.031933366Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 7,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:35:36.786186933Z",
+            "timestamp": 1931951388,
+            "rssi": -53,
+            "channel_rssi": -53,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEJz6nJkHGgwI6NOLygYQl4eBiQMg4Oqaip04",
+            "received_at": "2025-12-17T17:35:36.804467613Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:35:36.783533096Z",
+            "timestamp": 658158852,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -7,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEITq6rkCGgwI6NOLygYQu7u2kAMgoK/M6pONAg==",
+            "received_at": "2025-12-17T17:35:36.802938758Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867900000",
+          "timestamp": 1931951388,
+          "time": "2025-12-17T17:35:36.786186933Z"
+        },
+        "received_at": "2025-12-17T17:35:36.825078374Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP3DBRK89ATVJTPTXCTE4F"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP3DJ9THXNEN7NSEP5GT64"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:35:00.907102881Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP2A2VS0RRFVEJ5P5SZH6K"
+      ],
+      "received_at": "2025-12-17T17:35:00.903073165Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 6,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:35:00.662956953Z",
+            "timestamp": 1895841131,
+            "rssi": -43,
+            "channel_rssi": -43,
+            "snr": 7.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEOv6gIgHGgwIxNOLygYQo/eozQIg+NO/x5Y3",
+            "received_at": "2025-12-17T17:35:00.679372756Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:35:00.678344011Z",
+            "timestamp": 622048555,
+            "rssi": -112,
+            "channel_rssi": -112,
+            "snr": -8.5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEKvqzqgCGgwIxNOLygYQqMO14QIg+N/up42MAg==",
+            "received_at": "2025-12-17T17:35:00.699976756Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868500000",
+          "timestamp": 1895841131,
+          "time": "2025-12-17T17:35:00.662956953Z"
+        },
+        "received_at": "2025-12-17T17:35:00.699773860Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP2A2VS0RRFVEJ5P5SZH6K"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP2A9BP4XWERSCR5Q0S65Z"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:34:24.817871030Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP16V22RQYQ557XDE7H6HW"
+      ],
+      "received_at": "2025-12-17T17:34:24.813906401Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 5,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:34:24.554682970Z",
+            "timestamp": 585938380,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -6.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEMzrspcCGgwIoNOLygYQzPmYowIg4MmY5YaLAg==",
+            "received_at": "2025-12-17T17:34:24.583003724Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:34:24.581439971Z",
+            "timestamp": 1859730988,
+            "rssi": -49,
+            "channel_rssi": -49,
+            "snr": 7.25,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEKz85PYGGgwIoNOLygYQ/rnipwIg4LfrhJA2",
+            "received_at": "2025-12-17T17:34:24.600927941Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867500000",
+          "timestamp": 585938380,
+          "time": "2025-12-17T17:34:24.554682970Z"
+        },
+        "received_at": "2025-12-17T17:34:24.611608172Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP16V22RQYQ557XDE7H6HW"
+    ],
+    "origin": "ip-10-100-4-144.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP171HG4TRM111PWH931T8"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:33:48.696005925Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPP03J8J8NA7E33CX5CRHBX"
+      ],
+      "received_at": "2025-12-17T17:33:48.691716346Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 4,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:33:48.459101915Z",
+            "timestamp": 1823620803,
+            "rssi": -51,
+            "channel_rssi": -51,
+            "snr": 10.75,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEMP9yOUGGgwI/NKLygYQxcGB6QEguNOUwok1",
+            "received_at": "2025-12-17T17:33:48.469409227Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:33:48.452749967Z",
+            "timestamp": 549828147,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -6,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcELPsloYCGgwI/NKLygYQj8OV9QEguO6+ooCKAg==",
+            "received_at": "2025-12-17T17:33:48.482626153Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868300000",
+          "timestamp": 1823620803,
+          "time": "2025-12-17T17:33:48.459101915Z"
+        },
+        "received_at": "2025-12-17T17:33:48.489211786Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPP03J8J8NA7E33CX5CRHBX"
+    ],
+    "origin": "ip-10-100-4-144.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPP03RRG5NNR47B4HSH7NYV"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:33:12.587517009Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPNZ09ZEZ4S149YFJWV5Z1H"
+      ],
+      "received_at": "2025-12-17T17:33:12.586008537Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 3,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:33:12.357716083Z",
+            "timestamp": 1787510579,
+            "rssi": -49,
+            "channel_rssi": -49,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfELP+rNQGGgwI2NKLygYQw6jotgEguL67/4I0",
+            "received_at": "2025-12-17T17:33:12.364023511Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:33:12.339880943Z",
+            "timestamp": 513717883,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -2.25,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEPvs+vQBGgwI2NKLygYQwLDNvAEg+KDj3/mIAg==",
+            "received_at": "2025-12-17T17:33:12.366808559Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867100000",
+          "timestamp": 1787510579,
+          "time": "2025-12-17T17:33:12.357716083Z"
+        },
+        "received_at": "2025-12-17T17:33:12.384126788Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPNZ09ZEZ4S149YFJWV5Z1H"
+    ],
+    "origin": "ip-10-100-12-156.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPNZ0GBR6TGZGMSM2HDQX85"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:32:36.497057104Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPNXX1ZKM8BC9A9YS06SWF0"
+      ],
+      "received_at": "2025-12-17T17:32:36.492520339Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "f_cnt": 2,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:32:36.233649969Z",
+            "timestamp": 477607659,
+            "rssi": -113,
+            "channel_rssi": -113,
+            "snr": -4,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEOvt3uMBGgwItNKLygYQ5vG6iAEg+IuKnfOHAg==",
+            "received_at": "2025-12-17T17:32:36.259177395Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "867300000",
+          "timestamp": 477607659,
+          "time": "2025-12-17T17:32:36.233649969Z"
+        },
+        "received_at": "2025-12-17T17:32:36.288011858Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPNXX1ZKM8BC9A9YS06SWF0"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPNXX8HGR7QCS5XQ8AD5NJ3"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:32:06.951247176Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPNX06MZD5R8SSAHE7VQWZ1"
+      ],
+      "received_at": "2025-12-17T17:32:06.946321790Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_cnt": 1,
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:32:06.707930088Z",
+            "timestamp": 1721877315,
+            "rssi": -47,
+            "channel_rssi": -47,
+            "snr": 9,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEMOGh7UGGgwIltKLygYQvMmB4QIguPuKv44y",
+            "received_at": "2025-12-17T17:32:06.721008619Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:32:06.719244956Z",
+            "timestamp": 448084555,
+            "rssi": -114,
+            "channel_rssi": -114,
+            "snr": -4.5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEMv01NUBGgwIltKLygYQ/5Ow8QIg+Omun4WHAg==",
+            "received_at": "2025-12-17T17:32:06.741450277Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868100000",
+          "timestamp": 1721877315,
+          "time": "2025-12-17T17:32:06.707930088Z"
+        },
+        "received_at": "2025-12-17T17:32:06.741192635Z",
+        "consumed_airtime": "0.046336s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPNX06MZD5R8SSAHE7VQWZ1"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPNX0D7M3R3RBRPPVAJXSP3"
+  },
+  {
+    "name": "end_device.update",
+    "time": "2025-12-17T17:32:00.289692425Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/google.protobuf.Value",
+      "value": [
+        "activated_at"
+      ]
+    },
+    "correlation_ids": [
+      "rpc:/ttn.lorawan.v3.EndDeviceRegistry/Update:01KCPNWSWWQ1HVXZX9H5SDQ91T"
+    ],
+    "origin": "ip-10-100-15-245.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_DEVICES_READ"
+      ]
+    },
+    "authentication": {
+      "type": "ClusterKey"
+    },
+    "remote_ip": "2a05:d018:b7b:e201:4d29:59:9f13:8377",
+    "user_agent": "tti-lw-stack go/1.24.10 ttn/3.35.1-rc6-SNAPSHOT-872a15f831 (872a15f831, 2025-12-08T09:03:55Z) grpc-go/1.71.0",
+    "unique_id": "01KCPNWSX1Z4ZMHZRTYVG0QMTP"
+  },
+  {
+    "name": "as.up.data.forward",
+    "time": "2025-12-17T17:32:00.284688702Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPNWSP9R2Y8T5Y998JY0H2C"
+      ],
+      "received_at": "2025-12-17T17:32:00.278331623Z",
+      "uplink_message": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "f_port": 1,
+        "frm_payload": "SGVsbG8sIHdvcmxk",
+        "rx_metadata": [
+          {
+            "gateway_ids": {
+              "gateway_id": "gateway-lorawan-iot-ucm",
+              "eui": "C0EE40FFFF294C1F"
+            },
+            "time": "2025-12-17T17:32:00.037595033Z",
+            "timestamp": 1715191371,
+            "rssi": -46,
+            "channel_rssi": -46,
+            "snr": 9.5,
+            "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEMv87rEGGgsIkNKLygYQq5jqIiD4qf3K9TE=",
+            "received_at": "2025-12-17T17:32:00.053650439Z"
+          },
+          {
+            "gateway_ids": {
+              "gateway_id": "eui-58a0cbfffe804a5c",
+              "eui": "58A0CBFFFE804A5C"
+            },
+            "time": "2025-12-17T17:32:00.022867918Z",
+            "timestamp": 441398603,
+            "rssi": -115,
+            "channel_rssi": -115,
+            "snr": -5.5,
+            "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEMvqvNIBGgsIkNKLygYQmbvOJSD42aCr7IYC",
+            "received_at": "2025-12-17T17:32:00.045482865Z"
+          }
+        ],
+        "settings": {
+          "data_rate": {
+            "lora": {
+              "bandwidth": 125000,
+              "spreading_factor": 7,
+              "coding_rate": "4/5"
+            }
+          },
+          "frequency": "868300000",
+          "timestamp": 1715191371,
+          "time": "2025-12-17T17:32:00.037595033Z"
+        },
+        "received_at": "2025-12-17T17:32:00.074564735Z",
+        "consumed_airtime": "0.061696s",
+        "network_ids": {
+          "net_id": "000013",
+          "ns_id": "EC656E0000000181",
+          "tenant_id": "ttn",
+          "cluster_id": "eu1",
+          "cluster_address": "eu1.cloud.thethings.network"
+        }
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPNWSP9R2Y8T5Y998JY0H2C"
+    ],
+    "origin": "ip-10-100-4-144.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPNWSWWTT22YTPRTPYX9BYB"
+  },
+  {
+    "name": "as.up.join.forward",
+    "time": "2025-12-17T17:31:56.753613107Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.ApplicationUp",
+      "end_device_ids": {
+        "device_id": "ucm-iot-nodo-ariel",
+        "application_ids": {
+          "application_id": "ariel-app"
+        },
+        "dev_eui": "70B3D57ED0074CF4",
+        "join_eui": "0101010101010101",
+        "dev_addr": "260BC7FB"
+      },
+      "correlation_ids": [
+        "gs:uplink:01KCPNWMNTF11ZA2XX39ZS83AW"
+      ],
+      "received_at": "2025-12-17T17:31:56.749075855Z",
+      "join_accept": {
+        "session_key_id": "AZstXlK/1J+nU6L/RqeiwA==",
+        "received_at": "2025-12-17T17:31:54.939313953Z"
+      }
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPNWMNTF11ZA2XX39ZS83AW"
+    ],
+    "origin": "ip-10-100-7-32.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPNWPEH4MDJW4NTT0EJ0B5S"
+  },
+  {
+    "name": "ns.up.join.process",
+    "time": "2025-12-17T17:31:55.141562417Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/ttn.lorawan.v3.UplinkMessage",
+      "raw_payload": "AAEBAQEBAQEB9EwH0H7Vs3A7XLTKcvw=",
+      "payload": {
+        "m_hdr": {},
+        "mic": "tMpy/A==",
+        "join_request_payload": {
+          "join_eui": "0101010101010101",
+          "dev_eui": "70B3D57ED0074CF4",
+          "dev_nonce": "5C3B"
+        }
+      },
+      "settings": {
+        "data_rate": {
+          "lora": {
+            "bandwidth": 125000,
+            "spreading_factor": 7,
+            "coding_rate": "4/5"
+          }
+        },
+        "frequency": "868500000",
+        "timestamp": 1710054035,
+        "time": "2025-12-17T17:31:54.901093959Z"
+      },
+      "rx_metadata": [
+        {
+          "gateway_ids": {
+            "gateway_id": "gateway-lorawan-iot-ucm",
+            "eui": "C0EE40FFFF294C1F"
+          },
+          "time": "2025-12-17T17:31:54.901093959Z",
+          "timestamp": 1710054035,
+          "rssi": -45,
+          "channel_rssi": -45,
+          "snr": 8.25,
+          "uplink_token": "CiUKIwoXZ2F0ZXdheS1sb3Jhd2FuLWlvdC11Y20SCMDuQP//KUwfEJO1ta8GGgwIitKLygYQ35bOvwMguJynueIx",
+          "received_at": "2025-12-17T17:31:54.919348448Z"
+        },
+        {
+          "gateway_ids": {
+            "gateway_id": "eui-58a0cbfffe804a5c",
+            "eui": "58A0CBFFFE804A5C"
+          },
+          "time": "2025-12-17T17:31:54.895781040Z",
+          "timestamp": 436261267,
+          "rssi": -113,
+          "channel_rssi": -113,
+          "snr": -7.5,
+          "uplink_token": "CiIKIAoUZXVpLTU4YTBjYmZmZmU4MDRhNWMSCFigy//+gEpcEJOjg9ABGgwIitKLygYQ1uiryQMguMzKmdmGAg==",
+          "received_at": "2025-12-17T17:31:54.927772831Z"
+        }
+      ],
+      "received_at": "2025-12-17T17:31:54.939313953Z",
+      "correlation_ids": [
+        "gs:uplink:01KCPNWMNTF11ZA2XX39ZS83AW"
+      ],
+      "device_channel_index": 2,
+      "consumed_airtime": "0.061696s"
+    },
+    "correlation_ids": [
+      "gs:uplink:01KCPNWMNTF11ZA2XX39ZS83AW"
+    ],
+    "origin": "ip-10-100-14-179.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPNWMW5Z5FH5A0VAY4HQRK1"
+  },
+  {
+    "name": "js.join.accept",
+    "time": "2025-12-17T17:31:54.945734711Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101",
+          "dev_addr": "260BC7FB"
+        }
+      }
+    ],
+    "origin": "ip-10-100-14-13.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_TRAFFIC_READ"
+      ]
+    },
+    "unique_id": "01KCPNWMP1259RPGE0VMWFA65H"
+  },
+  {
+    "name": "end_device.update",
+    "time": "2025-12-17T17:24:01.958114898Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          }
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/google.protobuf.Value",
+      "value": [
+        "label_ids"
+      ]
+    },
+    "correlation_ids": [
+      "rpc:/ttn.lorawan.v3.EndDeviceRegistry/Update:03be3d44-c13d-4347-b53e-feb2dbd83e27"
+    ],
+    "origin": "ip-10-100-5-229.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_DEVICES_READ"
+      ]
+    },
+    "authentication": {
+      "type": "Bearer",
+      "token_type": "AccessToken",
+      "token_id": "GCWOCRPGOZLVAGHXPNCJUYYZKJHTLK75YNZACFA"
+    },
+    "remote_ip": "147.96.81.147",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "unique_id": "01KCPNE6S6526X28PBT8X6QK9R"
+  },
+  {
+    "name": "end_device.create",
+    "time": "2025-12-17T17:24:01.728203170Z",
+    "identifiers": [
+      {
+        "device_ids": {
+          "device_id": "ucm-iot-nodo-ariel",
+          "application_ids": {
+            "application_id": "ariel-app"
+          },
+          "dev_eui": "70B3D57ED0074CF4",
+          "join_eui": "0101010101010101"
+        }
+      }
+    ],
+    "correlation_ids": [
+      "rpc:/ttn.lorawan.v3.EndDeviceRegistry/Create:6e84e4d5-e12c-44b1-8cfa-4c2a740a299e"
+    ],
+    "origin": "ip-10-100-15-245.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_DEVICES_READ"
+      ]
+    },
+    "authentication": {
+      "type": "Bearer",
+      "token_type": "AccessToken",
+      "token_id": "GCWOCRPGOZLVAGHXPNCJUYYZKJHTLK75YNZACFA"
+    },
+    "remote_ip": "147.96.81.147",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "unique_id": "01KCPNE6J0WDS77ZG93FG0Q4AX"
+  },
+  {
+    "name": "application.issue_dev_eui",
+    "time": "2025-12-17T17:20:59.576988895Z",
+    "identifiers": [
+      {
+        "application_ids": {
+          "application_id": "ariel-app"
+        }
+      }
+    ],
+    "correlation_ids": [
+      "rpc:/ttn.lorawan.v3.ApplicationRegistry/IssueDevEUI:62393c08-a97e-4ce4-8082-19328077a18c"
+    ],
+    "origin": "ip-10-100-5-229.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_INFO"
+      ]
+    },
+    "authentication": {
+      "type": "Bearer",
+      "token_type": "AccessToken",
+      "token_id": "GCWOCRPGOZLVAGHXPNCJUYYZKJHTLK75YNZACFA"
+    },
+    "remote_ip": "147.96.81.147",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "unique_id": "01KCPN8MNRVK7CTGTJDP0SW2V1"
+  },
+  {
+    "name": "application.update",
+    "time": "2025-12-17T17:17:35.803764249Z",
+    "identifiers": [
+      {
+        "application_ids": {
+          "application_id": "ariel-app"
+        }
+      }
+    ],
+    "data": {
+      "@type": "type.googleapis.com/google.protobuf.Value",
+      "value": [
+        "label_ids"
+      ]
+    },
+    "correlation_ids": [
+      "rpc:/ttn.lorawan.v3.ApplicationRegistry/Update:f8de97da-c826-4f11-8da6-ae92d6065fcb"
+    ],
+    "origin": "ip-10-100-5-229.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_INFO"
+      ]
+    },
+    "authentication": {
+      "type": "Bearer",
+      "token_type": "AccessToken",
+      "token_id": "GCWOCRPGOZLVAGHXPNCJUYYZKJHTLK75YNZACFA"
+    },
+    "remote_ip": "147.96.81.147",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "unique_id": "01KCPN2DNVY9APACMZARB71RQP"
+  },
+  {
+    "name": "application.create",
+    "time": "2025-12-17T17:17:35.702184663Z",
+    "identifiers": [
+      {
+        "application_ids": {
+          "application_id": "ariel-app"
+        }
+      }
+    ],
+    "correlation_ids": [
+      "rpc:/ttn.lorawan.v3.ApplicationRegistry/Create:24fb0c17-f6ff-4d65-9e0d-36aa03aab941"
+    ],
+    "origin": "ip-10-100-4-194.eu-west-1.compute.internal",
+    "context": {
+      "tenant-id": "CgN0dG4="
+    },
+    "visibility": {
+      "rights": [
+        "RIGHT_APPLICATION_INFO"
+      ]
+    },
+    "authentication": {
+      "type": "Bearer",
+      "token_type": "AccessToken",
+      "token_id": "GCWOCRPGOZLVAGHXPNCJUYYZKJHTLK75YNZACFA"
+    },
+    "remote_ip": "147.96.81.147",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+    "unique_id": "01KCPN2DJPQVZGZABTXKHRAGFR"
+  }
+]
