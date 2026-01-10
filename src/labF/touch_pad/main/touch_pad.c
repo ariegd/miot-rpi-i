@@ -9,10 +9,11 @@
 #include "driver/touch_pad.h"
 #include "esp_log.h"
 
-// Configuración
-#define TOUCH_PAD           TOUCH_PAD_NUM2   // GPIO 2 en ESP32
-#define TOUCH_THRESH_FACTOR 0.8f             // 80% del valor en reposo
-#define TIME_THRESHOLD_MS   1500             // Tiempo requerido (1.5 segundos)
+// Configuración obtenida mediante Kconfig
+#define TOUCH_PAD           ((touch_pad_t)CONFIG_TOUCH_PAD_NUMBER)
+// Convertimos el porcentaje entero del Kconfig a factor flotante (80 -> 0.8f)
+#define TOUCH_THRESH_FACTOR ((float)CONFIG_TOUCH_THRESH_FACTOR / 100.0f)
+#define TIME_THRESHOLD_MS   CONFIG_TIME_THRESHOLD_MS
 
 static const char *TAG = "touch_example";
 
