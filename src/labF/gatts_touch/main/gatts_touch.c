@@ -13,15 +13,14 @@
 #include "esp_chip_info.h"
 #include "esp_flash.h"
 #include "esp_system.h"
-#include "gatt_server_comp.h"
+#include "gatts_comp.h"
 #include "touch_pad_comp.h"
 
-static const char *TAG = "gatt_touch_server";
+static const char *TAG = "gatts_touch";
 
 void app_main(void)
 {
-    ESP_LOGI(TAG, "Iniciando sistema gatt_touch_server ...");
-    gatt_server_start();
+    ESP_LOGI(TAG, "Iniciando sistema gatts_touch...");
+    gatts_start();
     touch_pad_start();
-
 }

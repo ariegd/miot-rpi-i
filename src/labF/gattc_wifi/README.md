@@ -1,7 +1,7 @@
 | Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
 | ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
 
-# Hello World Example
+# Nodo gattc_wifi
 
 Starts a FreeRTOS task to print "Hello World".
 
@@ -51,3 +51,8 @@ Please use the following feedback channels:
 * For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
 
 We will get back to you as soon as possible.
+
+## Problemas detectados
+
+### Crear el archivo `sdkconfig.defaults`
+Para asegurar que una configuración de Kconfig (como habilitar el Bluetooth) se mantenga activa incluso después de un `idf.py fullclean`, la forma correcta y profesional de hacerlo no es mediante el archivo sdkconfig (que se borra con la limpieza), sino a través de un archivo llamado `sdkconfig.defaults`.

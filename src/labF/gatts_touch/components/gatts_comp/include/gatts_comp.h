@@ -22,4 +22,4 @@ enum
     HRS_IDX_NB,
 };
 
-void gatt_server_start(void);
+void gatts_start(void);

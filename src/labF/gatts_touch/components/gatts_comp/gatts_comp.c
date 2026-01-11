@@ -27,12 +27,14 @@
 #include "esp_gatts_api.h"
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"
-#include "gatts_table_creat_demo.h"
+#include "gatts_comp.h"
 #include "esp_gatt_common_api.h"
 
 #include "esp_random.h" /*Ejercicio 8*/
+#include "freertos/semphr.h" // Necesario para semáforos
+#include <string.h> // Para usar memcpy
 
-#define GATTS_TABLE_TAG "GATTS_TABLE_DEMO"
+#define GATTS_TABLE_TAG "GATT_SERVER"
 
 #define PROFILE_NUM                 1
 #define PROFILE_APP_IDX             0
@@ -52,6 +54,8 @@
 #define SCAN_RSP_CONFIG_FLAG        (1 << 1)
 
 static uint8_t adv_config_done       = 0;
+// 1. Definimos el semáforo globalmente
+SemaphoreHandle_t s_proximity_semaphore = NULL;
 
 uint16_t heart_rate_handle_table[HRS_IDX_NB];
 
@@ -383,7 +387,7 @@ void example_exec_write_event_env(prepare_type_env_t *prepare_write_env, esp_ble
 }
 
 /*Ejercicio 8*/
-static void publish_data_task(void *pvParameters)
+/*static void publish_data_task(void *pvParameters)
 {
     while (1) {
         ESP_LOGI("APP", "Sending data...");
@@ -405,6 +409,74 @@ static void publish_data_task(void *pvParameters)
 
         // Paso 3: dormir 1 segundo
         vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}*/
+
+/*Ejercicio 8 - Modificado*/
+/*static void publish_data_task(void *pvParameters)
+{
+    // Aseguramos que el semáforo esté creado antes de usarlo
+    if (s_proximity_semaphore == NULL) {
+        s_proximity_semaphore = xSemaphoreCreateBinary();
+    }
+
+    while (1) {
+        // ESPERA BLOQUEANTE: La tarea se duerme aquí hasta recibir la señal del Touch
+        // portMAX_DELAY significa "esperar para siempre"
+        if (xSemaphoreTake(s_proximity_semaphore, portMAX_DELAY) == pdTRUE) {
+            
+            ESP_LOGI("APP", "Señal de proximidad recibida. Enviando notificación BLE...");
+
+            // Paso 1: Definir el valor a enviar (ej. 0xAA para indicar alerta)
+            char_value_mod[1] = 0xAA; 
+
+            // Paso 2: Enviar datos si notificaciones están activas
+            if (notify_enabled) {
+                esp_ble_gatts_send_indicate(
+                    heart_rate_profile_tab[0].gatts_if,
+                    heart_rate_profile_tab[0].conn_id,
+                    heart_rate_handle_table[IDX_CHAR_VAL_A],
+                    sizeof(char_value_mod),
+                    char_value_mod,
+                    false); // false = notificación, true = indicación (con ACK)
+                
+                ESP_LOGI("APP", "Notificación enviada al cliente!");
+            } else {
+                ESP_LOGW("APP", "Evento detectado pero las notificaciones BLE están desactivadas por el cliente.");
+            }
+        }
+        // Nota: Ya no usamos vTaskDelay aquí porque xSemaphoreTake gestiona la espera
+    }
+    // Recordatorio: Las tareas nunca deben retornar
+    vTaskDelete(NULL); 
+}*/
+
+static void publish_data_task(void *pvParameters)
+{
+    if (s_proximity_semaphore == NULL) {
+        s_proximity_semaphore = xSemaphoreCreateBinary();
+    }
+
+    const char *payload = "prox_alert 👾";
+    uint8_t payload_len = strlen(payload);
+
+    while (1) {
+        // Espera pasiva: no consume CPU hasta que el sensor de proximidad avisa
+        if (xSemaphoreTake(s_proximity_semaphore, portMAX_DELAY) == pdTRUE) {
+            
+            ESP_LOGI("GATT_COMP", "Evento recibido. Enviando payload: %s", payload);
+
+            if (notify_enabled) {
+                // Enviamos el string directamente como array de bytes
+                esp_ble_gatts_send_indicate(
+                    heart_rate_profile_tab[0].gatts_if,
+                    heart_rate_profile_tab[0].conn_id,
+                    heart_rate_handle_table[IDX_CHAR_VAL_A],
+                    payload_len,
+                    (uint8_t *)payload,
+                    false);
+            }
+        }
     }
 }
 
@@ -594,7 +666,7 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
     } while (0);
 }
 
-void app_main(void)
+void gatts_task(void *pvParameters)
 {
     esp_err_t ret;
 
@@ -655,4 +727,12 @@ void app_main(void)
     if (local_mtu_ret){
         ESP_LOGE(GATTS_TABLE_TAG, "set local  MTU failed, error code = %x", local_mtu_ret);
     }
+    
+    // SOLUCIÓN: Matar la tarea al finalizar la configuración
+    vTaskDelete(NULL);
+}
+
+void gatts_start(void)
+{
+    xTaskCreate(&gatts_task, "gatts_task", 2048, NULL, 1, NULL);
 }

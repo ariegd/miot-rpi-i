@@ -1,11 +1,42 @@
-| Supported Targets | ESP32 | ESP32-C3  | Linux |
-| ----------------- | ----- | -------- | ----- |
+| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
+| ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
 
-#  Ejemplo de Touch Pad
+```
+Máster IoT, curso 25-26
+ 	└── Autor
+ 		    └── Ariel Gámez <arielg01@ucm.es>
+```
+[repositorio](https://github.com/ariegd/miot-aniot/tree/labF/src/labF) en GitHub
 
-Inicia una tarea FreeRTOS para imprimir "touch_example: value=682, touched=0".
+# LABF. Práctica ﬁnal de integración
+```
+El sistema debe estar compuesto por al menos:
 
-## Ejemplo del directorio del proyecto
+* 1 sensor IoT basado en un ESP32 que implemente el detector de proximidad y el
+servidor GATT.
+* 1 nodo Wi-Fi Mesh regular que implemente el cliente GATT y se conecte a la red Mesh.
+Una vez conectado, deberá encapsular y enviar la alerta a través de la red Mesh hacia
+el nodo Mesh raíz.
+* 1 nodo Wi-Fi Mesh raíz encargado de recibir las alertas y encaminarlas al gateway/hub
+IoT mediante Wi-Fi y CoAP.
+* 1 PC actuando como gateway/hub IoT que ejecute un servidor CoAP simple.
+```
+
+## How to use example
+
+Follow detailed instructions provided specifically for this example.
+
+Select the instructions depending on Espressif chip installed on your development board:
+
+- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
+
+
+## Example folder contents
+
+The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
+
+ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
 
 Below is short explanation of remaining files in the project folder.
 
@@ -18,65 +49,20 @@ Below is short explanation of remaining files in the project folder.
 └── README.md                  This is the file you are currently reading
 ```
 
-## Ejemplo de Salida
+For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
 
-This example's output maybe could not give a strong feeling to user since the waterproof function works
-automatically and silently inside the Touch Element library
+## Troubleshooting
 
-```
-I (17678) touch_example: value=61, touched=1
-I (17788) touch_example: value=53, touched=1
-I (17898) touch_example: value=51, touched=1
-I (18008) touch_example: value=51, touched=1
-I (18118) touch_example: value=54, touched=1
-I (18228) touch_example: value=671, touched=0
-I (18338) touch_example: value=682, touched=0
-I (18448) touch_example: value=637, touched=0
-I (18558) touch_example: value=568, touched=0
-I (18668) touch_example: value=174, touched=1
-I (18778) touch_example: value=128, touched=1
-I (18888) touch_example: value=121, touched=1
-I (18998) touch_example: value=118, touched=1
-I (19108) touch_example: value=180, touched=1
-I (19218) touch_example: value=682, touched=0
-I (19328) touch_example: value=682, touched=0
-I (19438) touch_example: value=680, touched=0
-I (19548) touch_example: value=123, touched=1
-```
+* Program upload failure
 
-2. Implementación del sensor IoT
-El sensor IoT debe medir la proximidad (es decir, detectar si se toca un pin concreto)
-utilizando el touch pad capacitivo del ESP32. Para ello, se deben emplear las funciones
-`touch_pad_init()`, `touch_pad_conﬁg()` y `touch_pad_read()`.
+    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
+    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
 
-```
-detector de proximidad           -->            nodo WiFi Mesh regular          -->         nodo WiFi Mesh raíz      -->        gateway/hub (PC servidor CoAP)
-y servidor GATT                   (GATT)                   y cliente GATT            (Wi-Fi Mesh)                                       (Wi-Fi y CoAP)
-```
+## Technical support and feedback
 
-## Problemas y soluciones
+Please use the following feedback channels:
 
-### Envíe la notificación solo cuando el sensor táctil detecta la proximidad (1.5s)
-Para lograr que el servidor GATT envíe la notificación solo cuando el sensor táctil detecta la proximidad (1.5s), necesitamos un mecanismo de comunicación entre las dos tareas (la del Touch y la del Bluetooth).
+* For technical queries, go to the [esp32.com](https://esp32.com/) forum
+* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
 
-La mejor forma de hacer esto en FreeRTOS es utilizando un Semáforo Binario.
-* La tarea del GATT (Bluetooth) se quedará "dormida" esperando el semáforo.
-* La tarea del Touch "dará" (activará) el semáforo cuando detecte la pulsación larga.
-
-### Causa del Error
-* El error `E (886) FreeRTOS: FreeRTOS Task "gatt_server_tas" should not return, Aborting now!` es muy específico y común cuando se migra código desde app_main a una tarea (Task) de FreeRTOS.
-* En FreeRTOS, una tarea nunca debe llegar al final de su función (es decir, no puede hacer return ni cerrar la llave }). A diferencia de las funciones normales, una tarea debe ser un bucle infinito (while(1)) o, si su trabajo termina (como una inicialización), debe autodestruirse explícitamente.
-* Solución: Tienes que editar el archivo components/gatt_server_comp/gatt_server_comp.c. Busca la función que se ejecuta como tarea (la que pasaste a xTaskCreate) y añade vTaskDelete(NULL); al final.
-
-### Habilitar Bluetooth en el menuconfig
-Si el compilador no encuentra el archivo, puede ser que el componente de Bluetooth esté excluido de la compilación. Asegúrate de que esté activo:
-1. Ejecuta: `idf.py menuconfig`
-2. Ve a: `Component config -> Bluetooth`
-3. Marca la casilla: `[*] Bluetooth`
-4. Dentro de Bluetooth, asegúrate de que el "Host" esté configurado (usualmente Bluedroid o NimBLE, según tu código utiliza esp_bluedroid_init).
-
-
-### Cambios Clave Realizados
-* Lógica de Temporización: Se han añadido las variables start_tick y is_touching. Cuando se detecta un toque, se guarda el "tiempo actual". En cada ciclo subsiguiente, se compara el tiempo actual con el inicial.
-* Filtro de Falsos Positivos: Si el usuario suelta el sensor antes de los 1.5 segundos (por ejemplo, ruido o un toque accidental), el bloque else resetea la variable is_touching y el contador vuelve a cero.
-* Prevención de Repetición: La bandera alert_sent asegura que la alerta (ESP_LOGW) se imprima una sola vez cuando se cumple el tiempo, en lugar de imprimirse continuamente mientras se mantiene el dedo.
+We will get back to you as soon as possible.
