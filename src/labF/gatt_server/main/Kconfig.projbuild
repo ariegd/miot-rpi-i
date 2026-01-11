@@ -1,0 +1,9 @@
+menu "GATT-SERVER Configuration"
+
+   config DEVICE_NAME_GATT
+       string "Nombre del dispositivo BLE"
+       default "ESP_GATTS_EJ-1"
+       help
+            Nombre que aparecerá en el escaneo BLE. Máximo 20 caracteres recomendados.
+            
+endmenu
