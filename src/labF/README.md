@@ -56,9 +56,20 @@ y servidor GATT                   (GATT)                   y cliente GATT       
 
 ## Problemas y soluciones
 
+### Causa del Error
+* El error `E (886) FreeRTOS: FreeRTOS Task "gatt_server_tas" should not return, Aborting now!` es muy específico y común cuando se migra código desde app_main a una tarea (Task) de FreeRTOS.
+* En FreeRTOS, una tarea nunca debe llegar al final de su función (es decir, no puede hacer return ni cerrar la llave }). A diferencia de las funciones normales, una tarea debe ser un bucle infinito (while(1)) o, si su trabajo termina (como una inicialización), debe autodestruirse explícitamente.
+* Solución: Tienes que editar el archivo components/gatt_server_comp/gatt_server_comp.c. Busca la función que se ejecuta como tarea (la que pasaste a xTaskCreate) y añade vTaskDelete(NULL); al final.
+
+### Habilitar Bluetooth en el menuconfig
+Si el compilador no encuentra el archivo, puede ser que el componente de Bluetooth esté excluido de la compilación. Asegúrate de que esté activo:
+1. Ejecuta: `idf.py menuconfig`
+2. Ve a: `Component config -> Bluetooth`
+3. Marca la casilla: `[*] Bluetooth`
+4. Dentro de Bluetooth, asegúrate de que el "Host" esté configurado (usualmente Bluedroid o NimBLE, según tu código utiliza esp_bluedroid_init).
+
+
 ### Cambios Clave Realizados
 * Lógica de Temporización: Se han añadido las variables start_tick y is_touching. Cuando se detecta un toque, se guarda el "tiempo actual". En cada ciclo subsiguiente, se compara el tiempo actual con el inicial.
-
 * Filtro de Falsos Positivos: Si el usuario suelta el sensor antes de los 1.5 segundos (por ejemplo, ruido o un toque accidental), el bloque else resetea la variable is_touching y el contador vuelve a cero.
-
 * Prevención de Repetición: La bandera alert_sent asegura que la alerta (ESP_LOGW) se imprima una sola vez cuando se cumple el tiempo, en lugar de imprimirse continuamente mientras se mantiene el dedo.
