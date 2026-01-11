@@ -9,6 +9,11 @@
 #include "driver/touch_pad.h"
 #include "esp_log.h"
 
+#include "freertos/semphr.h" // Necesario
+
+// 1. Referencia al semáforo que está en gatt_server_comp.c
+extern SemaphoreHandle_t s_proximity_semaphore;
+
 // Configuración obtenida mediante Kconfig
 #define TOUCH_PAD           ((touch_pad_t)CONFIG_TOUCH_PAD_NUMBER)
 // Convertimos el porcentaje entero del Kconfig a factor flotante (80 -> 0.8f)
@@ -70,7 +75,12 @@ void touch_pad_task(void *argParameter)
                 if (!alert_sent && (current_tick - start_tick >= required_ticks)) {
                     ESP_LOGW(TAG, "ALERTA: Proximidad detectada por 1.5 segundos!");
                     alert_sent = true; // Marcamos para no spamear el log
-                    
+
+                    // 2. AQUÍ DISPARAMOS EL SEMÁFORO
+                    // Verificamos que el semáforo exista antes de darlo
+                    if (s_proximity_semaphore != NULL) {
+                        xSemaphoreGive(s_proximity_semaphore);
+                    }
                     // Aquí podrías encender un LED o activar un buzzer
                 }
             }

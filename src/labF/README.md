@@ -56,6 +56,13 @@ y servidor GATT                   (GATT)                   y cliente GATT       
 
 ## Problemas y soluciones
 
+### Envíe la notificación solo cuando el sensor táctil detecta la proximidad (1.5s)
+Para lograr que el servidor GATT envíe la notificación solo cuando el sensor táctil detecta la proximidad (1.5s), necesitamos un mecanismo de comunicación entre las dos tareas (la del Touch y la del Bluetooth).
+
+La mejor forma de hacer esto en FreeRTOS es utilizando un Semáforo Binario.
+* La tarea del GATT (Bluetooth) se quedará "dormida" esperando el semáforo.
+* La tarea del Touch "dará" (activará) el semáforo cuando detecte la pulsación larga.
+
 ### Causa del Error
 * El error `E (886) FreeRTOS: FreeRTOS Task "gatt_server_tas" should not return, Aborting now!` es muy específico y común cuando se migra código desde app_main a una tarea (Task) de FreeRTOS.
 * En FreeRTOS, una tarea nunca debe llegar al final de su función (es decir, no puede hacer return ni cerrar la llave }). A diferencia de las funciones normales, una tarea debe ser un bucle infinito (while(1)) o, si su trabajo termina (como una inicialización), debe autodestruirse explícitamente.
