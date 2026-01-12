@@ -30,6 +30,9 @@
 #include "freertos/FreeRTOS.h"
 /*Ejercicio 5*/
 #include <math.h> 
+// 1. REFERENCIA A LA COLA EXTERNA (definida en wifim_comp.c)
+#include "freertos/queue.h"
+extern QueueHandle_t mesh_tx_queue;
 
 #define GATTC_TAG "GATT_CLIENT"
 #define REMOTE_SERVICE_UUID        0x00FF
@@ -70,6 +73,28 @@ static void mac_str_to_bytes(const char *mac_str, uint8_t *mac_bytes)
     sscanf(mac_str, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",
            &mac_bytes[0], &mac_bytes[1], &mac_bytes[2],
            &mac_bytes[3], &mac_bytes[4], &mac_bytes[5]);
+}
+
+/*reconectar*/
+static bool get_name_from_adv(uint8_t *adv_data, const char *target_name, uint8_t *out_len)
+{
+    uint8_t *p = adv_data;
+    uint8_t length;
+    uint8_t type;
+
+    // El formato del advertisement es: [Longitud] [Tipo] [Datos...]
+    while (p[0] != 0) {
+        length = p[0];
+        type = p[1];
+        if (type == ESP_BLE_AD_TYPE_NAME_CMPL || type == ESP_BLE_AD_TYPE_NAME_SHORT) {
+            if (strncmp((char *)(p + 2), target_name, length - 1) == 0) {
+                *out_len = length - 1;
+                return true;
+            }
+        }
+        p += length + 1;
+    }
+    return false;
 }
 
 static char remote_device_name[ESP_BLE_ADV_NAME_LEN_MAX] =  CONFIG_DEVICE_NAME_GATT;
@@ -311,6 +336,27 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
         ESP_LOG_BUFFER_HEX(GATTC_TAG, p_data->notify.value, p_data->notify.value_len);
         // Esta es la línea mágica:
         ESP_LOGI(GATTC_TAG, "payload: %.*s", p_data->notify.value_len, p_data->notify.value);
+        
+        // 2. LÓGICA DE FILTRADO Y ENVÍO A MESH
+        // Verificamos si la cola existe y si el payload contiene "prox_alert"
+        if (mesh_tx_queue != NULL && p_data->notify.value_len > 0) {
+            
+            // Creamos un string temporal terminado en null para comparaciones seguras
+            char temp_buff[100];
+            int len = (p_data->notify.value_len < 99) ? p_data->notify.value_len : 99;
+            memcpy(temp_buff, p_data->notify.value, len);
+            temp_buff[len] = '\0';
+
+            // Buscamos la subcadena clave "prox_alert"
+            if (strstr(temp_buff, "prox_alert") != NULL) {
+                ESP_LOGW(GATTC_TAG, "DETECTADO PROX_ALERT 👾 -> Enviando a Mesh...");
+                
+                // Enviamos a la cola (sin esperar si está llena, para no bloquear BLE)
+                if(xQueueSend(mesh_tx_queue, temp_buff, 0) != pdTRUE) {
+                    ESP_LOGE(GATTC_TAG, "Cola Mesh llena, mensaje descartado");
+                }
+            }
+        }
         break;
     case ESP_GATTC_WRITE_DESCR_EVT:
         if (p_data->write.status != ESP_GATT_OK){
@@ -349,6 +395,14 @@ static void gattc_profile_event_handler(esp_gattc_cb_event_t event, esp_gatt_if_
         get_server = false;
         ESP_LOGI(GATTC_TAG, "Disconnected, remote "ESP_BD_ADDR_STR", reason 0x%02x",
                  ESP_BD_ADDR_HEX(p_data->disconnect.remote_bda), p_data->disconnect.reason);
+                 
+        // Resetear variables de estado si las tienes (is_connected, etc.)
+        connect = false;
+        get_server = false;
+
+        // REINICIAR ESCANEO AUTOMÁTICAMENTE
+        uint32_t duration = 0; // Escaneo continuo
+        esp_ble_gap_start_scanning(duration);
         break;
     default:
         break;
@@ -380,7 +434,14 @@ static void esp_gap_cb(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *par
     case ESP_GAP_BLE_SCAN_RESULT_EVT: {
         esp_ble_gap_cb_param_t *scan_result = (esp_ble_gap_cb_param_t *)param;
         switch (scan_result->scan_rst.search_evt) {
-        case ESP_GAP_SEARCH_INQ_RES_EVT:
+        case ESP_GAP_SEARCH_INQ_RES_EVT:  
+          // Lógica para filtrar por nombre o UUID del dispositivo que envía el prox_alert
+          if (get_name_from_adv(scan_result->scan_rst.ble_adv, CONFIG_DEVICE_NAME_GATT, &adv_name_len)) {
+              esp_ble_gap_stop_scanning(); // Detener escaneo para conectar
+              esp_ble_gattc_open(gl_profile_tab[PROFILE_A_APP_ID].gattc_if, 
+                                 scan_result->scan_rst.bda, 
+                                 scan_result->scan_rst.ble_addr_type, true);
+          }
           /*Ejercicio 4*/
           if (strlen(CONFIG_REMOTE_DEVICE_ADDRESS) > 0 && 
                           memcmp(scan_result->scan_rst.bda, target_bda_to_filter, ESP_BD_ADDR_LEN) != 0) {

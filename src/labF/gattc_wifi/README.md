@@ -69,6 +69,13 @@ We will get back to you as soon as possible.
 
 ## Problemas detectados
 
+### Para lograr que el componente BLE (gattc_comp) envíe datos al componente WiFi Mesh (wifim_comp)
+Solo cuando ocurre un evento específico (la alerta "prox_alert 👾") y detener el envío constante de datos basura, necesitamos implementar una Cola de Mensajes (FreeRTOS Queue).
+1. Eliminado: El bucle while en wifim_comp.c ya no tiene un contador ni envía datos (light_on/light_off) cada X segundos.
+2. Agregado: xQueueReceive con portMAX_DELAY hace que la tarea de transmisión WiFi Mesh se duerma (consumiendo 0 CPU) hasta que reciba datos.
+3. Puente: Cuando gattc_comp.c recibe ESP_GATTC_NOTIFY_EVT, verifica si contiene "prox_alert". Si es así, copia el mensaje a la cola.
+4. Resultado: El log constante desaparece. Solo verás actividad en el log de Mesh cuando escanees una etiqueta BLE que envíe la alerta específica.
+
 ### Stack Overflow (desbordamiento de pila)
 Tu tarea solo tiene 2044 bytes de stack (aprox. 2KB). Para un proyecto que combina Bluetooth + Wi-Fi Mesh, esto es extremadamente poco. Solo el proceso de autenticación de Wi-Fi (visto en el backtrace con aes_128_cbc, pbkdf2_sha1) consume mucha pila.
 
