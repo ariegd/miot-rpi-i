@@ -1,12 +1,31 @@
 | Supported Targets | ESP32 | ESP32-C3  | Linux |
 | ----------------- | ----- | -------- | ----- |
 
-#  Ejemplo de Touch Pad
+# Objetivo de este Nodo
+```
+2. Implementación del sensor IoT
 
+* El sensor IoT debe medir la proximidad (es decir, detectar si se toca un pin concreto)
+utilizando el touch pad capacitivo del ESP32. Para ello, se deben emplear las funciones
+touch_pad_init(), touch_pad_conﬁg() y touch_pad_read().
+Nota: estableced un umbral de tiempo para controlar el envío de alertas de proximidad
+y evitar falsos positivos (p.e. que la alerta sólo se envíe tras tocar el pin durante 1.5
+segundos).
+* En el servidor GATT se debe registrar un servicio y una característica con su
+correspondiente descriptor CCC que permita al cliente GATT suscribirse y recibir
+notiﬁcaciones cada vez que se genere una alerta de proximidad. Hasta este punto,
+podéis comprobar la comunicación con el servidor GATT usando la aplicación móvil
+LightBlue.
+Nota: durante todo el proceso de envío de alertas desde los sensores IoT hasta el
+gateway/hub IoT, el payload intercambiado puede ser simplemente un valor numérico,
+booleano o string corto (p.e. “1”, “true”, “prox_alert”). No es necesario serializar los
+datos con JSON o CBOR.
+```
+
+##  Ejemplo de Touch Pad
 Inicia una tarea FreeRTOS para imprimir "touch_example: value=682, touched=0".
 
 ## Ejemplo del directorio del proyecto
-
 Below is short explanation of remaining files in the project folder.
 
 ```
