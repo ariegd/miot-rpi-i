@@ -30,7 +30,7 @@
 /*******************************************************
  *                Variable Definitions
  *******************************************************/
-static const char *MESH_TAG = "mesh_main";
+static const char *MESH_TAG = "NODO_RAIZ";
 static const uint8_t MESH_ID[6] = { 0x77,0x77,0x77,0x77,0x77, 0xB};
 static uint8_t tx_buf[TX_SIZE] = { 0, };
 static uint8_t rx_buf[RX_SIZE] = { 0, };
@@ -76,7 +76,7 @@ void esp_mesh_p2p_tx_main(void *arg)
     is_running = true;
 
     while (is_running) {
-        /* non-root do nothing but print */
+        // non-root do nothing but print 
         if (!esp_mesh_is_root()) {
             ESP_LOGI(MESH_TAG, "layer:%d, rtableSize:%d, %s", mesh_layer,
                      esp_mesh_get_routing_table_size(),
@@ -119,7 +119,7 @@ void esp_mesh_p2p_tx_main(void *arg)
                          err, data.proto, data.tos);
             }
         }
-        /* if route_table_size is less than 10, add delay to avoid watchdog in this task. */
+        // if route_table_size is less than 10, add delay to avoid watchdog in this task. 
         if (route_table_size < 10) {
             vTaskDelay(1 * 1000 / portTICK_PERIOD_MS);
         }
@@ -127,44 +127,45 @@ void esp_mesh_p2p_tx_main(void *arg)
     vTaskDelete(NULL);
 }
 
+// -- nuevo
+/* 1. TAREA DE RECEPCIÓN (RX): Solo muestra mensajes ALERT */
 void esp_mesh_p2p_rx_main(void *arg)
 {
-    int recv_count = 0;
     esp_err_t err;
     mesh_addr_t from;
-    int send_count = 0;
     mesh_data_t data;
     int flag = 0;
     data.data = rx_buf;
     data.size = RX_SIZE;
     is_running = true;
 
+    // Mensaje de inicio limpio
+    printf("\n\n--- SISTEMA LISTO: ESPERANDO ALERTAS ---\n\n");
+
     while (is_running) {
         data.size = RX_SIZE;
+        // Espera bloqueante hasta recibir datos
         err = esp_mesh_recv(&from, &data, portMAX_DELAY, &flag, NULL, 0);
+        
         if (err != ESP_OK || !data.size) {
-            ESP_LOGE(MESH_TAG, "err:0x%x, size:%d", err, data.size);
             continue;
         }
-        /* extract send count */
-        if (data.size >= sizeof(send_count)) {
-            send_count = (data.data[25] << 24) | (data.data[24] << 16)
-                         | (data.data[23] << 8) | data.data[22];
-        }
-        recv_count++;
-        /* process light control */
-        mesh_light_process(&from, data.data, data.size);
-        if (!(recv_count % 1)) {
-            ESP_LOGW(MESH_TAG,
-                     "[#RX:%d/%d][L:%d] parent:"MACSTR", receive from "MACSTR", size:%d, heap:%" PRId32 ", flag:%d[err:0x%x, proto:%d, tos:%d]",
-                     recv_count, send_count, mesh_layer,
-                     MAC2STR(mesh_parent_addr.addr), MAC2STR(from.addr),
-                     data.size, esp_get_minimum_free_heap_size(), flag, err, data.proto,
-                     data.tos);
+
+        // Asegurar fin de cadena
+        if (data.size < RX_SIZE) data.data[data.size] = '\0';
+        else data.data[RX_SIZE-1] = '\0';
+
+        // FILTRO: Solo mostrar si contiene la alerta
+        char *msg = (char *)data.data;
+        if (strstr(msg, "prox_alert") != NULL) {
+            // Imprime en VERDE (\033[0;32m)
+            ESP_LOGW(MESH_TAG, "\033[0;32m [ALERTA RECIBIDA] De "MACSTR": %s \033[0m", 
+                     MAC2STR(from.addr), msg);
         }
     }
     vTaskDelete(NULL);
 }
+//--fin
 
 esp_err_t esp_mesh_comm_p2p_start(void)
 {
@@ -385,7 +386,7 @@ void ip_event_handler(void *arg, esp_event_base_t event_base,
 
 }
 
-void app_main(void)
+void  wifir_task(void *pvParameters)
 {
     ESP_ERROR_CHECK(mesh_light_init());
     ESP_ERROR_CHECK(nvs_flash_init());
@@ -440,15 +441,18 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_mesh_set_config(&cfg));
     
     /* APLICAR LÓGICA DE ROOT FIJO DESDE MENUCONFIG */
+/*
 #ifdef CONFIG_MESH_FIXED_ROOT
     // Este código se activa si marcas la opción en menuconfig
-    ESP_ERROR_CHECK(esp_mesh_fix_root(true));
+    ESP_ERROR_CHECK(esp_mesh_fix_root(true)); // FORZAR ROOT
     ESP_LOGI(MESH_TAG, "--- CONFIGURACIÓN: NODO RAÍZ FIJO ---");
 #else
     // Comportamiento para nodos normales
     ESP_ERROR_CHECK(esp_mesh_fix_root(false));
     ESP_LOGI(MESH_TAG, "--- CONFIGURACIÓN: NODO REGULAR ---");
 #endif
+*/
+    ESP_ERROR_CHECK(esp_mesh_fix_root(true)); // FORZAR ROOT
     /* --- FIN DE MODIFICACIÓN --- */
     
     /* mesh start */
@@ -462,4 +466,12 @@ void app_main(void)
     ESP_LOGI(MESH_TAG, "mesh starts successfully, heap:%" PRId32 ", %s<%d>%s, ps:%d",  esp_get_minimum_free_heap_size(),
              esp_mesh_is_root_fixed() ? "root fixed" : "root not fixed",
              esp_mesh_get_topology(), esp_mesh_get_topology() ? "(chain)":"(tree)", esp_mesh_is_ps_enabled());
+             
+    // SOLUCIÓN: Matar la tarea al finalizar la configuración
+    vTaskDelete(NULL);
+}
+
+void wifir_start(void)
+{
+    xTaskCreate(&wifir_task, "wifir_task", 4096, NULL, 1, NULL);
 }

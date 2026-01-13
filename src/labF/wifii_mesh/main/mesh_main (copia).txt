@@ -17,10 +17,6 @@
 #include "mesh_light.h"
 #include "nvs_flash.h"
 
-// 1. DEFINICIÓN DE LA COLA GLOBAL
-#include "freertos/queue.h"
-QueueHandle_t mesh_tx_queue = NULL;
-
 /*******************************************************
  *                Macros
  *******************************************************/
@@ -34,7 +30,7 @@ QueueHandle_t mesh_tx_queue = NULL;
 /*******************************************************
  *                Variable Definitions
  *******************************************************/
-static const char *MESH_TAG = "NODO_MESH";
+static const char *MESH_TAG = "mesh_main";
 static const uint8_t MESH_ID[6] = { 0x77,0x77,0x77,0x77,0x77, 0xB};
 static uint8_t tx_buf[TX_SIZE] = { 0, };
 static uint8_t rx_buf[RX_SIZE] = { 0, };
@@ -65,106 +61,67 @@ mesh_light_ctl_t light_off = {
 /*******************************************************
  *                Function Definitions
  *******************************************************/
-/* REEMPLAZA LA FUNCIÓN esp_mesh_p2p_tx_main COMPLETA POR ESTA */
-/*
 void esp_mesh_p2p_tx_main(void *arg)
 {
+    int i;
     esp_err_t err;
+    int send_count = 0;
     mesh_addr_t route_table[CONFIG_MESH_ROUTE_TABLE_SIZE];
     int route_table_size = 0;
     mesh_data_t data;
-    char queue_msg[100]; // Buffer para recibir el mensaje de la cola
-    
+    data.data = tx_buf;
+    data.size = sizeof(tx_buf);
     data.proto = MESH_PROTO_BIN;
     data.tos = MESH_TOS_P2P;
     is_running = true;
 
-    ESP_LOGI(MESH_TAG, "Esperando alertas BLE para enviar por Mesh...");
-
     while (is_running) {
-        // 2. BLOQUEANTE: Espera infinitamente (portMAX_DELAY) hasta que llegue algo a la cola
-        if (xQueueReceive(mesh_tx_queue, queue_msg, portMAX_DELAY) == pdTRUE) {
-            
-            // Solo el ROOT se encarga de distribuir en este ejemplo P2P
-            if (!esp_mesh_is_root()) {
-                ESP_LOGW(MESH_TAG, "Mensaje recibido pero no soy ROOT, ignorando...");
-                continue;
-            }
+        // non-root do nothing but print
+        if (!esp_mesh_is_root()) {
+            ESP_LOGI(MESH_TAG, "layer:%d, rtableSize:%d, %s", mesh_layer,
+                     esp_mesh_get_routing_table_size(),
+                     is_mesh_connected ? "NODE" : "DISCONNECT");
+            vTaskDelay(10 * 1000 / portTICK_PERIOD_MS);
+            continue;
+        }
+        esp_mesh_get_routing_table((mesh_addr_t *) &route_table,
+                                   CONFIG_MESH_ROUTE_TABLE_SIZE * 6, &route_table_size);
+        if (send_count && !(send_count % 100)) {
+            ESP_LOGI(MESH_TAG, "size:%d/%d,send_count:%d", route_table_size,
+                     esp_mesh_get_routing_table_size(), send_count);
+        }
+        send_count++;
+        tx_buf[25] = (send_count >> 24) & 0xff;
+        tx_buf[24] = (send_count >> 16) & 0xff;
+        tx_buf[23] = (send_count >> 8) & 0xff;
+        tx_buf[22] = (send_count >> 0) & 0xff;
+        if (send_count % 2) {
+            memcpy(tx_buf, (uint8_t *)&light_on, sizeof(light_on));
+        } else {
+            memcpy(tx_buf, (uint8_t *)&light_off, sizeof(light_off));
+        }
 
-            // Preparar los datos para enviar
-            int msg_len = strlen(queue_msg);
-            memcpy(tx_buf, queue_msg, msg_len); // Copiar mensaje al buffer de transmisión global
-            data.size = msg_len;
-            data.data = tx_buf;
-
-            // Obtener tabla de rutas para saber a quién enviar
-            esp_mesh_get_routing_table((mesh_addr_t *) &route_table,
-                                       CONFIG_MESH_ROUTE_TABLE_SIZE * 6, &route_table_size);
-
-            ESP_LOGW(MESH_TAG, "ALERTA RECIBIDA: '%s'. Enviando a %d nodos...", queue_msg, route_table_size);
-
-            // Enviar a todos los nodos en la tabla de rutas
-            for (int i = 0; i < route_table_size; i++) {
-                err = esp_mesh_send(&route_table[i], &data, MESH_DATA_P2P, NULL, 0);
-                if (err) {
-                    ESP_LOGE(MESH_TAG, "Error enviando a nodo [%d]: 0x%x", i, err);
-                }
+        for (i = 0; i < route_table_size; i++) {
+            err = esp_mesh_send(&route_table[i], &data, MESH_DATA_P2P, NULL, 0);
+            if (err) {
+                ESP_LOGE(MESH_TAG,
+                         "[ROOT-2-UNICAST:%d][L:%d]parent:"MACSTR" to "MACSTR", heap:%" PRId32 "[err:0x%x, proto:%d, tos:%d]",
+                         send_count, mesh_layer, MAC2STR(mesh_parent_addr.addr),
+                         MAC2STR(route_table[i].addr), esp_get_minimum_free_heap_size(),
+                         err, data.proto, data.tos);
+            } else if (!(send_count % 100)) {
+                ESP_LOGW(MESH_TAG,
+                         "[ROOT-2-UNICAST:%d][L:%d][rtableSize:%d]parent:"MACSTR" to "MACSTR", heap:%" PRId32 "[err:0x%x, proto:%d, tos:%d]",
+                         send_count, mesh_layer,
+                         esp_mesh_get_routing_table_size(),
+                         MAC2STR(mesh_parent_addr.addr),
+                         MAC2STR(route_table[i].addr), esp_get_minimum_free_heap_size(),
+                         err, data.proto, data.tos);
             }
         }
-    }
-    vTaskDelete(NULL);
-}
-*/
-void esp_mesh_p2p_tx_main(void *arg)
-{
-    esp_err_t err;
-    mesh_addr_t route_table[CONFIG_MESH_ROUTE_TABLE_SIZE];
-    int route_table_size = 0;
-    mesh_data_t data;
-    char queue_msg[100]; 
-
-    data.proto = MESH_PROTO_BIN;
-    data.tos = MESH_TOS_P2P;
-    is_running = true;
-
-    ESP_LOGI(MESH_TAG, "Tarea TX iniciada. Esperando datos en 'mesh_tx_queue'...");
-
-    while (is_running) {
-        // 1. BLOQUEANTE: Espera hasta que llegue un mensaje a la cola
-        if (xQueueReceive(mesh_tx_queue, queue_msg, portMAX_DELAY) == pdTRUE) {
-            
-            int msg_len = strlen(queue_msg) + 1;  // El +1 incluye el '\0'
-            data.size = msg_len;
-            data.data = (uint8_t *)queue_msg; // Usamos directamente el mensaje de la cola
-
-            // 2. LÓGICA DE ENVÍO SEGÚN EL ROL DEL NODO
-            if (!esp_mesh_is_root()) {
-                /* --- CASO NODO HIJO: Enviar datos hacia el ROOT --- */
-                // Al pasar NULL como dirección de destino, el stack Mesh 
-                // lo encamina automáticamente hacia el nodo ROOT.
-                err = esp_mesh_send(NULL, &data, MESH_DATA_P2P, NULL, 0);
-                
-                if (err == ESP_OK) {
-                    ESP_LOGI(MESH_TAG, "HIJO: Mensaje enviado al ROOT: '%s'", queue_msg);
-                } else {
-                    ESP_LOGE(MESH_TAG, "HIJO: Error enviando al ROOT: 0x%x", err);
-                }
-            } 
-            else {
-                /* --- CASO NODO ROOT: Distribuir a todos los nodos --- */
-                esp_mesh_get_routing_table((mesh_addr_t *) &route_table,
-                                           CONFIG_MESH_ROUTE_TABLE_SIZE * 6, &route_table_size);
-
-                ESP_LOGW(MESH_TAG, "ROOT: Reenviando alerta a %d nodos...", route_table_size);
-
-                for (int i = 0; i < route_table_size; i++) {
-                    err = esp_mesh_send(&route_table[i], &data, MESH_DATA_P2P, NULL, 0);
-                    if (err != ESP_OK) {
-                        ESP_LOGE(MESH_TAG, "ROOT: Error enviando a "MACSTR": 0x%x", 
-                                 MAC2STR(route_table[i].addr), err);
-                    }
-                }
-            }
+        // if route_table_size is less than 10, add delay to avoid watchdog in this task. 
+        if (route_table_size < 10) {
+            vTaskDelay(1 * 1000 / portTICK_PERIOD_MS);
         }
     }
     vTaskDelete(NULL);
@@ -428,7 +385,7 @@ void ip_event_handler(void *arg, esp_event_base_t event_base,
 
 }
 
-void  wifim_task(void *pvParameters)
+void app_main(void)
 {
     ESP_ERROR_CHECK(mesh_light_init());
     ESP_ERROR_CHECK(nvs_flash_init());
@@ -494,30 +451,15 @@ void  wifim_task(void *pvParameters)
 #endif
     /* --- FIN DE MODIFICACIÓN --- */
     
-    /* ANTES DE esp_mesh_start(), INICIALIZA LA COLA */
-    // Cola para 5 mensajes de hasta 100 caracteres
-    mesh_tx_queue = xQueueCreate(5, 100 * sizeof(char)); 
-    if (mesh_tx_queue == NULL) {
-        ESP_LOGE(MESH_TAG, "Error creando la cola Mesh");
-    }
-    
     /* mesh start */
     ESP_ERROR_CHECK(esp_mesh_start());
 #ifdef CONFIG_MESH_ENABLE_PS
-    /* set the device active duty cycle. (default:10, MESH_PS_DEVICE_DUTY_REQUEST) */
+    // set the device active duty cycle. (default:10, MESH_PS_DEVICE_DUTY_REQUEST) 
     ESP_ERROR_CHECK(esp_mesh_set_active_duty_cycle(CONFIG_MESH_PS_DEV_DUTY, CONFIG_MESH_PS_DEV_DUTY_TYPE));
-    /* set the network active duty cycle. (default:10, -1, MESH_PS_NETWORK_DUTY_APPLIED_ENTIRE) */
+    // set the network active duty cycle. (default:10, -1, MESH_PS_NETWORK_DUTY_APPLIED_ENTIRE) 
     ESP_ERROR_CHECK(esp_mesh_set_network_duty_cycle(CONFIG_MESH_PS_NWK_DUTY, CONFIG_MESH_PS_NWK_DUTY_DURATION, CONFIG_MESH_PS_NWK_DUTY_RULE));
 #endif
     ESP_LOGI(MESH_TAG, "mesh starts successfully, heap:%" PRId32 ", %s<%d>%s, ps:%d",  esp_get_minimum_free_heap_size(),
              esp_mesh_is_root_fixed() ? "root fixed" : "root not fixed",
              esp_mesh_get_topology(), esp_mesh_get_topology() ? "(chain)":"(tree)", esp_mesh_is_ps_enabled());
-             
-    // SOLUCIÓN: Matar la tarea al finalizar la configuración
-    vTaskDelete(NULL);
-}
-
-void wifim_start(void)
-{
-    xTaskCreate(&wifim_task, "wifim_task", 4096, NULL, 2, NULL);
 }

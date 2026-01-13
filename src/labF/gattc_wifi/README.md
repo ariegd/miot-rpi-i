@@ -69,6 +69,18 @@ We will get back to you as soon as possible.
 
 ## Problemas detectados
 
+### El error que estás viendo (reason 0x08) es un "Connection Timeout".
+Esto ocurre porque el dispositivo BLE se aleja, hay mucha interferencia o, lo más probable en este caso, el dispositivo BLE (servidor/tag) entra en modo de bajo consumo y cierra la conexión tras enviar la alerta.
+
+Para que el sistema se vuelva a conectar automáticamente y envíe la siguiente alerta, debemos modificar la lógica en gattc_comp.c. Actualmente, el código probablemente deja de escanear una vez que se conecta o se desconecta.
+
+Flujo de operación resultante:
+1. Estado Reposo: El ESP32 está escaneando.
+2. Detección: El tag BLE aparece y envía publicidad. El ESP32 lo reconoce por el nombre.
+3. Acción: Se conecta, recibe la notificación prox_alert 👾, la mete en la cola Mesh y el componente WiFi Mesh la envía.
+4. Cierre: El tag se desconecta (tu error 0x08).
+5. Reactivación: El evento de desconexión dispara esp_ble_gap_start_scanning(0), volviendo al paso 1.
+
 ### Para lograr que el componente BLE (gattc_comp) envíe datos al componente WiFi Mesh (wifim_comp)
 Solo cuando ocurre un evento específico (la alerta "prox_alert 👾") y detener el envío constante de datos basura, necesitamos implementar una Cola de Mensajes (FreeRTOS Queue).
 1. Eliminado: El bucle while en wifim_comp.c ya no tiene un contador ni envía datos (light_on/light_off) cada X segundos.

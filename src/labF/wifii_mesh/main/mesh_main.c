@@ -30,7 +30,7 @@
 /*******************************************************
  *                Variable Definitions
  *******************************************************/
-static const char *MESH_TAG = "mesh_main";
+static const char *MESH_TAG = "ROOT_MESH";
 static const uint8_t MESH_ID[6] = { 0x77,0x77,0x77,0x77,0x77, 0xB};
 static uint8_t tx_buf[TX_SIZE] = { 0, };
 static uint8_t rx_buf[RX_SIZE] = { 0, };
@@ -61,6 +61,7 @@ mesh_light_ctl_t light_off = {
 /*******************************************************
  *                Function Definitions
  *******************************************************/
+ /*
 void esp_mesh_p2p_tx_main(void *arg)
 {
     int i;
@@ -76,7 +77,7 @@ void esp_mesh_p2p_tx_main(void *arg)
     is_running = true;
 
     while (is_running) {
-        /* non-root do nothing but print */
+        // non-root do nothing but print
         if (!esp_mesh_is_root()) {
             ESP_LOGI(MESH_TAG, "layer:%d, rtableSize:%d, %s", mesh_layer,
                      esp_mesh_get_routing_table_size(),
@@ -119,14 +120,15 @@ void esp_mesh_p2p_tx_main(void *arg)
                          err, data.proto, data.tos);
             }
         }
-        /* if route_table_size is less than 10, add delay to avoid watchdog in this task. */
+        // if route_table_size is less than 10, add delay to avoid watchdog in this task. 
         if (route_table_size < 10) {
             vTaskDelay(1 * 1000 / portTICK_PERIOD_MS);
         }
     }
     vTaskDelete(NULL);
 }
-
+*/
+/*
 void esp_mesh_p2p_rx_main(void *arg)
 {
     int recv_count = 0;
@@ -146,13 +148,13 @@ void esp_mesh_p2p_rx_main(void *arg)
             ESP_LOGE(MESH_TAG, "err:0x%x, size:%d", err, data.size);
             continue;
         }
-        /* extract send count */
+        // extract send count 
         if (data.size >= sizeof(send_count)) {
             send_count = (data.data[25] << 24) | (data.data[24] << 16)
                          | (data.data[23] << 8) | data.data[22];
         }
         recv_count++;
-        /* process light control */
+        // process light control 
         mesh_light_process(&from, data.data, data.size);
         if (!(recv_count % 1)) {
             ESP_LOGW(MESH_TAG,
@@ -165,7 +167,91 @@ void esp_mesh_p2p_rx_main(void *arg)
     }
     vTaskDelete(NULL);
 }
+*/
 
+void esp_mesh_p2p_tx_main(void *arg)
+{
+    // EL NODO RAÍZ NO ENVÍA NADA. SE QUEDA DORMIDO.
+    is_running = true;
+    while (is_running) {
+        vTaskDelay(10000 / portTICK_PERIOD_MS);
+    }
+    vTaskDelete(NULL);
+}
+
+void esp_mesh_p2p_rx_main(void *arg)
+{
+    esp_err_t err;
+    mesh_addr_t from;
+    mesh_data_t data;
+    int flag = 0;
+    data.data = rx_buf;
+    data.size = RX_SIZE;
+    is_running = true;
+
+    ESP_LOGI(MESH_TAG, "--- TAREA RX INICIADA: ESCUCHANDO MENSAJES ---");
+
+    while (is_running) {
+        data.size = RX_SIZE;
+        // Espera bloqueante hasta recibir algo de cualquier nodo (hijo)
+        err = esp_mesh_recv(&from, &data, portMAX_DELAY, &flag, NULL, 0);
+        
+        if (err != ESP_OK || !data.size) {
+            ESP_LOGE(MESH_TAG, "Error en recepción: 0x%x", err);
+            continue;
+        }
+
+        /* --- MEJORA: Forzar terminador nulo para impresión segura --- */
+        // Aseguramos que el buffer sea tratado como un string de C
+        if (data.size < RX_SIZE) {
+            data.data[data.size] = '\0'; 
+        } else {
+            data.data[RX_SIZE - 1] = '\0';
+        }
+
+        // Imprimir quién envía y qué envía
+        ESP_LOGW(MESH_TAG, "!!! MENSAJE RECIBIDO de "MACSTR" !!!", MAC2STR(from.addr));
+        ESP_LOGI(MESH_TAG, "CONTENIDO: %s", (char*)data.data);
+        ESP_LOGI(MESH_TAG, "TAMAÑO: %d bytes", data.size);
+        ESP_LOGI(MESH_TAG, "-----------------------------------------");
+    }
+    vTaskDelete(NULL);
+}
+
+/*
+void esp_mesh_p2p_rx_main(void *arg)
+{
+    esp_err_t err;
+    mesh_addr_t from;
+    mesh_data_t data;
+    int flag = 0;
+    data.data = rx_buf;
+    data.size = RX_SIZE;
+    is_running = true;
+
+    ESP_LOGI(MESH_TAG, "--- TAREA RX INICIADA: ESPERANDO DATOS DE HIJOS ---");
+
+    while (is_running) {
+        data.size = RX_SIZE;
+        // Espera bloqueante hasta recibir algo
+        err = esp_mesh_recv(&from, &data, portMAX_DELAY, &flag, NULL, 0);
+        if (err != ESP_OK || !data.size) {
+            ESP_LOGE(MESH_TAG, "err:0x%x, size:%d", err, data.size);
+            continue;
+        }
+
+        // Detectar si es texto
+        if (data.size > 0 && data.data[data.size - 1] == 0) {
+             ESP_LOGW(MESH_TAG, "!!! ALERTA RECIBIDA DE "MACSTR" !!!", MAC2STR(from.addr));
+             ESP_LOGW(MESH_TAG, "MENSAJE: %s", (char*)data.data);
+             ESP_LOGW(MESH_TAG, "-----------------------------------------");
+        } else {
+             ESP_LOGI(MESH_TAG, "Datos binarios de "MACSTR", size: %d", MAC2STR(from.addr), data.size);
+        }
+    }
+    vTaskDelete(NULL);
+}
+*/
 esp_err_t esp_mesh_comm_p2p_start(void)
 {
     static bool is_comm_p2p_started = false;
@@ -454,9 +540,9 @@ void app_main(void)
     /* mesh start */
     ESP_ERROR_CHECK(esp_mesh_start());
 #ifdef CONFIG_MESH_ENABLE_PS
-    /* set the device active duty cycle. (default:10, MESH_PS_DEVICE_DUTY_REQUEST) */
+    // set the device active duty cycle. (default:10, MESH_PS_DEVICE_DUTY_REQUEST) 
     ESP_ERROR_CHECK(esp_mesh_set_active_duty_cycle(CONFIG_MESH_PS_DEV_DUTY, CONFIG_MESH_PS_DEV_DUTY_TYPE));
-    /* set the network active duty cycle. (default:10, -1, MESH_PS_NETWORK_DUTY_APPLIED_ENTIRE) */
+    // set the network active duty cycle. (default:10, -1, MESH_PS_NETWORK_DUTY_APPLIED_ENTIRE) 
     ESP_ERROR_CHECK(esp_mesh_set_network_duty_cycle(CONFIG_MESH_PS_NWK_DUTY, CONFIG_MESH_PS_NWK_DUTY_DURATION, CONFIG_MESH_PS_NWK_DUTY_RULE));
 #endif
     ESP_LOGI(MESH_TAG, "mesh starts successfully, heap:%" PRId32 ", %s<%d>%s, ps:%d",  esp_get_minimum_free_heap_size(),
