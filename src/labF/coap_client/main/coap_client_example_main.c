@@ -113,34 +113,23 @@ static coap_response_t
 message_handler(coap_session_t *session,
                 const coap_pdu_t *sent,
                 const coap_pdu_t *received,
-                const coap_mid_t mid)
+                const coap_mid_t id)
 {
-    const unsigned char *data = NULL;
-    size_t data_len;
+    const uint8_t *data;
+    size_t len;
     size_t offset;
     size_t total;
-    coap_pdu_code_t rcvd_code = coap_pdu_get_code(received);
 
-    if (COAP_RESPONSE_CLASS(rcvd_code) == 2) {
-        if (coap_get_data_large(received, &data_len, &data, &offset, &total)) {
-            if (data_len != total) {
-                printf("Unexpected partial data received offset %u, length %u\n", offset, data_len);
-            }
-            printf("Received:\n%.*s\n", (int)data_len, data);
-            resp_wait = 0;
-        }
-        return COAP_RESPONSE_OK;
+    // Imprimir el código de respuesta (Ej: 2.04)
+    ESP_LOGI(TAG, "Respuesta del servidor recibida (Código: %d.%02d)",
+             coap_pdu_get_code(received) >> 5, coap_pdu_get_code(received) & 0x1F);
+
+    // Obtener y mostrar el texto que envía el servidor
+    if (coap_get_data_large(received, &len, &data, &offset, &total)) {
+        ESP_LOGI(TAG, "Mensaje del servidor: %.*s", (int)len, data);
     }
-    printf("%d.%02d", (rcvd_code >> 5), rcvd_code & 0x1F);
-    if (coap_get_data_large(received, &data_len, &data, &offset, &total)) {
-        printf(": ");
-        while (data_len--) {
-            printf("%c", isprint(*data) ? *data : '.');
-            data++;
-        }
-    }
-    printf("\n");
-    resp_wait = 0;
+
+    resp_wait = 0; // Esto detiene el bucle de espera en app_main
     return COAP_RESPONSE_OK;
 }
 

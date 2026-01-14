@@ -114,27 +114,28 @@ hnd_espressif_get(coap_resource_t *resource,
 /*
  * MANEJADOR PARA PETICIONES POST (Para recibir alertas)
  */
-static void hnd_espressif_post(coap_resource_t *resource,
-                               coap_session_t *session,
-                               const coap_pdu_t *request,
-                               const coap_string_t *query,
-                               coap_pdu_t *response)
+static void
+hnd_espressif_post(coap_resource_t *resource,
+                   coap_session_t *session,
+                   const coap_pdu_t *request,
+                   const coap_string_t *query,
+                   coap_pdu_t *response)
 {
     size_t size;
+    size_t offset;
+    size_t total;
     const uint8_t *data;
-    
-    // 1. Extraer los datos del paquete recibido
-    if (coap_get_data(request, &size, &data)) {
-        // 2. Imprimir la alerta por pantalla
-        // Usamos %.*s porque los datos CoAP no siempre terminan en \0
+
+    /* 1. Obtener los datos del cliente */
+    if (coap_get_data_large(request, &size, &data, &offset, &total) && size > 0) {
         ESP_LOGW(TAG, "!!! ALERTA RECIBIDA !!!: %.*s", (int)size, data);
-        
-        // 3. Responder al cliente que todo salió bien (Código 2.04 Changed)
-        coap_pdu_set_code(response, COAP_RESPONSE_CODE_CHANGED);
-    } else {
-        // Si llegó un POST vacío
-        ESP_LOGI(TAG, "Recibido POST sin datos");
-        coap_pdu_set_code(response, COAP_RESPONSE_CODE_BAD_REQUEST);
+
+        /* 2. CONFIGURAR EL CÓDIGO DE RESPUESTA (Crucial para que el cliente no dé Timeout) */
+        coap_pdu_set_code(response, COAP_RESPONSE_CODE_CHANGED); // Código 2.04
+
+        /* 3. Opcional: Enviar un mensaje de confirmación al cliente */
+        const char *reply = "Alerta procesada por el servidor";
+        coap_add_data(response, strlen(reply), (const uint8_t *)reply);
     }
 }
 
