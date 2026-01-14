@@ -17,7 +17,7 @@ de una tarea FreeRTOS.
 mediante una pe,ción POST de CoAP. 
 ```
 
-## Nodo wifi_coap
+## Nodo wifir_coapc
 Starts a FreeRTOS task to print "Hello World".
 
 (See the README.md file in the upper level 'examples' directory for more information about examples.)
@@ -51,12 +51,54 @@ Below is short explanation of remaining files in the project folder.
 
 For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
 
-## Troubleshooting
+## Ejemplo de salida
 
-* Program upload failure
+* Salida `wifir_coapc` cliente coap y wifi mesh:
+```
+I (81240) ROOT_MESH: -----------------------------------------
+W (81240) ROOT_MESH: !!! MENSAJE RECIBIDO de 34:85:18:02:70:4c !!!
+I (81240) ROOT_MESH: CONTENIDO: prox_alert 👾
+I (81240) ROOT_MESH: TAMAÑO: 16 bytes
+I (81250) ROOT_MESH: Payload enviado a la cola CoAP correctamente
+I (81250) CoAP_CLIENT: Alerta recibida desde Mesh: prox_alert 👾
+I (82260) CoAP_CLIENT: Respuesta del servidor recibida (Código: 2.04)
+I (82260) CoAP_CLIENT: Mensaje del servidor: Alerta procesada por el servidor
+I (131630) ROOT_MESH: -----------------------------------------
+W (131630) ROOT_MESH: !!! MENSAJE RECIBIDO de 34:85:18:02:70:4c !!!
+I (131630) ROOT_MESH: CONTENIDO: prox_alert 👾
+I (131630) ROOT_MESH: TAMAÑO: 16 bytes
+I (131640) ROOT_MESH: Payload enviado a la cola CoAP correctamente
+I (131640) CoAP_CLIENT: Alerta recibida desde Mesh: prox_alert 👾
+I (132650) CoAP_CLIENT: Respuesta del servidor recibida (Código: 2.04)
+I (132650) CoAP_CLIENT: Mensaje del servidor: Alerta procesada por el servidor
+I (136810) ROOT_MESH: -----------------------------------------
+W (136810) ROOT_MESH: !!! MENSAJE RECIBIDO de 34:85:18:02:70:4c !!!
+I (136810) ROOT_MESH: CONTENIDO: prox_alert 👾
+I (136820) ROOT_MESH: TAMAÑO: 16 bytes
+I (136820) ROOT_MESH: Payload enviado a la cola CoAP correctamente
+I (136830) CoAP_CLIENT: Alerta recibida desde Mesh: prox_alert 👾
+I (137840) CoAP_CLIENT: Respuesta del servidor recibida (Código: 2.04)
+I (137840) CoAP_CLIENT: Mensaje del servidor: Alerta procesada por el servidor
+```
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+* Salida `coap_server`:
+```
+W (3601) wifi:<ba-add>idx:0, ifx:0, tid:0, TAHI:0x100bf3c, TALO:0x918f64a0, (ssn:2, win:64, cur_ssn:2), CONF:0xc0000005
+I (4831) esp_netif_handlers: example_netif_sta ip: 192.168.1.42, mask: 255.255.255.0, gw: 192.168.1.1
+I (4831) example_connect: Got IPv4 event: Interface "example_netif_sta" address: 192.168.1.42
+I (4831) example_common: Connected to example_netif_sta
+I (4841) example_common: - IPv4 address: 192.168.1.42,
+I (4841) CoAP_server: Iniciando Servidor CoAP...
+I (4851) CoAP_server: !!! SERVIDOR COAP ESCUCHANDO EN PUERTO 5683 !!!
+I (4861) main_task: Returned from app_main()
+W (22641) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
+W (30011) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
+W (84381) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
+W (86871) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
+W (239531) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
+W (240441) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
+W (241361) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
+```
 
 ## Technical support and feedback
 
