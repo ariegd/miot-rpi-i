@@ -40,27 +40,27 @@ A continuación se muestra una explicación de los archivos en la carpeta del pr
 
 ## Cómo ejecutar el proyecto
 Orden de ejecución en cada placa de prototipo, se necesita de 3 a 4 ESP32:
-1. [gatts_tourch](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-2. [gattc_wifih](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+1. [gatts_tourch](https://github.com/ariegd/miot-rpi-i/tree/labF/src/labF/gatts_touch)
+2. [gattc_wifih](https://github.com/ariegd/miot-rpi-i/tree/labF/src/labF/gattc_wifih)
 3. [wifir_coapc](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-4. [server](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+4. [server](https://github.com/ariegd/miot-rpi-i/tree/labF/src/labF/server)
 
 Antes de configurar y construir el proyecto, asegúrese de configurar el chip objetivo correcto utilizando `idf.py set-target <chip_name>`.
 
 ### Hardware requerido
-1. [gatts_tourch](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+1. [gatts_tourch](https://github.com/ariegd/miot-rpi-i/tree/labF/src/labF/gatts_touch)
 * Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
 * Un cable USB para alimentación y programación.
 
-2. [gattc_wifih](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+2. [gattc_wifih](https://github.com/ariegd/miot-rpi-i/tree/labF/src/labF/gattc_wifih)
 * Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
 * Un cable USB para alimentación y programación.
 
-3. [wifir_coapc](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+3. [wifir_coapc](https://github.com/ariegd/miot-rpi-i/tree/labF/src/labF/wifir_coapc)
 * Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
 * Un cable USB para alimentación y programación.
 
-4. [server](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+4. [server](https://github.com/ariegd/miot-rpi-i/tree/labF/src/labF/server)
 Servidor CoAP en ESP43:
 * Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
 * Un cable USB para alimentación y programación.
