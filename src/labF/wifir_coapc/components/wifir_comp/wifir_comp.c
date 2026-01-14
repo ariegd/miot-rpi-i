@@ -332,11 +332,11 @@ void ip_event_handler(void *arg, esp_event_base_t event_base,
 void  wifir_task(void *pvParameters)
 {
     ESP_ERROR_CHECK(mesh_light_init());
-    ESP_ERROR_CHECK(nvs_flash_init());
+    // ESP_ERROR_CHECK(nvs_flash_init()); <-- Ya se hace en app_main
     /*  tcpip initialization */
-    ESP_ERROR_CHECK(esp_netif_init());
+    // ESP_ERROR_CHECK(esp_netif_init()); <-- Ya se hace en app_main
     /*  event initialization */
-    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    // ESP_ERROR_CHECK(esp_event_loop_create_default()); <-- ESTA ES LA QUE DA EL ERROR 0x103
     /*  create network interfaces for mesh (only station instance saved for further manipulation, soft AP instance ignored */
     ESP_ERROR_CHECK(esp_netif_create_default_wifi_mesh_netifs(&netif_sta, NULL));
     /*  wifi initialization */

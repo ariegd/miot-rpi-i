@@ -1,0 +1,27 @@
+dependencies:
+  espressif/coap:
+    component_hash: 3d9fa98345036751440d30de94677b4b3b4963384a127a2303fca413e575807a
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.4'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 4.3.5~5
+  idf:
+    source:
+      type: idf
+    version: 5.5.0
+  protocol_examples_common:
+    dependencies: []
+    source:
+      path: /home/zodd/esp/esp-idf/examples/common_components/protocol_examples_common
+      type: local
+    version: '*'
+direct_dependencies:
+- espressif/coap
+- protocol_examples_common
+manifest_hash: d982fcbbf62dd37f7c9e08e84551696ed0410e98a33716022021caa69d7a9d44
+target: esp32c3
+version: 2.0.0
