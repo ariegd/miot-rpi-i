@@ -423,54 +423,58 @@ static void coap_example_client(void *p)
     }
 #endif /* CONFIG_COAP_WEBSOCKETS */
 
-    while (1) {
-        request = coap_new_pdu(coap_is_mcast(&dst_addr) ? COAP_MESSAGE_NON : COAP_MESSAGE_CON,
-                               COAP_REQUEST_CODE_GET, session);
-        if (!request) {
-            ESP_LOGE(TAG, "coap_new_pdu() failed");
+while (1) {
+        // 1. Limpiamos la lista de opciones previa
+        if (optlist) {
+            coap_delete_optlist(optlist);
+            optlist = NULL;
+        }
+
+        // --- CORRECCIÓN CRÍTICA ---
+        // 2. Regenerar las opciones de la URI (Host, Path="Espressif", etc.)
+        // Sin esto, la petición pierde la ruta y el servidor no sabe a quién entregarla (Error 4.04).
+        if (coap_uri_into_options(&uri, &dst_addr, &optlist, 1,
+                                  uri_path, sizeof(uri_path)) < 0) {
+            ESP_LOGE(TAG, "Error regenerando opciones de URI");
             goto clean_up;
         }
-        
-      // 1. Cambiar COAP_REQUEST_GET por COAP_REQUEST_POST
+        // --------------------------
+
+        // 3. Crear la PDU como POST
         request = coap_new_pdu(COAP_MESSAGE_CON, COAP_REQUEST_POST, session);
         if (!request) {
             ESP_LOGE(TAG, "coap_new_pdu failed");
             goto clean_up;
-        }        
-        
+        }
+
         /* Add in an unique token */
         coap_session_new_token(session, &tokenlength, token);
         coap_add_token(request, tokenlength, token);
 
-        /*
-         * To make this a POST, you will need to do the following
-         * Change COAP_REQUEST_CODE_GET to COAP_REQUEST_CODE_POST for coap_new_pdu()
-         * Add in here a Content-Type Option based on the format of the POST text.  E.G. for JSON
-         *   u_char buf[4];
-         *   coap_insert_optlist(&optlist,
-         *                       coap_new_optlist(COAP_OPTION_CONTENT_FORMAT,
-         *                                        coap_encode_var_safe (buf, sizeof (buf),
-         *                                                              COAP_MEDIATYPE_APPLICATION_JSON),
-         *                                        buf));
-         * Add in here the POST data of length length. E.G.
-         *   coap_add_data_large_request(session, request length, data, NULL, NULL);
-         */
+        // 4. Configurar Content-Format (TEXT_PLAIN)
+        unsigned char buf[4];
+        coap_insert_optlist(&optlist,
+                            coap_new_optlist(COAP_OPTION_CONTENT_FORMAT,
+                                             coap_encode_var_safe(buf, sizeof(buf),
+                                                                  COAP_MEDIATYPE_TEXT_PLAIN),
+                                             buf));
 
+        // Insertamos TODAS las opciones (Ruta + Content-Format) en la PDU
         coap_add_optlist_pdu(request, &optlist);
 
-        // 2. Definir el mensaje de alerta y añadirlo al paquete
+        // 5. Añadir los datos (Payload)
         const char *alerta_msg = "TEMPERATURA CRITICA: 85C";
-        // Añadimos los datos (payload) a la petición
         coap_add_data(request, strlen(alerta_msg), (const uint8_t *)alerta_msg);
-        ESP_LOGI(TAG, "Enviando ALERTA: %s", alerta_msg);
-        // 3. Enviar
+        
+        ESP_LOGI(TAG, "Enviando POST con ALERTA: %s", alerta_msg);
+
+        // 6. Enviar la petición
         coap_send(session, request);
 
         resp_wait = 1;
-        coap_send(session, request);
-
+        
+        // Esperar respuesta
         wait_ms = COAP_DEFAULT_TIME_SEC * 1000;
-
         while (resp_wait) {
             int result = coap_io_process(ctx, wait_ms > 1000 ? 1000 : wait_ms);
             if (result >= 0) {
@@ -482,13 +486,15 @@ static void coap_example_client(void *p)
                 }
             }
         }
+        
+        // Cuenta atrás
         for (int countdown = 10; countdown >= 0; countdown--) {
             ESP_LOGI(TAG, "%d... ", countdown);
             vTaskDelay(1000 / portTICK_PERIOD_MS);
         }
         ESP_LOGI(TAG, "Starting again!");
-    }
-
+ }
+    
 clean_up:
     if (optlist) {
         coap_delete_optlist(optlist);
