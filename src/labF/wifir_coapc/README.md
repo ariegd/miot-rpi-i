@@ -69,6 +69,61 @@ We will get back to you as soon as possible.
 
 ## Problemas detectados
 
+### El `coap_server` se queda en silencio y el `coap_client` no imprime nada después de conectarse al Wi-Fi.
+**El paso clave: Desactivar IPv6 (si no lo usas)**
+Muchos ejemplos de ESP-IDF esperan a que la interfaz de red tenga una IP IPv6 "Local Link" antes de disparar el evento que arranca la tarea CoAP.
+
+Si tu router solo da IPv4, la tarea nunca empieza. Para arreglarlo:
+1. Ejecuta `idf.py menuconfig` en ambos proyectos.
+2. Ve a Example Connection Configuration.
+3. Desmarca (u oculta) la opción de IPv6 Support si está habilitada, o asegúrate de que el código no dependa de `EXAMPLE_CONNECT_PREFERRED_IPV6`.
+
+coap_server:
+```
+I (3371) wifi:[ADDBA]RX addba response, status:0, tid:5/tb:1(0xa1), bufsize:32, batimeout:0, txa_wnd:32
+W (3611) wifi:<ba-add>idx:0, ifx:0, tid:0, TAHI:0x100bf3c, TALO:0x918f64a0, (ssn:2, win:64, cur_ssn:2), CONF:0xc0000005
+I (4881) esp_netif_handlers: example_netif_sta ip: 192.168.1.42, mask: 255.255.255.0, gw: 192.168.1.1
+I (4881) example_connect: Got IPv4 event: Interface "example_netif_sta" address: 192.168.1.42
+I (4881) example_common: Connected to example_netif_sta
+I (4891) example_common: - IPv4 address: 192.168.1.42,
+I (4891) CoAP_server: Iniciando Servidor CoAP...
+I (4901) CoAP_server: !!! SERVIDOR COAP ESCUCHANDO EN PUERTO 5683 !!!
+I (4911) main_task: Returned from app_main()
+```
+
+coap_client:
+```
+I (3071) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (3081) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (3091) wifi:AP's beacon interval = 102400 us, DTIM period = 3
+I (3301) wifi:<ba-add>idx:0 (ifx:0, a0:64:8f:91:3c:bf), tid:0, ssn:2, winSize:64
+I (4591) esp_netif_handlers: example_netif_sta ip: 192.168.1.40, mask: 255.255.255.0, gw: 192.168.1.1
+I (4591) example_connect: Got IPv4 event: Interface "example_netif_sta" address: 192.168.1.40
+I (4591) example_common: Connected to example_netif_sta
+I (4601) example_common: - IPv4 address: 192.168.1.40,
+I (4601) CoAP_client: !!! TAREA CLIENTE INICIADA CON URI: coap://192.168.1.42/Espressif !!!
+I (4611) CoAP_client: DNS lookup succeeded. IP=192.168.1.42
+I (4621) main_task: Returned from app_main()
+Received:
+Hello World!
+I (4831) CoAP_client: 10... 
+I (5831) CoAP_client: 9... 
+I (6831) CoAP_client: 8... 
+I (7831) CoAP_client: 7... 
+I (8831) CoAP_client: 6... 
+I (9831) CoAP_client: 5... 
+I (10831) CoAP_client: 4... 
+I (11831) CoAP_client: 3... 
+I (12831) CoAP_client: 2... 
+I (13831) CoAP_client: 1... 
+I (14831) CoAP_client: 0... 
+I (15831) CoAP_client: Starting again!
+Received:
+Hello World!
+I (16191) CoAP_client: 10... 
+I (17191) CoAP_client: 9... 
+```
+
 ### Solamente el NODO RAIZ (ROOT) 
 1. Debe estar conectado con la wifi router (el ruter de casa) 
 2. Una vez que ya se tiene designado el NODO RAIZ el resto de los nodos mesh se conectan automaticamente.
