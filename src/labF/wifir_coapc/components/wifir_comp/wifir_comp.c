@@ -17,6 +17,9 @@
 #include "mesh_light.h"
 #include "nvs_flash.h"
 
+#include "freertos/queue.h" // <--- IMPORTANTE
+// Referencia a la cola creada en coapc_comp.c
+extern QueueHandle_t coap_alert_queue;
 /*******************************************************
  *                Macros
  *******************************************************/
@@ -61,6 +64,22 @@ mesh_light_ctl_t light_off = {
 /*******************************************************
  *                Function Definitions
  *******************************************************/
+ // Función auxiliar para enviar alerta (puedes llamarla desde donde quieras)
+void notificar_alerta_coap() {
+    const char *mensaje = "prox_alert 👾";
+
+    if (coap_alert_queue != NULL) {
+        // Enviar a la cola. Si está llena, no bloqueamos (0 espera)
+        if (xQueueSend(coap_alert_queue, mensaje, 0) == pdPASS) {
+            ESP_LOGI(MESH_TAG, "Alerta enviada a la tarea CoAP");
+        } else {
+            ESP_LOGW(MESH_TAG, "Cola CoAP llena, alerta descartada");
+        }
+    } else {
+        ESP_LOGE(MESH_TAG, "Cola CoAP no inicializada aún");
+    }
+}
+
 void esp_mesh_p2p_tx_main(void *arg)
 {
     // EL NODO RAÍZ NO ENVÍA NADA. SE QUEDA DORMIDO.
@@ -101,11 +120,22 @@ void esp_mesh_p2p_rx_main(void *arg)
             data.data[RX_SIZE - 1] = '\0';
         }
 
+        ESP_LOGI(MESH_TAG, "-----------------------------------------");
         // Imprimir quién envía y qué envía
         ESP_LOGW(MESH_TAG, "!!! MENSAJE RECIBIDO de "MACSTR" !!!", MAC2STR(from.addr));
         ESP_LOGI(MESH_TAG, "CONTENIDO: %s", (char*)data.data);
         ESP_LOGI(MESH_TAG, "TAMAÑO: %d bytes", data.size);
-        ESP_LOGI(MESH_TAG, "-----------------------------------------");
+        // --- ENVIAR EL PAYLOAD REAL A LA COLA COAP ---
+        if (coap_alert_queue != NULL) {
+            // Enviamos el contenido de data.data a la cola
+            if (xQueueSend(coap_alert_queue, data.data, 0) == pdPASS) {
+                ESP_LOGI(MESH_TAG, "Payload enviado a la cola CoAP correctamente");
+            } else {
+                ESP_LOGW(MESH_TAG, "Cola CoAP llena, no se pudo enviar el mensaje");
+            }
+        } else {
+            ESP_LOGE(MESH_TAG, "Error: La cola CoAP no existe aún");
+        }
     }
     vTaskDelete(NULL);
 }

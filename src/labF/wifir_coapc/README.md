@@ -69,6 +69,48 @@ We will get back to you as soon as possible.
 
 ## Problemas detectados
 
+### Tome ese payload y lo coloque en la cola `coap_alert_queue`.
+La idea es que cada vez que el nodo raíz (Root) reciba un paquete de un nodo hijo, tome ese payload y lo coloque en la cola `coap_alert_queue`.
+¿Qué sucede ahora?
+* Evento puntual: El cliente CoAP no enviará nada mientras el Mesh esté en silencio.
+* Transmisión: En el instante en que un nodo hijo envíe datos (por ejemplo, una lectura de sensor), el Root los recibe, los mete en la cola, y la tarea CoAP los procesa inmediatamente para enviarlos al servidor mediante un POST.
+
+### No es recomendable poner un bucle de recepción dentro de `wifir_task`
+porque esa tarea debe terminar después de configurar el Mesh. El lugar correcto para procesar los mensajes y enviar la alerta es en la tarea que ya tienes creada para eso: esp_mesh_p2p_rx_main.
+
+### Cola de Mensajes (FreeRTOS Queue)
+Para lograr que el componente Mesh (wifir_comp.c) envíe datos al componente CoAP (coapc_comp.c) solo cuando ocurre un evento puntual, la arquitectura correcta es utilizar una Cola de Mensajes (FreeRTOS Queue).
+
+Esto evita tener un bucle enviando datos constantemente y permite que la tarea CoAP "duerma" o haga mantenimiento hasta que el Mesh le avise.
+
+### Error `ESP_ERR_INVALID_STATE (0x103)` en la función `esp_event_loop_create_default()`
+El error ESP_ERR_INVALID_STATE (0x103) en la función esp_event_loop_create_default() ocurre porque estás intentando crear el bucle de eventos dos veces.
+
+En ESP-IDF, el "Event Loop" es un recurso global. Si ya lo has inicializado en el app_main (como te recomendé en el paso anterior), cualquier intento posterior de un componente por crearlo de nuevo hará que el programa aborte.
+
+### Error se produce porque `example_connect()` ha fallado
+1. Causa Inmediata (El Crash): En el log ves: WiFi Connect failed 7 times, stop reconnect. seguido de ESP_ERROR_CHECK failed... abort(). Esto ocurre dentro de coapc_start, donde llamas a example_connect(). Como no logra conectar con el SSID "myssid" (posiblemente porque no existe o la clave está mal en el menuconfig), la función devuelve error y el programa explota.
+2. Causa Raíz (Conflicto de Arquitectura): Estás uniendo dos mundos que chocan:
+* coapc_comp.c (Cliente CoAP): Usa example_connect(). Esta función está diseñada para demos sencillas; inicializa el Wi-Fi, lo configura como Estación (STA) y bloquea el programa hasta obtener IP.
+* wifir_comp.c (Mesh/Repeater): El Wi-Fi Mesh (esp_mesh) necesita control total sobre el driver Wi-Fi para configurar las interfaces AP y STA dinámicamente.
+
+El problema: Al llamar primero a coapc_start(), este intenta configurar el Wi-Fi como una estación normal. Si falla, crashea. Si tuviera éxito, bloquearía o interferiría con la configuración posterior de wifir_start().
+
+### Error fatal error: esp_wifi.h: No such file or directory
+El error fatal error: esp_wifi.h: No such file or directory ocurre porque el sistema de compilación de ESP-IDF (CMake) no sabe que tu nuevo componente coapc_comp depende de las librerías de Wi-Fi del sistema.
+
+### Desactivación de IPv6 de forma permanente
+¿Por qué hacerlo aquí?
+* Persistencia: Al estar en sdkconfig.defaults, cualquier persona que clone tu proyecto o cualquier nueva compilación desde cero tomará este valor por defecto.
+* Prioridad: Cuando ejecutas idf.py build, el sistema lee este archivo para generar el sdkconfig final.
+* Limpieza: Evitas que el servidor intente levantar interfaces IPv6 que no vas a usar, ahorrando memoria en el heap (algo importante para evitar el desbordamiento que mencionamos antes).
+
+
+### Error 4.04: Not Found que recibe el cliente y la falta de logs
+El error 4.04: Not Found que recibe el cliente y la falta de logs en el servidor confirman lo siguiente:
+1. La conexión es correcta: El cliente llega al servidor (IP 192.168.1.42), por eso recibes una respuesta 4.04 en lugar de un error de "Timeout".
+2. El problema: Estás recibiendo un Not Found porque el cliente está pidiendo una ruta que no existe.
+
 ### El `coap_server` se queda en silencio y el `coap_client` no imprime nada después de conectarse al Wi-Fi.
 **El paso clave: Desactivar IPv6 (si no lo usas)**
 Muchos ejemplos de ESP-IDF esperan a que la interfaz de red tenga una IP IPv6 "Local Link" antes de disparar el evento que arranca la tarea CoAP.

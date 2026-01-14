@@ -34,6 +34,10 @@
 #include "coap_config.h"
 #include "coap3/coap.h"
 
+#include "freertos/queue.h" // <--- IMPORTANTE
+// 1. Declarar la cola global
+QueueHandle_t coap_alert_queue = NULL;
+
 
 #ifndef CONFIG_COAP_CLIENT_SUPPORT
 #error COAP_CLIENT_SUPPORT needs to be enabled
@@ -75,7 +79,7 @@
 #define COAP_DEFAULT_DEMO_URI CONFIG_EXAMPLE_TARGET_DOMAIN_URI
 //#define COAP_DEFAULT_DEMO_URI "coap://192.168.1.42/Espressif"
 
-const static char *TAG = "CoAP_client";
+const static char *TAG = "CoAP_CLIENT";
 
 static int resp_wait = 1;
 static coap_optlist_t *optlist = NULL;
@@ -412,77 +416,56 @@ static void coap_example_client(void *p)
     }
 #endif /* CONFIG_COAP_WEBSOCKETS */
 
+  // 2. Inicializar la cola (Guardar hasta 5 mensajes de 50 caracteres)
+  coap_alert_queue = xQueueCreate(5, sizeof(char) * 50);
+  if (coap_alert_queue == NULL) {
+      ESP_LOGE(TAG, "Error creando la cola de alertas");
+      goto clean_up;
+  }
+
+char payload_recibido[50]; // Buffer para recibir datos
+
+
 while (1) {
-        // 1. Limpiamos la lista de opciones previa
-        if (optlist) {
-            coap_delete_optlist(optlist);
-            optlist = NULL;
-        }
+        // 3. Esperar mensaje de la cola con un timeout pequeño
+        // Usamos timeout (ej. 100 ticks) para permitir que coap_io_process siga ejecutándose
+        if (xQueueReceive(coap_alert_queue, payload_recibido, (TickType_t)100) == pdPASS) {
+            
+            // --- ¡SE RECIBIÓ UNA ALERTA! ---
+            ESP_LOGI(TAG, "Alerta recibida desde Mesh: %s", payload_recibido);
 
-        // --- CORRECCIÓN CRÍTICA ---
-        // 2. Regenerar las opciones de la URI (Host, Path="Espressif", etc.)
-        // Sin esto, la petición pierde la ruta y el servidor no sabe a quién entregarla (Error 4.04).
-        if (coap_uri_into_options(&uri, &dst_addr, &optlist, 1,
-                                  uri_path, sizeof(uri_path)) < 0) {
-            ESP_LOGE(TAG, "Error regenerando opciones de URI");
-            goto clean_up;
-        }
-        // --------------------------
-
-        // 3. Crear la PDU como POST
-        request = coap_new_pdu(COAP_MESSAGE_CON, COAP_REQUEST_POST, session);
-        if (!request) {
-            ESP_LOGE(TAG, "coap_new_pdu failed");
-            goto clean_up;
-        }
-
-        /* Add in an unique token */
-        coap_session_new_token(session, &tokenlength, token);
-        coap_add_token(request, tokenlength, token);
-
-        // 4. Configurar Content-Format (TEXT_PLAIN)
-        unsigned char buf[4];
-        coap_insert_optlist(&optlist,
-                            coap_new_optlist(COAP_OPTION_CONTENT_FORMAT,
-                                             coap_encode_var_safe(buf, sizeof(buf),
-                                                                  COAP_MEDIATYPE_TEXT_PLAIN),
-                                             buf));
-
-        // Insertamos TODAS las opciones (Ruta + Content-Format) en la PDU
-        coap_add_optlist_pdu(request, &optlist);
-
-        // 5. Añadir los datos (Payload)
-        const char *alerta_msg = "TEMPERATURA CRITICA: 85C";
-        coap_add_data(request, strlen(alerta_msg), (const uint8_t *)alerta_msg);
-        
-        ESP_LOGI(TAG, "Enviando POST con ALERTA: %s", alerta_msg);
-
-        // 6. Enviar la petición
-        coap_send(session, request);
-
-        resp_wait = 1;
-        
-        // Esperar respuesta
-        wait_ms = COAP_DEFAULT_TIME_SEC * 1000;
-        while (resp_wait) {
-            int result = coap_io_process(ctx, wait_ms > 1000 ? 1000 : wait_ms);
-            if (result >= 0) {
-                if (result >= wait_ms) {
-                    ESP_LOGE(TAG, "No response from server");
-                    break;
-                } else {
-                    wait_ms -= result;
-                }
+            /* Preparar el POST dinámicamente */
+            if (optlist) { coap_delete_optlist(optlist); optlist = NULL; }
+            
+            // Regenerar URI (Importante si se limpió antes)
+            // Asegúrate de tener las variables uri, dst_addr, uri_path disponibles aquí
+            // (Si están fuera del bucle, asegúrate de no haberlas borrado con clean_up antes)
+            if (coap_uri_into_options(&uri, &dst_addr, &optlist, 1, uri_path, sizeof(uri_path)) < 0) {
+                 ESP_LOGE(TAG, "Error URI"); continue;
             }
+
+            request = coap_new_pdu(COAP_MESSAGE_CON, COAP_REQUEST_POST, session);
+            if (!request) { ESP_LOGE(TAG, "Error PDU"); continue; }
+
+            // Añadir Token y Opciones
+            coap_session_new_token(session, &tokenlength, token);
+            coap_add_token(request, tokenlength, token);
+            
+            unsigned char buf[4];
+            coap_insert_optlist(&optlist, coap_new_optlist(COAP_OPTION_CONTENT_FORMAT,
+                                coap_encode_var_safe(buf, sizeof(buf), COAP_MEDIATYPE_TEXT_PLAIN), buf));
+            coap_add_optlist_pdu(request, &optlist);
+
+            // AÑADIR EL PAYLOAD QUE VINO DE LA COLA
+            coap_add_data(request, strlen(payload_recibido), (const uint8_t *)payload_recibido);
+
+            coap_send(session, request);
         }
-        
-        // Cuenta atrás
-        for (int countdown = 10; countdown >= 0; countdown--) {
-            ESP_LOGI(TAG, "%d... ", countdown);
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
-        }
-        ESP_LOGI(TAG, "Starting again!");
- }
+
+        // 4. Mantenimiento del stack CoAP (IMPRESCINDIBLE ejecutarlo periódicamente)
+        // Aunque no enviemos nada, esto procesa ACKs y respuestas del servidor
+        coap_io_process(ctx, COAP_IO_NO_WAIT); 
+    }
     
 clean_up:
     if (optlist) {
