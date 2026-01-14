@@ -111,6 +111,33 @@ hnd_espressif_get(coap_resource_t *resource,
                                  NULL, NULL);
 }
 
+/*
+ * MANEJADOR PARA PETICIONES POST (Para recibir alertas)
+ */
+static void hnd_espressif_post(coap_resource_t *resource,
+                               coap_session_t *session,
+                               const coap_pdu_t *request,
+                               const coap_string_t *query,
+                               coap_pdu_t *response)
+{
+    size_t size;
+    const uint8_t *data;
+    
+    // 1. Extraer los datos del paquete recibido
+    if (coap_get_data(request, &size, &data)) {
+        // 2. Imprimir la alerta por pantalla
+        // Usamos %.*s porque los datos CoAP no siempre terminan en \0
+        ESP_LOGW(TAG, "!!! ALERTA RECIBIDA !!!: %.*s", (int)size, data);
+        
+        // 3. Responder al cliente que todo salió bien (Código 2.04 Changed)
+        coap_pdu_set_code(response, COAP_RESPONSE_CODE_CHANGED);
+    } else {
+        // Si llegó un POST vacío
+        ESP_LOGI(TAG, "Recibido POST sin datos");
+        coap_pdu_set_code(response, COAP_RESPONSE_CODE_BAD_REQUEST);
+    }
+}
+
 static void
 hnd_espressif_put(coap_resource_t *resource,
                   coap_session_t *session,
@@ -381,6 +408,8 @@ static void coap_example_server(void *p)
             goto clean_up;
         }
         coap_register_handler(resource, COAP_REQUEST_GET, hnd_espressif_get);
+        // AÑADE ESTA LÍNEA NUEVA (POST):
+        coap_register_handler(resource, COAP_REQUEST_POST, hnd_espressif_post);
         coap_register_handler(resource, COAP_REQUEST_PUT, hnd_espressif_put);
         coap_register_handler(resource, COAP_REQUEST_DELETE, hnd_espressif_delete);
         /* We possibly want to Observe the GETs */

@@ -430,6 +430,14 @@ static void coap_example_client(void *p)
             ESP_LOGE(TAG, "coap_new_pdu() failed");
             goto clean_up;
         }
+        
+      // 1. Cambiar COAP_REQUEST_GET por COAP_REQUEST_POST
+        request = coap_new_pdu(COAP_MESSAGE_CON, COAP_REQUEST_POST, session);
+        if (!request) {
+            ESP_LOGE(TAG, "coap_new_pdu failed");
+            goto clean_up;
+        }        
+        
         /* Add in an unique token */
         coap_session_new_token(session, &tokenlength, token);
         coap_add_token(request, tokenlength, token);
@@ -449,6 +457,14 @@ static void coap_example_client(void *p)
          */
 
         coap_add_optlist_pdu(request, &optlist);
+
+        // 2. Definir el mensaje de alerta y añadirlo al paquete
+        const char *alerta_msg = "TEMPERATURA CRITICA: 85C";
+        // Añadimos los datos (payload) a la petición
+        coap_add_data(request, strlen(alerta_msg), (const uint8_t *)alerta_msg);
+        ESP_LOGI(TAG, "Enviando ALERTA: %s", alerta_msg);
+        // 3. Enviar
+        coap_send(session, request);
 
         resp_wait = 1;
         coap_send(session, request);
