@@ -1,7 +1,7 @@
 | Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
 | ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
 
-# Objetivos de este Nodo
+# Objetivos del nodo `wifir_coapc`
 ```
 4. Implementación del nodo Mesh raíz
 * Por su parte, el nodo Mesh raíz se conectará a un punto de acceso Wi-Fi (p.e. el de
@@ -17,42 +17,116 @@ de una tarea FreeRTOS.
 mediante una pe,ción POST de CoAP. 
 ```
 
-## Nodo wifir_coapc
-Starts a FreeRTOS task to print "Hello World".
+##  Tareas en ejecución
+1. Inicia una tarea FreeRTOS para `wifir_start()`.
+   * Crea y contiene la lógica del nodo raíz del Wi-Fi Mesh.
+2. Inicia una tarea FreeRTOS para `coapc_start();`.
+   * Crea y contiene la lógica para el cliente CoAP.
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+Las dos tareas comparten el envío de alertas en FreeRTOS utilizando una **Cola de Mensajes (FreeRTOS Queue)**
+* La tarea de transmisión WiFi Mesh se duerma (consumiendo 0 CPU) hasta que reciba datos del nodo hijo.
+* La tarea del cliente CoAP "duerma" o hace mantenimiento hasta que el Nodo Raíz Mesh le avise.
 
-## How to use example
+> Nota: Iniciar recursos del sistema (NVS y Event Loop) UNA SOLA VEZ. Ya que el las dos tareas necesitan credenciales de la Wi-Fi
 
-Follow detailed instructions provided specifically for this example.
-
-Select the instructions depending on Espressif chip installed on your development board:
-
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
-
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
-
+## Directorio del proyecto
+A continuación se muestra una explicación de los archivos en la carpeta del proyecto `wifir_coapc`.
 ```
 ├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
+├── components
+│   ├── coapc_comp                      <-- Componente para GoAP-CLIENT
+│   │   ├── certs
+│   │   │   ├── coap_ca.pem
+│   │   │   ├── coap_client.crt
+│   │   │   └── coap_client.key
+│   │   ├── CMakeLists.txt
+│   │   ├── coapc_comp.c
+│   │   ├── idf_component.yml
+│   │   ├── include
+│   │   │   └── coapc_comp.h
+│   │   ├── Kconfig.projbuild
+│   │   └── oscore
+│   │       └── coap_oscore.conf
+│   └── wifir_comp                      <-- Componente para RAIZ-MESH
+│       ├── CMakeLists.txt
+│       ├── include
+│       │   ├── mesh_light.h
+│       │   └── wifir_comp.h
+│       ├── Kconfig.projbuild
+│       ├── mesh_light.c
+│       └── wifir_comp.c
+├── dependencies.lock
 ├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+│   ├── CMakeLists.txt
+│   └── wifir_coapc.c
+├── partitions.csv
+├── pytest_hello_world.py
+├── README.md
+├── sdkconfig
+├── sdkconfig.ci
+├── sdkconfig.defaults
+├── sdkconfig.old
+└── tutorials
+    ├── Envio_y_recepcion_ESP-MESH.md
+    └── Nodos-hijos-envían-mensajes-en-ESP-MESH.md
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+## Cómo ejecutar el proyecto
+Antes de configurar y construir el proyecto, asegúrese de configurar el chip objetivo correcto utilizando `idf.py set-target <chip_name>`.
+
+### Hardware requerido
+* Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
+* Un cable USB para alimentación y programación.
+
+### Configuración del proyecto antes de puesta en marcha
+Abrir el menu de configuración del proyecto (`idf.py menuconfig`).
+
+1. En el menu `WIFI-MESH Configuration  ---`:
+* Establecer la configuración de ejemplo.
+```
+(ORANGE_7ZB3) Router SSID                             # El router se le proporciona las claves WIFI, ya que este SI será el nodo raíz. 
+(H4sk1234567Xs) Router password
+    Mesh AP Authentication Mode (WIFI_AUTH_WPA2_PSK)  --->
+```
+
+2. En el menu `CoAP-CLIENT Configuration  --->`:
+* Establecer la configuración de ejemplo.
+```
+...
+(coap://192.168.1.39/Espressif) Target Uri          # Uri del servidor CoAP ya sea en el ESP32 o en el Ordenador
+(sesame) Preshared Key (PSK) to used in the connection to the CoAP server
+(password) PSK Client identity (username)
+...
+```
+
+3. Este ejemplo como utiliza Bluetooth y Wi-Fi. Se encuentra activado por defecto en el archivo `sdkconfig.defaults`
+* Señalar que se crea una tabla de particiones personalizada (Recomendado)
+* Junto se desactiva `(Top) → Component config → CoAP Configuration ->[ ] Enable Server functionality within CoAP`
+```
+# Configuración CoAP
+CONFIG_MBEDTLS_SSL_PROTO_DTLS=y
+CONFIG_MBEDTLS_PSK_MODES=y
+CONFIG_MBEDTLS_KEY_EXCHANGE_PSK=y
+CONFIG_LWIP_NETBUF_RECVINFO=y
+CONFIG_COAP_CLIENT_SUPPORT=y
+
+# Configuración para usar una tabla de particiones personalizada
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+CONFIG_PARTITION_TABLE_FILENAME="partitions.csv"
+CONFIG_COMPILER_OPTIMIZATION_SIZE=y
+
+# Desactivar la obtención de dirección IPv6 en los ejemplos comunes
+CONFIG_EXAMPLE_CONNECT_IPV6=n
+```
+
+### Construir y flashear
+Construya el proyecto y fórmelo en la placa, luego ejecute la herramienta de monitorización para ver la salida en serie:
+Ejecute `idf.py -p PORT flash monitor` para compilar, actualizar y monitorear el proyecto.
+(Para salir del monitor serial, escriba ``Ctrl-]``.)
+
 
 ## Ejemplo de salida
-
 * Salida `wifir_coapc` cliente coap y wifi mesh:
 ```
 I (81240) ROOT_MESH: -----------------------------------------
@@ -80,8 +154,7 @@ I (136830) CoAP_CLIENT: Alerta recibida desde Mesh: prox_alert 👾
 I (137840) CoAP_CLIENT: Respuesta del servidor recibida (Código: 2.04)
 I (137840) CoAP_CLIENT: Mensaje del servidor: Alerta procesada por el servidor
 ```
-
-* Salida `coap_server`:
+* Salida `coap_server` en otro ESP32:
 ```
 W (3601) wifi:<ba-add>idx:0, ifx:0, tid:0, TAHI:0x100bf3c, TALO:0x918f64a0, (ssn:2, win:64, cur_ssn:2), CONF:0xc0000005
 I (4831) esp_netif_handlers: example_netif_sta ip: 192.168.1.42, mask: 255.255.255.0, gw: 192.168.1.1
@@ -100,17 +173,7 @@ W (240441) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
 W (241361) CoAP_server: !!! ALERTA RECIBIDA !!!: prox_alert 👾
 ```
 
-## Technical support and feedback
-
-Please use the following feedback channels:
-
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
-
-We will get back to you as soon as possible.
-
 ## Problemas detectados
-
 ### Tome ese payload y lo coloque en la cola `coap_alert_queue`.
 La idea es que cada vez que el nodo raíz (Root) reciba un paquete de un nodo hijo, tome ese payload y lo coloque en la cola `coap_alert_queue`.
 ¿Qué sucede ahora?

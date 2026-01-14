@@ -22,47 +22,48 @@ IoT mediante Wi-Fi y CoAP.
 * 1 PC actuando como gateway/hub IoT que ejecute un servidor CoAP simple.
 ```
 
-## How to use example
-
-Follow detailed instructions provided specifically for this example.
-
-Select the instructions depending on Espressif chip installed on your development board:
-
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
-
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
-
+## Objetivo del labF
 ```
-├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
-├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+detector de proximidad           -->            nodo WiFi Mesh regular          -->         nodo WiFi Mesh raíz      -->        gateway/hub (PC servidor CoAP)
+y servidor GATT                   (GATT)                   y cliente GATT            (Wi-Fi Mesh)                                       (Wi-Fi y CoAP)
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+## Directorio del proyecto
+A continuación se muestra una explicación de los archivos en la carpeta del proyecto.
+```
+├── gattc_wifih
+├── gatts_tourch
+├── server
+├── wifir_coapc
+└── README.md                  
+```
 
-## Troubleshooting
+## Cómo ejecutar el proyecto
+Orden de ejecución en cada placa de prototipo, se necesita de 3 a 4 ESP32:
+1. [gatts_tourch](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+2. [gattc_wifih](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+3. [wifir_coapc](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+4. [server](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
 
-* Program upload failure
+Antes de configurar y construir el proyecto, asegúrese de configurar el chip objetivo correcto utilizando `idf.py set-target <chip_name>`.
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+### Hardware requerido
+1. [gatts_tourch](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+* Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
+* Un cable USB para alimentación y programación.
 
-## Technical support and feedback
+2. [gattc_wifih](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+* Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
+* Un cable USB para alimentación y programación.
 
-Please use the following feedback channels:
+3. [wifir_coapc](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+* Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
+* Un cable USB para alimentación y programación.
 
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
+4. [server](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
+Servidor CoAP en ESP43:
+* Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
+* Un cable USB para alimentación y programación.
 
-We will get back to you as soon as possible.
+O Servidor CoAP en  Ordenador:
+* Portátil

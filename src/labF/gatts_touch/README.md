@@ -1,7 +1,7 @@
 | Supported Targets | ESP32 | ESP32-C3  | Linux |
 | ----------------- | ----- | -------- | ----- |
 
-# Objetivo de este Nodo
+# Objetivo del nodo `gatts_touch`
 ```
 2. Implementación del sensor IoT
 
@@ -22,31 +22,87 @@ booleano o string corto (p.e. “1”, “true”, “prox_alert”). No es nece
 datos con JSON o CBOR.
 ```
 
-##  Ejemplo de Touch Pad
-Inicia una tarea FreeRTOS para imprimir "touch_example: value=682, touched=0".
+##  Tareas en ejecución
+1. Inicia una tarea FreeRTOS para ` gatts_start()`.
+   * Crea y contiene la lógica del servidor GATT.
+2. Inicia una tarea FreeRTOS para `touch_pad_start()`.
+   * Crea y contiene la lógica del sensor IoT `touch_pad_*`
 
-## Ejemplo del directorio del proyecto
-Below is short explanation of remaining files in the project folder.
+Las dos tareas comparten el envío de alertas en FreeRTOS utilizando un **Semáforo Binario**.
+* La tarea del GATT (Bluetooth) se quedará "dormida" esperando el semáforo.
+* La tarea del Touch "dará" (activará) el semáforo cuando detecte la pulsación larga.
+
+## Directorio del proyecto
+A continuación se muestra una explicación de los archivos en la carpeta del proyecto `gatts_touch`.
 
 ```
 ├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
+├── components
+│   ├── gatts_comp                      <-- Componente para GATT-SERVER
+│   │   ├── CMakeLists.txt
+│   │   ├── gatts_comp.c
+│   │   ├── include
+│   │   │   └── gatts_comp.h
+│   │   └── Kconfig.projbuild
+│   └── touch_pad_comp          <-- Componente para sensor TOUCH-PAD
+│       ├── CMakeLists.txt
+│       ├── include
+│       │   └── touch_pad_comp.h
+│       ├── Kconfig.projbuild
+│       └── touch_pad_comp.c
+├── img
+│   └── Habilitar BLE.png
 ├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+│   ├── CMakeLists.txt
+│   └── gatts_touch.c
+├── pytest_hello_world.py
+├── README.md
+├── sdkconfig
+├── sdkconfig.ci
+├── sdkconfig.defaults
+└── sdkconfig.old
 ```
 
-## Objetivo del labF
+## Cómo ejecutar el proyecto
+Antes de configurar y construir el proyecto, asegúrese de configurar el chip objetivo correcto utilizando `idf.py set-target <chip_name>`.
+
+### Hardware requerido
+* Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
+* Un cable USB para alimentación y programación.
+
+### Configuración del proyecto antes de puesta en marcha
+Abrir el menu de configuración del proyecto (`idf.py menuconfig`).
+
+1. En el menu `TOUCH-PAD Configuration  --->`:
+* Establecer la configuración de ejemplo.
 ```
-detector de proximidad           -->            nodo WiFi Mesh regular          -->         nodo WiFi Mesh raíz      -->        gateway/hub (PC servidor CoAP)
-y servidor GATT                   (GATT)                   y cliente GATT            (Wi-Fi Mesh)                                       (Wi-Fi y CoAP)
+(2) Numero de Touch Pad (GPIO)
+(80) Factor de Umbral (%)
+(1500) Tiempo de activacion requerido (ms)
 ```
+
+2. En el menu `GATT-SERVER Configuration  --->`:
+* Establecer la configuración de ejemplo.
+```
+(ESP_GATTS_EJ-1) Nombre del dispositivo BLE  # El nombre tiene que coincidir con el cliente GATT
+```
+
+3. Este ejemplo como utiliza Bluetooth. Se encuentra activado por defecto en el archivo `sdkconfig.defaults`
+```
+CONFIG_BT_ENABLED=y
+# CONFIG_BT_BLE_50_FEATURES_SUPPORTED is not set
+CONFIG_BT_BLE_42_FEATURES_SUPPORTED=y
+# CONFIG_BT_LE_50_FEATURE_SUPPORT is not used on ESP32, ESP32-C3 and ESP32-S3.
+# CONFIG_BT_LE_50_FEATURE_SUPPORT is not set
+```
+
+### Construir y flashear
+Construya el proyecto y fórmelo en la placa, luego ejecute la herramienta de monitorización para ver la salida en serie:
+Ejecute `idf.py -p PORT flash monitor` para compilar, actualizar y monitorear el proyecto.
+(Para salir del monitor serial, escriba ``Ctrl-]``.)
 
 ## Ejemplo de Salida
-This example's output maybe could not give a strong feeling to user since the waterproof function works
-automatically and silently inside the Touch Element library
-
+Se muestra como el componente para sensor TOUCH-PAD  envia el payload al componente para GATT-SERVER
 ```
  (13166) GATTS_TABLE_DEMO: notify enable
 W (19646) touch_pad_comp: ALERTA: Proximidad detectada por 1.5 segundos!
@@ -103,7 +159,6 @@ Notification handle = 0x002a value: 70 72 6f 78 5f 61 6c 65 72 74 20 f0 9f 91 be
 ```
 
 ## Problemas y soluciones
-
 ### Envíe la notificación solo cuando el sensor táctil detecta la proximidad (1.5s)
 Para lograr que el servidor GATT envíe la notificación solo cuando el sensor táctil detecta la proximidad (1.5s), necesitamos un mecanismo de comunicación entre las dos tareas (la del Touch y la del Bluetooth).
 
@@ -122,7 +177,6 @@ Si el compilador no encuentra el archivo, puede ser que el componente de Bluetoo
 2. Ve a: `Component config -> Bluetooth`
 3. Marca la casilla: `[*] Bluetooth`
 4. Dentro de Bluetooth, asegúrate de que el "Host" esté configurado (usualmente Bluedroid o NimBLE, según tu código utiliza esp_bluedroid_init).
-
 
 ### Cambios Clave Realizados
 * Lógica de Temporización: Se han añadido las variables start_tick y is_touching. Cuando se detecta un toque, se guarda el "tiempo actual". En cada ciclo subsiguiente, se compara el tiempo actual con el inicial.

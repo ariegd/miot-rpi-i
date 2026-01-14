@@ -8,7 +8,7 @@
 #include "esp_flash.h"
 #include "esp_system.h"
 
-// --- AÑADE ESTAS TRES LÍNEAS ---
+// ---  TRES LÍNEAS ---
 #include "nvs_flash.h"
 #include "esp_netif.h"
 #include "esp_event.h"
@@ -41,14 +41,12 @@ void app_main(void)
     ESP_LOGI(TAG, "Iniciando sistema wifi_coap...");
 
     // 2. Iniciar el Mesh / Wi-Fi (Quien da la conectividad)
-    // Asegúrate de que wifir_start NO llame a nvs_flash_init de nuevo internamente si ya lo hiciste aquí,
-    // o quítalo de aquí y deja que wifir_start lo haga.
     wifir_start(); 
 
     // 3. Iniciar CoAP
     // IMPORTANTE: El cliente CoAP fallará si intenta enviar datos antes de tener IP.
     // Lo ideal es esperar un evento de IP_EVENT_STA_GOT_IP o MESH_EVENT_ROOT_GOT_IP.
-    // Como solución rápida, pon un delay o deja que la tarea CoAP reintente internamente.
+    // Como solución rápida, un delay o deja que la tarea CoAP reintente internamente.
     
     vTaskDelay(pdMS_TO_TICKS(5000)); // Esperar un poco a que arranque el Mesh (opcional)
     coapc_start();

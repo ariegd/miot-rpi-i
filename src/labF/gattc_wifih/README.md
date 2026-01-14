@@ -1,7 +1,7 @@
 | Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C5 | ESP32-C6 | ESP32-C61 | ESP32-H2 | ESP32-H21 | ESP32-H4 | ESP32-P4 | ESP32-S2 | ESP32-S3 | Linux |
 | ----------------- | ----- | -------- | -------- | -------- | -------- | --------- | -------- | --------- | -------- | -------- | -------- | -------- | ----- |
 
-# Objetivos de este Nodo
+# Objetivos del nodo `gattc_wifih`
 ```
 3. Implementación del nodo Mesh regular
 
@@ -17,58 +17,124 @@ el evento ESP_GATTC_NOTIFY_EVT para encapsularla y enviarla al nodo Mesh raíz
 utilizando la función esp_mesh_send().
 ```
 
-## Nodo gattc_wifi
-Starts a FreeRTOS task to print "Hello World".
+##  Tareas en ejecución
+1. Inicia una tarea FreeRTOS para ` gattc_start()`.
+   * Crea y contiene la lógica del cliente GATT.
+2. Inicia una tarea FreeRTOS para `wifim_start()`.
+   * Crea y contiene la lógica del nodo NO raíz de  Wi-Fi MESH
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+Las dos tareas comparten el envío de alertas en FreeRTOS utilizando una **Cola de Mensajes (FreeRTOS Queue)**
+* La tarea del GATT (Bluetooth) verifica si contiene "prox_alert", enviado por el servidor GATT. Si es así, copia el mensaje a la cola.
+* La tarea de transmisión WiFi Mesh se duerma (consumiendo 0 CPU) hasta que reciba datos. Posteriormente lo envia al nodo raíz.
 
-## How to use example
-
-Follow detailed instructions provided specifically for this example.
-
-Select the instructions depending on Espressif chip installed on your development board:
-
-- [ESP32 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/stable/get-started/index.html)
-- [ESP32-S2 Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/get-started/index.html)
-
-
-## Example folder contents
-
-The project **hello_world** contains one source file in C language [hello_world_main.c](main/hello_world_main.c). The file is located in folder [main](main).
-
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt` files that provide set of directives and instructions describing the project's source files and targets (executable, library, or both).
-
-Below is short explanation of remaining files in the project folder.
-
+## Directorio del proyecto
+A continuación se muestra una explicación de los archivos en la carpeta del proyecto `gattc_wifih`.
 ```
 ├── CMakeLists.txt
-├── pytest_hello_world.py      Python script used for automated testing
+├── components
+│   ├── gattc_comp                      <-- Componente para GATT-CLIENT
+│   │   ├── CMakeLists.txt
+│   │   ├── gattc_comp.c
+│   │   ├── include
+│   │   │   └── gattc_comp.h
+│   │   └── Kconfig.projbuild
+│   └── wifim_comp                      <-- Componente para WIFI-MESH
+│       ├── CMakeLists.txt
+│       ├── include
+│       │   ├── mesh_light.h
+│       │   └── wifim_comp.h
+│       ├── Kconfig.projbuild
+│       ├── mesh_light.c
+│       └── wifim_comp.c
 ├── main
-│   ├── CMakeLists.txt
-│   └── hello_world_main.c
-└── README.md                  This is the file you are currently reading
+│   ├── CMakeLists.txt
+│   └── gattc_wifih.c
+├── partitions.csv
+├── pytest_hello_world.py
+├── README.md
+├── sdkconfig
+├── sdkconfig.ci
+├── sdkconfig.defaults
+└── sdkconfig.old
 ```
 
-For more information on structure and contents of ESP-IDF projects, please refer to Section [Build System](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/build-system.html) of the ESP-IDF Programming Guide.
+## Cómo ejecutar el proyecto
+Antes de configurar y construir el proyecto, asegúrese de configurar el chip objetivo correcto utilizando `idf.py set-target <chip_name>`.
 
-## Troubleshooting
+### Hardware requerido
+* Una placa de desarrollo con ESP32/ESP32-C3 SoC (e.g., ESP32-DevKitC, ESP-WROVER-KIT, etc.).
+* Un cable USB para alimentación y programación.
 
-* Program upload failure
+### Configuración del proyecto antes de puesta en marcha
+Abrir el menu de configuración del proyecto (`idf.py menuconfig`).
 
-    * Hardware connection is not correct: run `idf.py -p PORT monitor`, and reboot your board to see if there are any output logs.
-    * The baud rate for downloading is too high: lower your baud rate in the `menuconfig` menu, and try again.
+1. En el menu `GATT-CLIENT Configuration  --->`:
+* Establecer la configuración de ejemplo.
+```
+(ESP_GATTS_EJ-1) Nombre del dispositivo BLE                 # El nombre tiene que coincidir con el servidor GATT
+()  Remote BLE Device Address (e.g., 34:85:18:02:70:4E)
+(1000) BLE scan interval (ms)
+(100) BLE scan window (ms)
+[ ] Dump whole adv data and scan response data in example
+(0) example id for CI test
+(0) The pipeline id for CI test
+[ ] Perform init deinit of bluedroid host in a loop
+```
 
-## Technical support and feedback
+2. En el menu `GATT-SERVER Configuration  --->`:
+* Establecer la configuración de ejemplo.
+```
+...
+(ROUTER_SSID) Router SSID                                       # El router se queda en blanco, ya que este NO será el nodo raíz. 
+(ROUTER_PASSWD) Router password                     # Automaticamente creara una Malla Wi-Fi Mesh y buscará al nodo raíz
+    Mesh AP Authentication Mode (WIFI_AUTH_WPA2_PSK)  --->
+...
+```
 
-Please use the following feedback channels:
+3. Este ejemplo como utiliza Bluetooth y Wi-Fi. Se encuentra activado por defecto en el archivo `sdkconfig.defaults`
+* Señalar que se crea una tabla de particiones personalizada (Recomendado)
+```
+CONFIG_BT_ENABLED=y
+# CONFIG_BT_BLE_50_FEATURES_SUPPORTED is not set
+CONFIG_BT_BLE_42_FEATURES_SUPPORTED=y
+# CONFIG_BT_LE_50_FEATURE_SUPPORT is not used on ESP32, ESP32-C3 and ESP32-S3.
+# CONFIG_BT_LE_50_FEATURE_SUPPORT is not set
 
-* For technical queries, go to the [esp32.com](https://esp32.com/) forum
-* For a feature request or bug report, create a [GitHub issue](https://github.com/espressif/esp-idf/issues)
+# Configuración para usar una tabla de particiones personalizada
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+CONFIG_PARTITION_TABLE_FILENAME="partitions.csv"
+CONFIG_COMPILER_OPTIMIZATION_SIZE=y
+```
 
-We will get back to you as soon as possible.
+### Construir y flashear
+Construya el proyecto y fórmelo en la placa, luego ejecute la herramienta de monitorización para ver la salida en serie:
+Ejecute `idf.py -p PORT flash monitor` para compilar, actualizar y monitorear el proyecto.
+(Para salir del monitor serial, escriba ``Ctrl-]``.)
+
+## Ejemplo de Salida
+Se muestra como el componente para GATT-CLIENT envia el payload al componente para WIFI-MESH
+```
+I (11418) mesh: [scan]new scanning time:600ms, beacon interval:300ms
+I (11438) mesh: 2004<arm>parent monitor, my layer:2(cap:6)(node), interval:9327ms, retries:1<normal connected>
+I (11438) NODO_MESH: <MESH_EVENT_PARENT_CONNECTED>layer:0-->2, parent:60:55:f9:c1:13:f5<layer2>, ID:77:77:77:77:77:0b, duty:10
+I (11448) NODO_MESH: <MESH_EVENT_TODS_REACHABLE>state:0
+I (11448) NODO_MESH: Tarea TX iniciada. Esperando datos en 'mesh_tx_queue'...
+I (13968) GATT_CLIENT: Notification received
+I (13968) GATT_CLIENT: 70 72 6f 78 5f 61 6c 65 72 74 20 f0 9f 91 be
+I (13968) GATT_CLIENT: payload: prox_alert 👾
+W (13968) GATT_CLIENT: DETECTADO PROX_ALERT 👾 -> Enviando a Mesh...
+I (13978) wifi:<ba-add>idx:0 (ifx:0, 60:55:f9:c1:13:f5), tid:5, ssn:0, winSize:64
+I (13988) NODO_MESH: HIJO: Mensaje enviado al ROOT: 'prox_alert 👾'
+I (16728) GATT_CLIENT: Notification received
+I (16728) GATT_CLIENT: 70 72 6f 78 5f 61 6c 65 72 74 20 f0 9f 91 be
+I (16728) GATT_CLIENT: payload: prox_alert 👾
+W (16728) GATT_CLIENT: DETECTADO PROX_ALERT 👾 -> Enviando a Mesh...
+I (16738) NODO_MESH: HIJO: Mensaje enviado al ROOT: 'prox_alert 👾'
+I (19838) wifi:pm start, type: 1
+```
 
 ## Problemas detectados
-
 ### El error que estás viendo (reason 0x08) es un "Connection Timeout".
 Esto ocurre porque el dispositivo BLE se aleja, hay mucha interferencia o, lo más probable en este caso, el dispositivo BLE (servidor/tag) entra en modo de bajo consumo y cierra la conexión tras enviar la alerta.
 
