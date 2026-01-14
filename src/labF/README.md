@@ -7,6 +7,7 @@ Máster IoT, curso 25-26
  		    └── Ariel Gámez <arielg01@ucm.es>
 ```
 [repositorio](https://github.com/ariegd/miot-aniot/tree/labF/src/labF) en GitHub
+[video](https://youtu.be/agf_GGZS18o)
 
 # LABF. Práctica ﬁnal de integración
 ```
